@@ -1,8 +1,9 @@
 <template>
-  <div class="input-container">
+  <form @submit.prevent="addItem" class="input-container">
     <input 
+      @submit="addItem"
       v-model="itemRef.item" 
-      class="p-2 rounded-l-md outline-none bg-white text-black" 
+      class="p-2 rounded-l-md rounded-r-none outline-none bg-white text-black" 
       type="text" 
       name="task" 
       placeholder="Enter input..."
@@ -19,7 +20,7 @@
     >
       Add Task
     </button>
-  </div>
+  </form>
 </template>
 <script setup>
 import { reactive } from 'vue'
