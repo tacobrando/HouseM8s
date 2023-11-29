@@ -1,0 +1,22 @@
+.slide-down-enter-active, .slide-down-move {
+  transition: transform 0.3s ease;
+}
+
+.slide-down-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  position: absolute;
+}
+
+.slide-down-enter, .slide-down-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.slide-down-leave-from {
+  opacity: 0;
+  transform: translateY(0);
+}
+
+.slide-down-move {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
