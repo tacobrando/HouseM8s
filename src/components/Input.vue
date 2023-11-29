@@ -1,13 +1,14 @@
 <template>
   <form @submit.prevent="addItem" class="input-container">
+  <div class="flex">
     <input 
       @submit="addItem"
       v-model="itemRef.item" 
-      class="p-2 rounded-l-md rounded-r-none outline-none bg-white text-black" 
+      class="p-2 rounded-l-md rounded-r-none outline-none bg-white text-black w-full" 
       type="text" 
       name="task" 
       placeholder="Enter input..."
-      maxlength="100"
+      maxlength="50"
     >
     <button 
       :disabled="itemRef.item.length < 1"
@@ -16,10 +17,11 @@
         'bg-blue-500': itemRef.item.length >= 1, 
         'bg-gray-300': itemRef.item.length < 1
       }" 
-      class="p-2 rounded-r-md transition-colors"
+      class="p-2 rounded-r-md transition-colors flex items-center"
     >
-      Add Task
+      <font-awesome-icon :icon="['fas', 'plus']" class="h-5 w-5" />
     </button>
+  </div>
   </form>
 </template>
 <script setup>

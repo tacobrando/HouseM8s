@@ -3,7 +3,7 @@
     <span class="text-xl font-bold">
       {{ title }}
     </span>
-    <div class="input">
+    <div class="input w-full lg:w-[calc(50%-7.5px)]">
       <Input @add="addItem" />
     </div>
     <div class="lg:flex justify-between items-start">
