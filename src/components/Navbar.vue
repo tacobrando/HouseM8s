@@ -7,12 +7,13 @@
       active-class="text-blue-500" 
       class="transition-all h-full flex items-center"
     >
-      <div class="w-auto h-full flex flex-col justify-center items-center mt-4 mx-6">
-        <font-awesome-icon :icon="['fas', getIcon(item)]" class="w-8 h-8" />
-        <div 
-          class=" w-12 h-1 rounded-full mt-3" 
+      <div class="w-auto h-full flex flex-col justify-center items-center mx-6 mt-2">
+        <font-awesome-icon :icon="['fas', getIcon(item)]" class="w-7 h-7" />
+        <span>{{ item.name }}</span>
+        <!-- <div 
+          class=" w-12 h-1 rounded-full" 
           :class="[route.path === item.path ? 'bg-blue-500' : 'bg-white']" 
-        />
+        /> -->
       </div>
     </router-link>
   </div>

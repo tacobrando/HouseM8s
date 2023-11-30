@@ -7,9 +7,18 @@ export function createStoreFactory(options) {
     state: () => ({
       list: [],
       completed: [],
+      initialized: false,
       ...options.state()
     }),
     actions: {
+      init() {
+        if (this.initialized) return;
+        
+        this.completed = this.list.filter(item => item.completed);
+        this.list = this.list.filter(item => !item.completed);
+        this.sortList();
+        this.initialized = true;
+      },
       sortList() {
         this.list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       },
