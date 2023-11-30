@@ -7,6 +7,10 @@ export function createStoreFactory(options) {
     state: () => ({
       list: [],
       completed: [],
+      showList: {
+        completed: true,
+        tasks: true,
+      },
       initialized: false,
       ...options.state()
     }),

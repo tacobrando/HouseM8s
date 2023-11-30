@@ -2,7 +2,7 @@
   <div 
     id="sidebar" 
   >
-    <div class="fixed flex top-0 z-30 w-full h-16 bg-white text-black shadow-md md:w-[300px] md:h-[calc(100vh-64px)] md:mt-16">
+    <div class="fixed flex top-0 z-[45] w-full h-16 bg-white text-black shadow-md md:w-[300px] md:h-[calc(100vh-64px)] md:mt-16">
       <div class="sidebar-content hidden md:block">
         Content
       </div>

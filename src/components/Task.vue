@@ -1,6 +1,6 @@
 <template>
   <div 
-    class="task-container flex justify-between items-center text-black my-2 p-2 rounded-md" 
+    class="task-container flex justify-between items-center text-black mt-2 p-2 rounded-md relative" 
     :class="[ task.completed ? 'bg-gray-400':'bg-white']"
   >
     <div class="flex-none">

@@ -11,7 +11,6 @@ export const useGroceryStore = createStoreFactory({
       { id: 4, item: "Penne Pasta", createdAt: "2023-11-27T13:00:00.000Z", completed: true },
       { id: 5, item: "Chilli Oil", createdAt: "2023-11-27T14:00:00.000Z", completed: false }
     ],
-    completed: []
   }),
   actions: {}
 })

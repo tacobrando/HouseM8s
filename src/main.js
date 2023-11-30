@@ -15,7 +15,9 @@ import {
   faBroom,
   faPlus,
   faCartShopping,
-  faBars
+  faBars,
+  faChevronDown,
+  faChevronUp
   
 } from '@fortawesome/free-solid-svg-icons';
 import Toast from 'vue-toastification'
@@ -31,7 +33,9 @@ library.add(
   faHome,
   faBroom,
   faPlus,
-  faBars
+  faBars,
+  faChevronDown,
+  faChevronUp
 )
 
 createApp(App)
