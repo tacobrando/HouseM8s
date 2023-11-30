@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import SidebarMenu from './SidebarMenu.vue'
+import SidebarMenu from '@/components/SidebarMenu.vue'
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 

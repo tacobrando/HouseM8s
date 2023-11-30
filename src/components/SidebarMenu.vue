@@ -31,13 +31,10 @@ function closeMenu(event){
   }
 }
 
-const clickOutsideEvent = 'ontouchstart' in window ? 'touchstart' : 'click';
-
 onMounted(() => {
-  window.addEventListener(clickOutsideEvent, closeMenu);
+  document.addEventListener('click', closeMenu);
 });
-
 onUnmounted(() => {
-  window.removeEventListener(clickOutsideEvent, closeMenu);
+  document.removeEventListener('click', closeMenu);
 });
 </script>

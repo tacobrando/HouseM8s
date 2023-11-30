@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="app-layout-container">
+  <div id="app" class="app-layout-container overflow-y-auto">
     <nav id="navbar">
       <Navbar />
     </nav>

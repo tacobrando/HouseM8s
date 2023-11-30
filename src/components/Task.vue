@@ -21,7 +21,7 @@
         class="block text-sm font-medium "
         :class="[ task.completed ? 'text-gray-500':'text-gray-400']"
       >
-        {{ formatDate(task.createdAt) }}
+        {{ formattedDate }}
       </span>
       <span 
         class="flex-1 break-all"
@@ -40,19 +40,13 @@
 
 <script setup>
 import moment from 'moment';
+import { computed } from 'vue';
 
 const emit = defineEmits(['delete', 'update']);
 const { task, bg } = defineProps(['task', 'bg']);
 
-function deleteItem(id) {
-  emit("delete", id);
-}
+const formattedDate = computed(() => moment(task.createdAt).calendar())
 
-function formatDate(date) {
-  return moment(date).calendar();
-}
-
-function toggleComplete(id) {
-  emit('update', id)
-}
+const deleteItem = (id) => emit("delete", id)
+const toggleComplete = (id) => emit('update', id)
 </script>
