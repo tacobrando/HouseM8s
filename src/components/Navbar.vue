@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-container fixed flex items-center justify-center top-0 w-full bg-white text-black h-16 shadow-md z-10">
+  <div class="navbar-container fixed flex items-center justify-center bottom-0 md:top-0 w-full bg-white text-black h-16 shadow-md z-50">
     <router-link 
       v-for="(item, index) in routes"
       :key="index"

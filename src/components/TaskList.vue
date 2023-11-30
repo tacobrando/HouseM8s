@@ -1,15 +1,15 @@
 <template>
   <div class="task-container">
     <span class="text-xl font-bold">
-      {{ title }}
+      Add {{ title }}
     </span>
-    <div class="input w-full lg:w-[calc(50%-7.5px)]">
+    <div class="input w-full lg:w-[calc(50%-7.5px)] my-2">
       <Input @add="addItem" />
     </div>
     <div class="lg:flex justify-between items-start">
-      <div class="list-container mt-2 w-full lg:mr-2">
+      <div class="list-container w-full lg:mr-2">
         <div class="text-xl font-bold">
-          List
+          Tasks
         </div>
         <span v-if="store.list.length <= 0" class="text-start my-4">
           No items! 😱

@@ -20,3 +20,28 @@
 .slide-down-move {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
+
+@keyframes slide-up {
+  from {
+    transform: translateY(calc(100% - 2px)); /* Adjust starting position */
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.slide-enter-active, .slide-leave-active {
+  transition: transform 0.3s ease;
+}
+.slide-enter-from, .slide-leave-to /* .slide-leave-active in <2.1.8 */ {
+  transform: translateY(-100%);
+}
+.slide-enter-to, .slide-leave-from {
+  transform: translateY(0);
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s forwards;
+}
+.slide-move {
+  transition: transform 0.5s ease-in-out;
+}
