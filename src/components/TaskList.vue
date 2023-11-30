@@ -1,6 +1,6 @@
 <template>
-  <div class="task-container select-none relative bg-[#242424] top-0 -mt-4 z-30">
-    <div class="bg-[#242424] relative z-20 pt-4">
+  <div class="task-container select-none relative bg-default top-0 -mt-4 z-30">
+    <div class="bg-inherit relative z-20 pt-4">
       <span class="text-xl font-bold">
         Add {{ title }}
       </span>
@@ -8,12 +8,12 @@
         <Input @add="addItem" />
       </div>
     </div>
-    <div class="lg:flex justify-between items-start z-10 bg-[#242424]">
+    <div class="lg:flex justify-between items-start z-10 bg-inherit">
       <ListAccordion 
         name="Tasks"
         :show="store.showList" 
         :length="store.list.length" 
-        class="relative z-[5] pb-2 bg-[#242424]"
+        class="relative z-[5] pb-2 bg-inherit"
       >
         <Task 
           @update="toggleItem"
@@ -26,7 +26,7 @@
         name="Completed"
         :show="store.showList" 
         :length="store.completed.length" 
-        class="relative -z-0 bg-[#242424]"
+        class="relative -z-[0] bg-inherit"
       >
         <Task 
           @update="toggleItem"
