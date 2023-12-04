@@ -3,11 +3,27 @@
     id="sidebar" 
   >
     <div class="fixed flex top-0 z-[45] w-full h-16 bg-white text-black shadow-md md:w-[300px] md:h-[calc(100vh-64px)] md:mt-16">
-      <div class="sidebar-content hidden md:block">
-        Content
+      <div class="sidebar-content hidden md:block p-4 w-full">
+        <div class="font-bold text-xl">
+          <span>
+            Groups
+          </span>
+        </div>
+        <div class="w-full my-4">
+          <button class="flex items-center" @click="addGroup">
+            <font-awesome-icon icon="fa-solid fa-plus" class="mr-4" />
+            Add Group
+          </button>
+        </div>
+        <div class="group-list flex flex-col">
+          <span v-for="group in groupStore.groupList" :key="group.id">
+            <button @click="setGroup(group.id)">
+              {{ group.name }}
+            </button>
+          </span>
+        </div>
       </div>
       <div class="md:hidden flex h-full mx-4 items-center z-30">
-        <!-- <div class="w-8 h-8 bg-blue-500 rounded-full"></div> -->
         <div class="h-full flex items-center flex-col justify-center mt-5">
           <button 
           @click.stop="mobileMenu.toggle" 
@@ -26,16 +42,18 @@
         </div>
       </div>
     </div>
-    <SidebarMenu :isOpen="mobileMenu.value" @close="mobileMenu.set" />
+    <SideBarMobileMenu :isOpen="mobileMenu.value" @close="mobileMenu.set" />
   </div>
 </template>
 
 <script setup>
-import SidebarMenu from '@/components/SidebarMenu.vue'
+import SideBarMobileMenu from '@/components/SideBarMobileMenu.vue'
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
+import { useGroupStore } from '@/composables/group';
 
 const route = useRoute()
+const groupStore = useGroupStore()
 
 const mobileMenu = reactive({
   value: false,
@@ -46,4 +64,15 @@ const mobileMenu = reactive({
     mobileMenu.value = bool
   }
 })
+
+async function addGroup() {
+  await groupStore.addGroup({
+    id: Math.random(),
+    name: `Hello ${Math.random()}`
+  })
+}
+
+function setGroup(id) {
+  groupStore.setGroup(id)
+}
 </script>

@@ -1,19 +1,13 @@
-import { defineStore } from "pinia";
 import { useToast } from 'vue-toastification'
 
-const toast = useToast()
-
-export const useToast = defineStore('toast', {
-  state: () => ({}),
-  actions: {
+export const toast = Object.freeze({
     showInfo(message) {
-      toast.info(message)
+      useToast().info(message)
     },
     showError(message) {
-      toast.error(message)
+      useToast().error(message)
     },
     showSuccess(message) {
-      toast.success(message)
+      useToast().success(message)
     }
-  }
 })

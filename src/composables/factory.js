@@ -1,10 +1,14 @@
 // storeFactory.js
+import { toast } from './toast.js';
 import { defineStore } from 'pinia';
+import api from '../utils/Axios.js';
+
 
 export function createStoreFactory(options) {
   return defineStore({
     ...options,
     state: () => ({
+      route: '',
       list: [],
       completed: [],
       showList: {
@@ -26,9 +30,20 @@ export function createStoreFactory(options) {
       sortList() {
         this.list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       },
-      addItem(item) {
-        this.list.unshift(item);
-        this.sortList();
+      async addItem(item, groupId) {
+        try{
+          await api.post(`/groups/${groupId}/${this.route}/add`, {
+            ...item
+          })
+          .then(res => console.log(res.data))
+          this.list.unshift({ ...item, groupId });
+          this.showList.tasks = true
+          this.sortList();
+        } catch(error) {
+          console.error(error)
+          // toast().showError(error)
+        }
+        // console.log(axios.config)
       },
       deleteItem(itemId) {
         const completedIndex = this.completed.findIndex(item => item.id === itemId);
@@ -48,7 +63,8 @@ export function createStoreFactory(options) {
           item = this.completed[itemIndex];
           this.completed.splice(itemIndex, 1);
           item.completed = false;
-          this.addItem(item);
+          this.list.unshift(item);
+          this.showList.tasks = true
         } else {
           itemIndex = this.list.findIndex(item => item.id === itemId);
           if (itemIndex !== -1) {
@@ -57,10 +73,11 @@ export function createStoreFactory(options) {
             item.completed = true;
             this.completed.unshift(item);
           }
+          this.showList.completed = true
           this.sortList();
         }
       },
       ...options.actions
-    }
+    },
   });
 }

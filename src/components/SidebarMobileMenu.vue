@@ -1,7 +1,7 @@
 <template>
   <transition-group name="slide" tag="div">
-    <div v-if="isOpen" id="sidebar-mobile-menu" class="fixed z-[44] w-full text-black shadow md:hidden">      
-      <ul class="flex flex-col bg-white rounded-b-xl mx-4 ">
+    <div v-if="isOpen" id="sidebar-mobile-menu" class="fixed z-[44] w-full text-black">      
+      <ul class="flex flex-col bg-white rounded-b-xl mx-4 shadow md:hidden">
         <li 
           v-for="num in 3"
           :key="num"

@@ -47,4 +47,8 @@ function addItem() {
     resetChoreRef()
   }
 }
+
+function sumbitHandler() {
+  
+}
 </script>
