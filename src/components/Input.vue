@@ -1,13 +1,13 @@
 <template>
   <form @submit.prevent="addItem" class="input-container">
-  <div class="flex">
+  <div class="flex" v-bind="$attrs">
     <input 
       @submit="addItem"
       v-model="itemRef.item" 
-      class="p-2 rounded-l-md rounded-r-none outline-none bg-white text-black w-full" 
+      class="p-2 rounded-l-md rounded-r-none border-l-2 border-t-2 border-b-2 outline-none bg-white text-black w-full"
       type="text" 
       name="task" 
-      placeholder="Enter input..."
+      :placeholder="placeholder"
       maxlength="50"
     >
     <button 
@@ -26,6 +26,10 @@
 </template>
 <script setup>
 import { reactive } from 'vue'
+
+const { placeholder } = defineProps({
+  placeholder: String
+})
 
 const emit = defineEmits()
 
@@ -46,9 +50,5 @@ function addItem() {
     emit('add', { ...itemRef })
     resetChoreRef()
   }
-}
-
-function sumbitHandler() {
-  
 }
 </script>

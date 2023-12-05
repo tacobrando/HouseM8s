@@ -3,26 +3,42 @@ import api from "@/utils/Axios";
 import { toast } from "./toast";
 export const useUserStore = defineStore('user', {
   state: () => ({
-    id: '',
-    username: '',
-    email: '',
-    groups: [],
-    // token: '',
+    userInfo: {
+      id: '',
+      username: '',
+      email: '',
+      groups: [],
+      createdAt: '',
+      updatedAt: ''
+    },
+    registerInfo: {
+      username: 'Test', 
+      email: 'test@tester.com',
+      password: 'monkey',
+      confirmPassword: 'monkey'
+    }
   }),
   actions: {
     setUserInfo(user) {
       for(const field in user) {
-        if(field === '_id') {
-          this.$state.id = user._id
-        } else {
-          this.$state[field] = user[field]
-        }
+        if(field === '_id') this.$state.userInfo.id = user._id
+        else this.$state.userInfo[field] = user[field]
       }
     },
-    async registerUser(user) {
+    resetInfo(option) {
+      let info;
+      if(option === 'register') info = this.$state.registerInfo
+      else if (option === 'user') info = this.$state.userInfo
+
+      for(const field in info) {
+        if(field === 'groups') info[field].groups = []
+        else info[field] = ''
+      }
+    },
+    async registerUser() {
       try {
         await api.post('/users/register', {
-          info: user
+          info: this.$state.registerInfo
         })
         .then((res) => {
           if(res.data) {

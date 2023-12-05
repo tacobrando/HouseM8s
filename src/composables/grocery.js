@@ -3,7 +3,7 @@ import { createStoreFactory } from "./factory";
 export const useGroceryStore = createStoreFactory({
   id: 'grocery',
   state: () => ({
-    api: '/groceries',
+    api: 'groceries',
     list: [
       { id: 1, groupId: 2, user: 'Dave', item: "Milk", createdAt: "2023-12-02T03:55:00Z", completed: true },
       { id: 2, groupId: 2, user: 'John', item: "Cookies", createdAt: "2023-11-28T13:00:00.000Z", completed: false },

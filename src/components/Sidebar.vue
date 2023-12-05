@@ -2,34 +2,14 @@
   <div 
     id="sidebar" 
   >
-    <div class="fixed flex top-0 z-[45] w-full h-16 bg-white text-black shadow-md md:w-[300px] md:h-[calc(100vh-64px)] md:mt-16">
-      <div class="sidebar-content hidden md:block p-4 w-full">
-        <div class="font-bold text-xl">
-          <span>
-            Groups
-          </span>
-        </div>
-        <div class="w-full my-4">
-          <button class="flex items-center" @click="addGroup">
-            <font-awesome-icon icon="fa-solid fa-plus" class="mr-4" />
-            Add Group
-          </button>
-        </div>
-        <div class="group-list flex flex-col">
-          <span v-for="group in groupStore.groupList" :key="group.id">
-            <button @click="setGroup(group.id)">
-              {{ group.name }}
-            </button>
-          </span>
-        </div>
-      </div>
-      <div class="md:hidden flex h-full mx-4 items-center z-30">
-        <div class="h-full flex items-center flex-col justify-center mt-5">
+    <div class="fixed flex flex-col top-0 z-[45] md:w-[300px] text-black md:mt-16"> <!--w-full shadow-md h-16-->
+      <div class="md:hidden flex flex-row w-screen items-center bg-white z-30 shadow-md">
+        <div class="h-full flex items-center flex-col justify-center mt-5 ml-4 mr-2">
           <button 
-          @click.stop="mobileMenu.toggle" 
-          class="flex justify-center items-center mx-3 transition-all"
-          :class="{ 'text-blue-500': mobileMenu.value }"
-        >
+            @click.stop="mobileMenu.toggle" 
+            class="flex justify-center items-center transition-all"
+            :class="{ 'text-blue-500': mobileMenu.value }"
+          >
           <font-awesome-icon icon="fa-solid fa-bars" class="w-6 h-6" />
         </button>
         <div 
@@ -37,20 +17,20 @@
           :class="[ mobileMenu.value ? 'bg-blue-500' : 'bg-white']" 
         />
         </div>
-        <div class="sidebar-title ml-2 font-semibold text-lg">
+        <div class="sidebar-title font-semibold text-lg">
           {{ route.name }}
         </div>
       </div>
+      <SidebarMenu @close="mobileMenu.set" :isOpen="mobileMenu.value" :store="groupStore" />
     </div>
-    <SideBarMobileMenu :isOpen="mobileMenu.value" @close="mobileMenu.set" />
   </div>
 </template>
 
 <script setup>
-import SideBarMobileMenu from '@/components/SideBarMobileMenu.vue'
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { useGroupStore } from '@/composables/group';
+import SidebarMenu from './SidebarMenu.vue';
 
 const route = useRoute()
 const groupStore = useGroupStore()
@@ -64,15 +44,4 @@ const mobileMenu = reactive({
     mobileMenu.value = bool
   }
 })
-
-async function addGroup() {
-  await groupStore.addGroup({
-    id: Math.random(),
-    name: `Hello ${Math.random()}`
-  })
-}
-
-function setGroup(id) {
-  groupStore.setGroup(id)
-}
 </script>

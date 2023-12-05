@@ -19,7 +19,10 @@ export function authenticateToken(req, res, next) {
       if(!user) {
         return res.status(401).send({ message: "User not found." });
       }
-      req.user = user
+      const userObject = user.toObject()
+      delete userObject.password
+
+      req.user = userObject
       next()
     } catch(error) {
       Console.Log(error)

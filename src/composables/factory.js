@@ -8,7 +8,7 @@ export function createStoreFactory(options) {
   return defineStore({
     ...options,
     state: () => ({
-      route: '',
+      api: '',
       list: [],
       completed: [],
       showList: {
@@ -32,7 +32,7 @@ export function createStoreFactory(options) {
       },
       async addItem(item, groupId) {
         try{
-          await api.post(`/groups/${groupId}/${this.route}/add`, {
+          await api.post(`/groups/${groupId}/${this.api}/add`, {
             ...item
           })
           .then(res => console.log(res.data))

@@ -3,7 +3,7 @@ import api from '@/utils/Axios'
 
 export const useGroupStore = defineStore('group', {
   state: () => ({
-    groupId: 1,
+    groupId: null,
     groupList: [
       { id: 1, name: "Housemates" },
       { id: 2, name: "Roomies" },
@@ -14,8 +14,11 @@ export const useGroupStore = defineStore('group', {
   actions: {
     async addGroup(group) {
       try {
-        this.groupList.unshift(group)
         await api.post('/groups/add', group)
+        .then((res) => {
+          console.log(res.data)
+        })
+        this.groupList.unshift(group)
       } catch(error) {
         console.error(error)
       }

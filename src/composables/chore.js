@@ -3,7 +3,7 @@ import { createStoreFactory } from "./factory";
 export const useChoreStore = createStoreFactory({
   id: 'chore',
   state: () => ({
-    route: 'chores',
+    api: 'chores',
     list: [
       { id: 1, groupId: 2, user: 'Dave', item: "Take out garbage", completed: true, createdAt: new Date() },
       { id: 2, groupId: 1, user: 'John', item: "Feed the dog", completed: false, createdAt: "2023-11-28T13:00:00.000Z" },

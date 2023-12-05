@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-container fixed flex items-center justify-center bottom-0 md:top-0 w-full bg-white text-black h-16 shadow-md z-50">
+  <div class="navbar-container fixed flex items-center justify-center bottom-0 md:top-0 w-full bg-white text-black h-16 md:shadow-md shadow-top-md z-50">
     <router-link 
       v-for="(item, index) in routes"
       :key="index"
@@ -7,7 +7,7 @@
       active-class="text-blue-500" 
       class="transition-all h-full flex items-center"
     >
-      <div class="w-auto h-full flex flex-col justify-center items-center mx-6 mt-2">
+      <div v-if="item.name !== 'Login' && item.name !== 'Error'" class="w-auto h-full flex flex-col justify-center items-center mx-6 mt-2">
         <font-awesome-icon :icon="['fas', getIcon(item)]" class="w-7 h-7" />
         <span>{{ item.name }}</span>
         <!-- <div 

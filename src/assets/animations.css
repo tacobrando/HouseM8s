@@ -1,4 +1,4 @@
-/* .slide-down-enter-active, .slide-down-move {
+.slide-down-enter-active, .slide-down-move {
   transition: transform 0.3s ease;
 }
 
@@ -19,7 +19,7 @@
 
 .slide-down-move {
   transition: opacity 0.3s ease, transform 0.3s ease;
-} */
+}
 
 @keyframes slide-down {
   from {
