@@ -1,10 +1,10 @@
 <template>
   <div 
     id="sidebar" 
-    class="w-screen"
+    class="w-full"
   >
     <div class="fixed flex flex-col top-0 z-[45] w-full md:w-[300px] text-black md:mt-16">
-      <div class="md:hidden flex flex-row items-center bg-white z-30 shadow-md"> <!-- Use w-full instead of w-screen -->
+      <div class="md:hidden flex flex-row items-center bg-white z-30 shadow-md"> 
         <div class="h-full flex items-center flex-col justify-center mt-5 ml-4 mr-2">
           <button 
             @click.stop="mobileMenu.toggle" 
@@ -25,7 +25,7 @@
           <ProfileAvatar class="w-10 h-10 mr-4" />
         </div>
       </div>
-      <SidebarMenu @close="mobileMenu.set" :isOpen="mobileMenu.value" :store="groupStore" />
+        <SidebarMenu @close="mobileMenu.set" :isOpen="mobileMenu.value" :store="groupStore" />
     </div>
   </div>
 </template>

@@ -7,17 +7,6 @@
   >
     <div class="flex-none">
       <Checkbox :completed="task.completed" @toggle="toggleComplete(task.id)" />
-      <!-- <button 
-        @click="toggleComplete(task.id)" 
-        class="h-7 w-7 shadow-inner transition-all border border-gray-200 rounded-full mr-3 select-none" 
-        :class="[task.completed ? 'bg-pink-400' : 'bg-gray-200']"
-      >
-          <font-awesome-icon 
-            icon="fa-solid fa-check" 
-            class="transition-all" 
-            :class="[task.completed ? 'text-white':'text-gray-200']"
-          />
-      </button> -->
     </div>
     <div class="flex-grow flex justify-between items-center">
       <div class="task-details flex flex-col">
@@ -35,7 +24,7 @@
         </span>
       </div>
       <span 
-        class="task-date text-sm font-medium"
+        class="task-date text-sm font-medium text-end sm:text-start"
         :class="[ task.completed ? 'text-gray-500':'text-gray-400']"
       >
         {{ formattedDate }}

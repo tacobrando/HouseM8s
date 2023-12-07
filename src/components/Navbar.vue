@@ -12,7 +12,7 @@
         active-class="text-blue-500" 
         class="transition-all h-full flex items-center"
       >
-        <div v-if="checkRoute(item)" class="w-auto h-full flex flex-col justify-center items-center mx-6 mt-2">
+        <div v-if="checkRoute(item)" class="w-auto h-full flex flex-col justify-center items-center mx-2 sm:mx-3 md:mx-6 mt-2">
           <font-awesome-icon :icon="['fas', getIcon(item)]" class="w-7 h-7" />
           <span>{{ item.name }}</span>
         </div>

@@ -3,11 +3,11 @@
     :class="{
       'transform translate-x-0 pointer-events-auto z-20': isOpen, 
       '-translate-x-full': !isOpen,
-      'fixed inset-y-0 left-0 w-[300px] transition-transform': true,
+      'fixed inset-y-0 left-0 w-[300px] transition-transform duration-200': true,
       'flex flex-col': true
     }" 
     id="sidebar-menu"
-    class="sidebar-content shadow-md mt-[64px] md:mt-0 md:h-[calc(100vh-64px)] h-[calc(100vh-128px)] bg-white px-4 pt-4 md:static md:translate-x-0"
+    class="sidebar-content w-full 2xs:w-[300px] shadow-md mt-[64px] md:mt-0 md:h-[calc(100vh-64px)] h-[calc(100vh-128px)] bg-white px-4 pt-4 md:static md:translate-x-0"
   >
     <div class="font-bold text-xl flex items-center justify-between">
       <span>

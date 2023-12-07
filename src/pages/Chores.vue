@@ -6,7 +6,7 @@
           Add Chores
         </span>
         <div class="chore-input w-full lg:w-[calc(50%-7.5px)] pb-4 mt-2">
-          <Input placeholder="Enter chores" @add="addItem" />
+          <Input maxlength="40" placeholder="Enter chores" @add="addItem" />
         </div>
       </div>
       <div class="chore-list">  
