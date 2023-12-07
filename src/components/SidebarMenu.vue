@@ -4,41 +4,50 @@
       'transform translate-x-0 pointer-events-auto z-20': isOpen, 
       '-translate-x-full': !isOpen,
       'fixed inset-y-0 left-0 w-[300px] transition-transform': true,
-      'flex flex-col justify-between': true
+      'flex flex-col': true
     }" 
     id="sidebar-menu"
-    class="sidebar-content shadow-md mt-[64px] md:mt-0 md:h-[calc(100vh-64px)] h-[calc(100vh-128px)] bg-white p-4 md:static md:translate-x-0"
+    class="sidebar-content shadow-md mt-[64px] md:mt-0 md:h-[calc(100vh-64px)] h-[calc(100vh-128px)] bg-white px-4 pt-4 md:static md:translate-x-0"
   >
-    <div class="font-bold text-xl">
+    <div class="font-bold text-xl flex items-center justify-between">
       <span>
         Groups
       </span>
     </div>
     <div class="my-4">
-      <Input placeholder="Add group" class="text-white" @add="addGroup" />
+      <Input placeholder="Add group" name="group" type="text" maxlength="20" class="text-white" @add="addGroup" />
     </div>
     <transition-group name="slide-down" tag="div" class="group-list flex flex-col mt-4 overflow-y-auto overflow-x-hidden">
-      <span 
+      <div 
         v-for="group in store.groupList" 
         :key="group.id"
-        class="transition-colors first:z-50 first:border-t-2 border-b-2 p-3 border-x-0 -mx-4 bg-white cursor-pointer"
-        :class="[group.id === store.groupId ? 'text-blue-500' : '']"
-        @click="setGroup(group.id)"
+        class="transition-colors first:z-50 first:border-t-2 border-b-2 p-3 border-x-0 bg-white cursor-pointer"
       >
-        <p class="mx-2">  
-          {{ group.name }}
-        </p>
-      </span>
+        <div 
+          :class="[group.id === store.groupId ? 'text-blue-500' : '']"
+          class="flex justify-between" 
+          @click="setGroup(group.id)"
+        >
+          <p class="mx-2">  
+            {{ group.name }}
+          </p>
+          <button @click.stop="editMenu.toggle(group.id)" class="text-black">
+            <font-awesome-icon icon="fa-solid fa-ellipsis" />
+          </button>
+        </div>
+        <Tooltip @update:toggle="editMenu.toggle" class="right-4 text-black" :isOpen="editMenu.groupId === group.id">
+          <button @click="console.log('sdfds')">Edit</button>
+          <button>Delete</button>
+        </Tooltip>
+      </div>
     </transition-group>
-    <div class="mt-auto py-2 px-1">      
-      <button @click="logout">Logout</button>
-    </div>
   </div>
 </template>
 <script setup>
 import Input from './Input.vue'
-import { onMounted, onUnmounted } from 'vue';
+import { onMounted, onUnmounted, reactive } from 'vue';
 import { useAuthStore } from '@/composables/auth';
+import Tooltip from './Tooltip.vue';
 
 const { store, isOpen } = defineProps({
   store: Object,
@@ -53,6 +62,22 @@ async function addGroup(group) {
     name: group.item
   })
 }
+
+const editMenu = reactive({
+  value: false,
+  groupId: null,
+  toggle(groupId) {
+    if(editMenu.groupId === groupId) {
+      editMenu.groupId = null
+    } else {
+      editMenu.groupId = groupId
+    }
+    editMenu.value = !editMenu.value
+  },
+  update(value) {
+    editMenu.value = value
+  }
+})
 
 function setGroup(id) {
   store.setGroup(id)

@@ -5,10 +5,10 @@
       @submit="addItem"
       v-model="itemRef.item" 
       class="p-2 rounded-l-md rounded-r-none border-l-2 border-t-2 border-b-2 outline-none bg-white text-black w-full"
-      type="text" 
-      name="task" 
+      :type="type" 
+      :name="name" 
       :placeholder="placeholder"
-      maxlength="50"
+      :maxlength="maxlength"
     >
     <button 
       :disabled="itemRef.item.length < 1"
@@ -25,10 +25,16 @@
   </form>
 </template>
 <script setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue';
 
 const { placeholder } = defineProps({
-  placeholder: String
+  placeholder: String,
+  maxlength: {
+    type: String,
+    default: '50'
+  },
+  name: String,
+  type: String
 })
 
 const emit = defineEmits()

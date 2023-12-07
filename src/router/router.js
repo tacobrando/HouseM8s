@@ -3,6 +3,8 @@ import { useAuthStore } from "@/composables/auth";
 import Home from "@/pages/Home.vue";
 import Chores from "@/pages/Chores.vue";
 import Groceries from "@/pages/Groceries.vue";
+import Settings from "@/pages/Settings.vue";
+import Profile from '@/pages/Profile.vue'
 import Login from "@/pages/Login.vue";
 import Error from '@/pages/Error.vue'
 
@@ -26,6 +28,18 @@ export const router = createRouter({
       path: '/groceries',
       name: 'Groceries',
       component: Groceries,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/settings',
+      name: 'Settings',
+      component: Settings,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/profile/:username',
+      name: 'Profile',
+      component: Profile,
       meta: { requiresAuth: true }
     },
     {

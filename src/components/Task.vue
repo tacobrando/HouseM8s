@@ -6,7 +6,8 @@
     :class="[ task.completed ? 'bg-gray-400':'bg-white']"
   >
     <div class="flex-none">
-      <button 
+      <Checkbox :completed="task.completed" @toggle="toggleComplete(task.id)" />
+      <!-- <button 
         @click="toggleComplete(task.id)" 
         class="h-7 w-7 shadow-inner transition-all border border-gray-200 rounded-full mr-3 select-none" 
         :class="[task.completed ? 'bg-pink-400' : 'bg-gray-200']"
@@ -16,7 +17,7 @@
             class="transition-all" 
             :class="[task.completed ? 'text-white':'text-gray-200']"
           />
-      </button>
+      </button> -->
     </div>
     <div class="flex-grow flex justify-between items-center">
       <div class="task-details flex flex-col">
@@ -51,6 +52,7 @@
 <script setup>
 import moment from 'moment';
 import { computed, onMounted, ref } from 'vue';
+import Checkbox from './ui/Checkbox.vue';
 
 const taskRef = ref(null);
 

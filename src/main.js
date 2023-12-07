@@ -1,6 +1,6 @@
 import "vue-toastification/dist/index.css";
 import './style.css'
-import '@/assets/animations.css'
+import '@/assets/css/animations.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { router } from './router/router';
@@ -17,7 +17,11 @@ import {
   faCartShopping,
   faBars,
   faChevronDown,
-  faChevronUp
+  faChevronUp,
+  faGear,
+  faCircle,
+  faXmark,
+  faEllipsis
   
 } from '@fortawesome/free-solid-svg-icons';
 import Toast from 'vue-toastification'
@@ -35,7 +39,11 @@ library.add(
   faPlus,
   faBars,
   faChevronDown,
-  faChevronUp
+  faChevronUp,
+  faGear,
+  faCircle,
+  faXmark,
+  faEllipsis
 )
 
 createApp(App)

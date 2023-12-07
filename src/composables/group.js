@@ -5,8 +5,8 @@ export const useGroupStore = defineStore('group', {
   state: () => ({
     groupId: null,
     groupList: [
-      { id: 1, name: "Housemates" },
-      { id: 2, name: "Roomies" },
+      { id: 1, name: "Housemates"},
+      { id: 2, name: "Roomies"},
     ],
     members: [],
   }),
@@ -26,6 +26,15 @@ export const useGroupStore = defineStore('group', {
     },
     setGroup(id) {
       this.groupId = id
+    },
+    updateGroupName(id, newName) {
+      const group = this.$state.groupList.find(group => group.id === id)
+      if(group) {
+        group.name = newName
+      }
+    },
+    deleteGroup(id) {
+      this.$state.groupList = this.$state.groupList.filter(group => group.id !== id);
     }
   }
 })

@@ -46,6 +46,10 @@ export const useAuthStore = defineStore('auth', {
     async isAuthenticated() {
       try {
         const response = await api.get('/auth/verify-token');
+        if(response.data.verified) {
+          const { setUserInfo } = useUserStore()
+          setUserInfo(response.data.user)
+        }
         this.$state.isLoggedIn = response.data.verified;
         return response.data.verified;
       } catch (error) {

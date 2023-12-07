@@ -1,9 +1,10 @@
 <template>
   <div 
     id="sidebar" 
+    class="w-screen"
   >
-    <div class="fixed flex flex-col top-0 z-[45] md:w-[300px] text-black md:mt-16"> <!--w-full shadow-md h-16-->
-      <div class="md:hidden flex flex-row w-screen items-center bg-white z-30 shadow-md">
+    <div class="fixed flex flex-col top-0 z-[45] w-full md:w-[300px] text-black md:mt-16">
+      <div class="md:hidden flex flex-row items-center bg-white z-30 shadow-md"> <!-- Use w-full instead of w-screen -->
         <div class="h-full flex items-center flex-col justify-center mt-5 ml-4 mr-2">
           <button 
             @click.stop="mobileMenu.toggle" 
@@ -11,14 +12,17 @@
             :class="{ 'text-blue-500': mobileMenu.value }"
           >
           <font-awesome-icon icon="fa-solid fa-bars" class="w-6 h-6" />
-        </button>
-        <div 
-          class=" w-12 h-1 rounded-full mt-4 transition-all" 
-          :class="[ mobileMenu.value ? 'bg-blue-500' : 'bg-white']" 
-        />
+          </button>
+          <div 
+            class=" w-12 h-1 rounded-full mt-4 transition-all" 
+            :class="[ mobileMenu.value ? 'bg-blue-500' : 'bg-white']" 
+          />
         </div>
-        <div class="sidebar-title font-semibold text-lg">
-          {{ route.name }}
+        <div class="flex items-center justify-between flex-grow">
+          <span class="sidebar-title font-semibold text-lg flex-shrink-0">
+            {{ route.name }}
+          </span>
+          <ProfileAvatar class="w-10 h-10 mr-4" />
         </div>
       </div>
       <SidebarMenu @close="mobileMenu.set" :isOpen="mobileMenu.value" :store="groupStore" />
@@ -31,6 +35,7 @@ import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { useGroupStore } from '@/composables/group';
 import SidebarMenu from './SidebarMenu.vue';
+import ProfileAvatar from './profile/ProfileAvatar.vue';
 
 const route = useRoute()
 const groupStore = useGroupStore()

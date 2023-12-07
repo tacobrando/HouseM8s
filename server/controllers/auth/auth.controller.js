@@ -46,9 +46,18 @@ export async function verifyTokenController(req, res) {
   const token = req.cookies['Housem8s_token']
   if(!token) return res.status(401).send({ verified: false })
 
-  jwt.verify(token, process.env.JWT_SECRET_KEY, (err) => {
+  jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, decoded) => {
     if(err) return res.status(403).send({ verified: false })
-    return res.status(200).send({ verified: true })
+    try {
+      const user = await UserModel.findById(decoded.userId)
+      if(!user) return res.status(401).send({ verified: false })
+      const userObject = user.toObject()
+      delete userObject.password
+
+      return res.status(200).send({ verified: true, user: userObject })
+    } catch(error) {
+
+    }
   })
 
 }
