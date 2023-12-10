@@ -26,6 +26,7 @@
         <div 
           :class="[group.id === store.groupId ? 'text-blue-500' : '']"
           class="flex justify-between" 
+          
           @click="setGroup(group.id)"
         >
           <p class="mx-2">  
@@ -46,20 +47,20 @@
 <script setup>
 import Input from './Input.vue'
 import { onMounted, onUnmounted, reactive } from 'vue';
-import { useAuthStore } from '@/composables/auth';
 import Tooltip from './Tooltip.vue';
-
+import { useUserStore } from "@/composables/user"
 const { store, isOpen } = defineProps({
   store: Object,
   isOpen: Boolean
 })
 const emit = defineEmits(['close'])
-const authStore = useAuthStore()
+const userStore = useUserStore()
 
 async function addGroup(group) {
   await store.addGroup({
-    id: group.id,
-    name: group.item
+    owner: userStore.userInfo.id,
+    name: group.item,
+    members: [userStore.userInfo.id]
   })
 }
 
@@ -91,11 +92,8 @@ function closeMenu(event){
   }
 }
 
-async function logout() {
-  await authStore.logoutUser()
-}
-
-onMounted(() => {
+onMounted(async () => {
+  await store.getGroups()
   document.addEventListener('click', closeMenu);
 });
 onUnmounted(() => {

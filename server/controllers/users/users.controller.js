@@ -44,11 +44,6 @@ export async function registerUserController(req, res) {
     const userObject = user.toObject()
     delete userObject.password
 
-    // const userObject = {
-    //   _id: Math.random(),
-    //   ...userData
-    // }
-
     const token = jwt.sign({ userId: userObject._id }, process.env.JWT_SECRET_KEY, { expiresIn: '7d' });
     res.cookie('Housem8s_token', token, { 
       httpOnly: true,

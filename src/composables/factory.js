@@ -22,28 +22,33 @@ export function createStoreFactory(options) {
       init() {
         if (this.initialized) return;
         
-        this.completed = this.list.filter(item => item.completed);
-        this.list = this.list.filter(item => !item.completed);
         this.sortList();
         this.initialized = true;
       },
       sortList() {
-        this.list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        this.completed = this.list.filter(item => item.completed)
+        this.list = this.list.filter(item => !item.completed);
+      },
+      async getGroupItems(groupId) {
+        try {
+          this.list = []
+          await api.get(`/groups/${groupId}/${this.api}/`)
+          .then(res => this.list = res.data)
+          this.sortList()
+        } catch(error) {
+          toast.showError(error.message)
+        }
       },
       async addItem(item, groupId) {
         try{
-          await api.post(`/groups/${groupId}/${this.api}/add`, {
+          const { data } = await api.post(`/groups/${groupId}/${this.api}/add`, {
             ...item
           })
-          .then(res => console.log(res.data))
-          this.list.unshift({ ...item, groupId });
+          this.list.unshift(data)
           this.showList.tasks = true
-          this.sortList();
         } catch(error) {
-          console.error(error)
-          // toast().showError(error)
+          toast.showError(error.message)
         }
-        // console.log(axios.config)
       },
       deleteItem(itemId) {
         const completedIndex = this.completed.findIndex(item => item.id === itemId);
@@ -51,10 +56,10 @@ export function createStoreFactory(options) {
           this.completed.splice(completedIndex, 1);
         } else {
           this.list = this.list.filter(item => item.id !== itemId);
-          this.sortList();
         }
       },
-      toggleComplete(itemId) {
+      async toggleComplete(itemId, groupId) {
+
         let itemIndex = this.completed.findIndex(item => item.id === itemId);
         let isCompleted = itemIndex !== -1;
         let item;
@@ -74,8 +79,8 @@ export function createStoreFactory(options) {
             this.completed.unshift(item);
           }
           this.showList.completed = true
-          this.sortList();
         }
+        await api.put(`/groups/${groupId}/${this.api}/${itemId}`)
       },
       ...options.actions
     },

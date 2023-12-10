@@ -1,5 +1,6 @@
 <template>
   <div 
+    @click="console.log(task)"
     ref="taskRef"
     class="task-container flex justify-between items-center text-black mt-2 p-2 rounded-md relative" 
     v-if="task.groupId === groupId"
@@ -14,7 +15,7 @@
           class="text-sm font-medium"
           :class="[ task.completed ? 'text-gray-500':'text-gray-400']"
         >
-          {{ task.user }}
+          {{ task.user.name }}
         </span>
         <span 
           class="flex-1 break-all"
@@ -67,5 +68,4 @@ onMounted(() => {
     taskRef.value.classList.add('animate-slide-down');
   }
 });
-
 </script>

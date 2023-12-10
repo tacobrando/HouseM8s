@@ -25,8 +25,8 @@
   </form>
 </template>
 <script setup>
-import { reactive, ref } from 'vue';
-
+import { reactive } from 'vue';
+import { useUserStore } from '@/composables/user';
 const { placeholder } = defineProps({
   placeholder: String,
   maxlength: {
@@ -38,23 +38,24 @@ const { placeholder } = defineProps({
 })
 
 const emit = defineEmits()
+const userStore = useUserStore()
 
 const itemRef = reactive({
-  id: Math.random(),
+  user: {
+    userId: userStore.userInfo.id,
+    name: userStore.userInfo.username
+  },
   item: '',
-  createdAt: new Date()
 })
 
-function resetChoreRef() {
-  itemRef.id = Math.random()
+function resetRef() {
   itemRef.item = ''
-  itemRef.createdAt = new Date()
 }
 
 function addItem() {
-  if(itemRef.item.length > 1) {
+  if(itemRef.item.length >= 1) {
     emit('add', { ...itemRef })
-    resetChoreRef()
+    resetRef()
   }
 }
 </script>

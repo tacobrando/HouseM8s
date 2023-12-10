@@ -32,7 +32,7 @@ import ProfileName from './ProfileName.vue';
 import ProfileAvatar from './ProfileAvatar.vue';
 import { useUserStore } from '@/composables/user';
 import { useAuthStore } from '@/composables/auth';
-import { onMounted, onUnmounted, reactive } from 'vue';
+import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import Modal from '../modal/Modal.vue';
 

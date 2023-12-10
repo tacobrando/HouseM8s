@@ -3,6 +3,7 @@ import { useUserStore } from "./user";
 import { router } from '@/router/router'
 
 import api from "@/utils/Axios";
+import { toast } from "./toast";
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -28,7 +29,7 @@ export const useAuthStore = defineStore('auth', {
         this.$state.isLoggedIn = true
         router.push('/')
       } catch(error) {
-        console.error(error);
+        toast.showError(error.message)
         this.$state.isLoggedIn = false;
       }
     },

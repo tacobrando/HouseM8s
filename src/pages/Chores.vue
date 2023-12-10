@@ -19,7 +19,7 @@
   </div>
 </template>
 <script setup>
-import { onBeforeMount } from 'vue';
+import { onBeforeMount, onMounted } from 'vue';
 import { useChoreStore } from '@/composables/chore'
 import { useGroupStore } from '@/composables/group'
 

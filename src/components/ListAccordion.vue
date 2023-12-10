@@ -22,13 +22,14 @@
     </transition-group>
   </div>
 </template>
+
 <script setup>
 import { reactive } from 'vue'
 const { show, name, length } = defineProps({
   show: Object,
   name: String,
   length: Number,
-  groupId: Number,
+  groupId: String,
 })
 
 const showId = name.toLowerCase()

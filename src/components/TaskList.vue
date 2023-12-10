@@ -11,7 +11,7 @@
         <Task 
           @update="toggleItem"
           @delete="deleteItem" 
-          v-for="item in store.list" 
+          v-for="item in sortedList" 
           :key="item.id" :task="item"
           :groupId="groupId"
         />
@@ -38,15 +38,18 @@
 <script setup>
 import Task from '@/components/Task.vue';
 import ListAccordion from '@/components/ListAccordion.vue'
+import { computed } from 'vue';
 
 const { store, title, groupId } = defineProps({
   store: Object,
   title: String,
-  groupId: Number
+  groupId: String
 });
+
+const sortedList = computed(() => store.list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)))
 
 const emit = defineEmits(['add', 'update', 'delete']);
 
 const deleteItem = (id) => store.deleteItem(id);
-const toggleItem = (id) => store.toggleComplete(id);
+const toggleItem = (id) => store.toggleComplete(id, groupId);
 </script>
