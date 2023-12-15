@@ -4,7 +4,8 @@
       <img
         id="avatar-img"
         alt="avatar"
-        class="rounded-full hover:brightness-90 cursor-pointer border h-full w-full"
+        class="rounded-full transition-all border h-full w-full"
+        :class="[ mode === 'tooltip' ? 'hover:brightness-90 cursor-pointer' : '']"
         src="@/assets/img/avatar.png" 
         v-bind="$attrs" 
       />
@@ -63,16 +64,18 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  // mode: {
-  //   type: String,
-  // }
+  mode: {
+    type: String,
+  }
 })
 const avatarUrl = ref([])
 
 const profileMenu = reactive({
   value: false,
   toggle() {
-    profileMenu.value = !profileMenu.value
+    if(props.mode === 'tooltip') {
+      profileMenu.value = !profileMenu.value
+    }
   },
   update(value) {
     profileMenu.value = value

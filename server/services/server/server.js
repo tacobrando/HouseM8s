@@ -20,7 +20,6 @@ export const Server = {
       origin: process.env.ORIGIN_HOST,
       credentials: true
     }))
-    
     this.app.use('/api', router)
 
     this.server = http.createServer(this.app)

@@ -9,11 +9,7 @@
       w-auto
       h-fit 
       bg-white 
-      border 
-      p-3 
-      flex 
-      flex-col 
-      justify-center 
+      border
       rounded-lg
     ">
     <slot />

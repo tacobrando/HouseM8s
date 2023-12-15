@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
 import api from "@/utils/Axios";
 import { toast } from "./toast";
+import { router } from '@/router/router'
+
 export const useUserStore = defineStore('user', {
   state: () => ({
     userInfo: {
@@ -12,13 +14,23 @@ export const useUserStore = defineStore('user', {
       updatedAt: ''
     },
     registerInfo: {
-      username: 'Test', 
-      email: 'test@tester.com',
-      password: 'monkey',
-      confirmPassword: 'monkey'
+      username: '', 
+      email: '',
+      password: '',
+      confirmPassword: ''
     }
   }),
   actions: {
+    async getAllUsers() {
+      try {
+        const { data } = await api.get('/users/all')
+        if(data) {
+          return data
+        }
+      } catch(error) {
+        toast.showError(error.message)
+      }
+    },
     setUserInfo(user) {
       for(const field in user) {
         if(field === '_id') this.$state.userInfo.id = user._id
@@ -46,6 +58,8 @@ export const useUserStore = defineStore('user', {
             toast.showSuccess(res.data.message)
           }
         })
+        this.resetInfo('register')
+        router.push('/')
       } catch(error) {   
         toast.showError(error.response.data.message)
       } 

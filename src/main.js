@@ -21,7 +21,8 @@ import {
   faGear,
   faCircle,
   faXmark,
-  faEllipsis
+  faEllipsis,
+  faRightFromBracket
   
 } from '@fortawesome/free-solid-svg-icons';
 import Toast from 'vue-toastification'
@@ -43,7 +44,8 @@ library.add(
   faGear,
   faCircle,
   faXmark,
-  faEllipsis
+  faEllipsis,
+  faRightFromBracket
 )
 
 createApp(App)

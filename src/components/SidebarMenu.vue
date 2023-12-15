@@ -15,6 +15,7 @@
       </span>
     </div>
     <div class="my-4">
+      <button @click="getUsersTest">Get Users</button>
       <Input placeholder="Add group" name="group" type="text" maxlength="20" class="text-white" @add="addGroup" />
     </div>
     <transition-group name="slide-down" tag="div" class="group-list flex flex-col mt-4 overflow-y-auto overflow-x-hidden">
@@ -27,7 +28,7 @@
           :class="[group.id === store.groupId ? 'text-blue-500' : '']"
           class="flex justify-between" 
           
-          @click="setGroup(group.id)"
+          @click="setGroup(group.id, group)"
         >
           <p class="mx-2">  
             {{ group.name }}
@@ -36,12 +37,24 @@
             <font-awesome-icon icon="fa-solid fa-ellipsis" />
           </button>
         </div>
-        <Tooltip @update:toggle="editMenu.toggle" class="right-4 text-black" :isOpen="editMenu.groupId === group.id">
-          <button @click="console.log('sdfds')">Edit</button>
-          <button>Delete</button>
+        <Tooltip @update:toggle="editMenu.toggle" class="right-4 text-black p-3 flex flex-col items-start" :isOpen="editMenu.groupId === group.id">
+          <button class="hover:text-blue-500" @click="memberModal.toggle(group.id)">Add</button>
+          <button class="hover:text-blue-500" @click="editModal.toggle(group)">Edit</button>
+          <button v-if="group.owner === userStore.userInfo.id" class="hover:text-blue-500">Delete</button>
         </Tooltip>
       </div>
     </transition-group>
+    <MemberSearchModal
+      :key="memberModal.groupId"
+      :groupId="memberModal.groupId"
+      :isOpen="memberModal.value"
+      @update="memberModal.update"
+    />
+    <EditGroupModal
+      :group="editModal.group"
+      :isOpen="editModal.value"
+      @update="editModal.update"
+    />
   </div>
 </template>
 <script setup>
@@ -49,6 +62,10 @@ import Input from './Input.vue'
 import { onMounted, onUnmounted, reactive } from 'vue';
 import Tooltip from './Tooltip.vue';
 import { useUserStore } from "@/composables/user"
+import api from '@/utils/Axios'
+import MemberSearchModal from './modal/search/members/MemberSearchModal.vue';
+import EditGroupModal from './modal/edit/EditGroupModal.vue';
+
 const { store, isOpen } = defineProps({
   store: Object,
   isOpen: Boolean
@@ -60,9 +77,47 @@ async function addGroup(group) {
   await store.addGroup({
     owner: userStore.userInfo.id,
     name: group.item,
-    members: [userStore.userInfo.id]
+    members: [{
+      userId: userStore.userInfo.id,
+      username: userStore.userInfo.username,
+      joined: new Date()
+    }]
   })
 }
+
+const memberModal = reactive({
+  value: false,
+  groupId: null,
+  toggle(groupId) {
+    editMenu.toggle()
+    memberModal.value = !memberModal.value
+    if(memberModal.value) {
+      memberModal.groupId = groupId
+    } else {
+      memberModal.groupId = null
+    }
+  },
+  update(value) {
+    memberModal.value = value
+  },
+})
+
+const editModal = reactive({
+  value: false,
+  group: null,
+  toggle(group) {
+    editMenu.toggle()
+    editModal.value = !editModal.value
+    if(editModal.value) {
+      editModal.group = group
+    } else {
+      editModal.group = null
+    }
+  },
+  update(value) {
+    editModal.value = value
+  }
+})
 
 const editMenu = reactive({
   value: false,
@@ -80,7 +135,17 @@ const editMenu = reactive({
   }
 })
 
-function setGroup(id) {
+async function getUsersTest() {
+  try{
+    const { data } = await api.get('/users/all')
+    console.log(data)
+  } catch(error) {
+    console.error(error)
+  }
+}
+
+function setGroup(id, group) {
+  console.log(group)
   store.setGroup(id)
   emit('close', false)
 }

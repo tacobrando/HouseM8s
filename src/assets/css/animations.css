@@ -107,3 +107,6 @@
 .pop-out {
   animation: popOut 0.3s forwards;
 }
+.spinner {
+  border-top-color: transparent;
+}

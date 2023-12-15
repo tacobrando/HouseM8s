@@ -7,29 +7,28 @@
       <button @click="login">Login</button>
       <button @click="logout">Logout</button>
     </span>
-    <button @click="registerUser">Register Test</button>
-    <!-- <button v-if="userStore.id" @click="getCookie">Get Cookie</button> -->
+    <button @click="registerModal.toggle">Register</button>
+    <RegisterModal :isOpen="registerModal.value" :update="registerModal.update"  />
   </div>
 </template>
 <script setup>
+import RegisterModal from '@/components/modal/register/RegisterModal.vue';
 import { useAuthStore } from '@/composables/auth'
-import { useUserStore } from '@/composables/user';
 import { toast } from '@/composables/toast'
+import { reactive } from 'vue';
+import { isFilled } from '@/utils/Helpers';
 
 const authStore = useAuthStore()
-const userStore = useUserStore()
 
-function isFilled(str) { return !!str }
-
-async function registerUser() {
-  for(const field in userStore.registerInfo) {
-    if(!isFilled(userStore.registerInfo[field])) {
-      console.log(`${field} not filled!`)
-      return
-    }
+const registerModal = reactive({
+  value: false,
+  toggle() {
+    registerModal.value = !registerModal.value
+  },
+  update(value) {
+    registerModal.value = value
   }
-  await userStore.registerUser()
-}
+})
 
 async function login() {
   if(!isFilled(authStore.username) && !isFilled(authStore.password)) {

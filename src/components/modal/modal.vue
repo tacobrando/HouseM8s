@@ -1,34 +1,36 @@
 <template>
-  <transition :name="animationClass">
-    <div v-if="visible" class="fixed inset-0 z-50 flex items-center justify-center p-4 text-black" @click.self="handleOutsideClick">
-      <div class="modal-dialog relative bg-white shadow-lg rounded-md overflow-hidden"
-           :class="fullscreen ? 'w-full h-full' : 'w-[90%]  sm:w-5/6 md:w-2/3 lg:w-1/3'"
-           role="dialog"
-           aria-modal="true">
-        <slot />
-        <button 
-          v-if="!hideBtn"
-          @click="initiateCloseModal" 
-          class="
-            absolute 
-            flex 
-            items-center 
-            justify-center 
-            top-2 right-2
-            hover:bg-gray-300 
-            rounded-full 
-            text-2xl
-            transition-colors
-          "
-        >
-          <font-awesome-icon icon="fa-solid fa-xmark" class="h-6 w-6 m-1" />
-        </button>
+  <teleport to="body">
+    <transition :name="animationClass">
+      <div v-if="visible" class="fixed inset-0 z-50 flex items-center justify-center p-4 text-black" @click.self="handleOutsideClick">
+        <div class="modal-dialog relative bg-white shadow-lg rounded-md overflow-hidden"
+            :class="fullscreen ? 'w-full h-full' : 'w-[90%]  sm:w-5/6 md:w-2/3 lg:w-1/3'"
+            role="dialog"
+            aria-modal="true">
+          <slot />
+          <button
+            v-if="!hideBtn"
+            @click="initiateCloseModal" 
+            class="
+              absolute 
+              flex 
+              items-center 
+              justify-center 
+              top-2 right-2
+              hover:bg-gray-300 
+              rounded-full 
+              text-2xl
+              transition-colors
+            "
+          >
+            <font-awesome-icon icon="fa-solid fa-xmark" class="h-6 w-6 m-1" />
+          </button>
+        </div>
       </div>
-    </div>
-  </transition>
-  <transition name="fade">
-    <div v-if="visible" class="fixed inset-0 bg-white bg-opacity-50 z-40" />
-  </transition>
+    </transition>
+    <transition name="fade">
+      <div v-if="visible" class="fixed inset-0 bg-white bg-opacity-50 z-40" />
+    </transition>
+  </teleport>
 </template>
 
 <script setup>

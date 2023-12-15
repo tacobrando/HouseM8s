@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import api from '@/utils/Axios'
+import { toast } from "./toast";
 import { useChoreStore } from "./chore";
 import { useGroceryStore } from "./grocery";
 
@@ -38,6 +39,36 @@ export const useGroupStore = defineStore('group', {
         console.error(error)
       } 
     },
+    async addUser(groupId, userId) {
+      const group = this.groupList.find(group => group.id === groupId)
+      try {
+        await api.put(`/groups/${groupId}/add-user`, {
+          memberId: userId
+        }).then((res) => {
+          group.members.push(res.data)
+        })
+        toast.showSuccess(`User added to ${group.name}!`)
+      } catch(error) {
+        console.log(error)
+        toast.showError(error.message)
+      }
+    },
+    async removeUser(groupId, userId) {
+      const group = this.groupList.find(group => group.id === groupId);
+      try {
+        await api.delete(`/groups/${groupId}/remove-user/${userId}`)
+        .then((res) => {
+          const group = this.groupList.find(group => group.id === groupId);
+          if (group) {
+            group.members = group.members.filter(member => member.userId !== userId);
+            console.log(group.members)
+          }
+        });
+        toast.showSuccess(`User removed from ${group.name}`)
+      } catch (error) {
+        toast.showError(error.message);
+      }
+    },    
     setGroup(id) {
       useGroceryStore().getGroupItems(id)
       useChoreStore().getGroupItems(id)

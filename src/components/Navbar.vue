@@ -19,7 +19,7 @@
       </router-link>
     </div>
     <div class="mr-4 flex-grow-0 hidden md:block w-10 h-10">
-      <ProfileAvatar />
+      <ProfileAvatar mode="tooltip" />
     </div>
   </div>
 </template>

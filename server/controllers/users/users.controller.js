@@ -60,6 +60,23 @@ export async function registerUserController(req, res) {
   }
 }
 
+export async function getUsersController(req, res) {
+  try {
+    const users = await UserModel.find({})
+    return res.status(200).send(users.map(user => {
+      const userObj = user.toObject();
+      userObj.id = userObj._id
+      delete userObj._id
+      delete userObj.password;
+      return userObj;
+    }))
+
+  } catch(error) {
+    console.log(error)
+    return res.status(400).send({ message: error.message })
+  } 
+}
+
 export async function getUserController(req, res) {
   const { userId } = req.body
 
@@ -67,7 +84,6 @@ export async function getUserController(req, res) {
 
   if(!user) {
     return res.status(401).send({ message: "User not found." });
-
   }
 }
 
