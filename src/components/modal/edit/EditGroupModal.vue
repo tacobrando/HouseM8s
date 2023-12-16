@@ -12,9 +12,9 @@
               <span class="flex items-center">
                 <ProfileAvatar class="w-10 h-10 mr-2" />
                 <p>{{ member.username }}</p>
-                <p v-if="member.userId === userInfo.id">Owner</p>
+                <p v-if="group.owner === member.userId">Owner</p>
               </span>
-              <span class="flex items-center" v-if="member.userId !== userInfo.id">
+              <span class="flex items-center" v-if="member.userId !== group.owner && member.userId !== userInfo.id">
                 <span 
                   v-if="isLoading[member.userId]"  
                   class="inline-block w-6 h-6 border-4 border-blue-500 rounded-full border-t-transparent animate-spin" 

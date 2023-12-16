@@ -107,11 +107,12 @@ async function handleSearch() {
     searchResults.value = [];
     return;
   }
-
+  const currentGroup = groupList.find(group => group.id === groupId);
   const searchSegments = searchQuery.value.toLowerCase().split(' ').filter(segment => segment.length);
 
   let filteredResults = users.filter(user => {
     return user.id !== userInfo.id && 
+    user.id !== currentGroup.owner &&
     // !groupMembers.value.includes(user.id) &&
     searchSegments.some(segment => 
       user.username.toLowerCase().startsWith(segment)
