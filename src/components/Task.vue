@@ -7,7 +7,7 @@
     :class="[ task.completed ? 'bg-gray-400':'bg-white']"
   >
     <div class="flex-none">
-      <Checkbox :completed="task.completed" @toggle="toggleComplete(task.id)" />
+      <Checkbox :disabled="task.completed !== userInfo.id && task.completed !== null" :completed="task.completed" @toggle="toggleComplete(task.id)" />
     </div>
     <div class="flex-grow flex justify-between items-center">
       <div class="task-details flex flex-col">
@@ -23,13 +23,28 @@
         >
           {{ task.item }}
         </span>
+        <span 
+          v-if="task.price"
+          :class="[ task.completed ? 'text-gray-500':'text-gray-400']"
+          class="task-price text-sm font-medium"        
+        >
+          Price: ${{ task.price }}
+        </span>
+        <span 
+          :class="[ task.completed ? 'text-gray-500':'text-gray-400']"
+          class="task-price text-sm font-medium"        
+        >
+          Completed by: {{ completedBy }}
+        </span>
       </div>
-      <span 
-        class="task-date text-sm font-medium text-end sm:text-start"
+      <div 
         :class="[ task.completed ? 'text-gray-500':'text-gray-400']"
+        class="task-details text-sm font-medium text-end sm:text-start flex flex-col"
       >
-        {{ formattedDate }}
-      </span>
+        <span class="task-date">
+          {{ formattedDate }}
+        </span>
+      </div>
     </div>
     <div class="text-white flex-none ml-2">
       <button class="bg-red-400 rounded-full text-white h-7 w-7 select-none" @click="deleteItem(task.id)">
@@ -43,14 +58,31 @@
 import moment from 'moment';
 import { computed, onMounted, ref } from 'vue';
 import Checkbox from './ui/Checkbox.vue';
+import { useUserStore } from '@/composables/user';
+import { useGroupStore } from '@/composables/group';
 
 const taskRef = ref(null);
-
+const { userInfo } = useUserStore()
+const { members } = useGroupStore()
 
 const emit = defineEmits(['delete', 'update']);
 const { task, groupId } = defineProps(['task', 'groupId']);
 
 const formattedDate = computed(() => moment(task.createdAt).fromNow())
+const completedBy = computed(() => {
+  if (task.completed) {
+    if (task.completed === userInfo.id) {
+      return userInfo.username;
+    } else {
+      const user = members.find(user => user.userId === task.completed);
+      if (user) {
+        return user.username;
+      }
+    }
+  }
+  return "TBD";
+});
+
 
 function deleteItem (id) {
   if (taskRef.value) {

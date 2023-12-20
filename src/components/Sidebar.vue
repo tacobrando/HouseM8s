@@ -22,7 +22,7 @@
           <span class="sidebar-title font-semibold text-lg flex-shrink-0">
             {{ route.name }}
           </span>
-          <ProfileAvatar class="w-10 h-10 mr-4" />
+          <ProfileAvatar mode="tooltip" class="w-10 h-10 mr-4" />
         </div>
       </div>
         <SidebarMenu @close="mobileMenu.set" :isOpen="mobileMenu.value" :store="groupStore" />

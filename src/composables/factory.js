@@ -1,6 +1,7 @@
 // storeFactory.js
 import { toast } from './toast.js';
 import { defineStore } from 'pinia';
+import { useUserStore } from './user'
 import api from '../utils/Axios.js';
 
 
@@ -27,7 +28,7 @@ export function createStoreFactory(options) {
       },
       sortList() {
         this.completed = this.list.filter(item => item.completed)
-        this.list = this.list.filter(item => !item.completed);
+        this.list = this.list.filter(item => item.completed === null);
       },
       async getGroupItems(groupId) {
         try {
@@ -50,7 +51,15 @@ export function createStoreFactory(options) {
           toast.showError(error.message)
         }
       },
-      deleteItem(itemId) {
+      async deleteItem(itemId, groupId) {
+        try {
+          this.removeFromLocalState(itemId);
+          await api.delete(`/groups/${groupId}/${this.api}/${itemId}/delete`)
+        } catch(error) {
+          toast.showError(error.message)
+        }
+      },
+      removeFromLocalState(itemId) {
         const completedIndex = this.completed.findIndex(item => item.id === itemId);
         if (completedIndex !== -1) {
           this.completed.splice(completedIndex, 1);
@@ -59,7 +68,7 @@ export function createStoreFactory(options) {
         }
       },
       async toggleComplete(itemId, groupId) {
-
+        const { userInfo } = useUserStore()
         let itemIndex = this.completed.findIndex(item => item.id === itemId);
         let isCompleted = itemIndex !== -1;
         let item;
@@ -67,20 +76,20 @@ export function createStoreFactory(options) {
         if (isCompleted) {
           item = this.completed[itemIndex];
           this.completed.splice(itemIndex, 1);
-          item.completed = false;
+          item.completed = null;
           this.list.unshift(item);
           this.showList.tasks = true
         } else {
           itemIndex = this.list.findIndex(item => item.id === itemId);
           if (itemIndex !== -1) {
             item = this.list[itemIndex];
-            this.deleteItem(itemId);
-            item.completed = true;
+            this.removeFromLocalState(itemId);
+            item.completed = userInfo.id;
             this.completed.unshift(item);
           }
           this.showList.completed = true
         }
-        await api.put(`/groups/${groupId}/${this.api}/${itemId}`)
+        await api.put(`/groups/${groupId}/${this.api}/${itemId}/update`)
       },
       ...options.actions
     },

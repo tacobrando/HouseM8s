@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { 
   addGroceryController, 
+  deleteGroceryController, 
   getGroceryController, 
   getGroupGroceriesController,
   updateGroceryController
@@ -9,9 +10,9 @@ import {
 const router = Router({ mergeParams: true })
 
 router.post('/add', addGroceryController)
-router.get('/:groceryId', getGroceryController)
-router.put('/:groceryId', updateGroceryController)
-
+// router.get('/:groceryId', getGroceryController)
+router.put('/:groceryId/update', updateGroceryController)
+router.delete('/:groceryId/delete', deleteGroceryController)
 router.get('/', getGroupGroceriesController)
 
 export default router

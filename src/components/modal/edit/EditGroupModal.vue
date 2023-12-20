@@ -9,12 +9,14 @@
         <ul class="max-h-[400px] overflow-auto p-2 edit-group-members">
           <li v-for="member in group.members" :key="member.userId" class="member-search-results-item p-1 rounded-md hover:bg-gray-100">
             <div v-if="member.userId" class="flex items-center justify-between my-2 mx-2">
-              <span class="flex items-center">
-                <ProfileAvatar class="w-10 h-10 mr-2" />
-                <p>{{ member.username }}</p>
-                <p v-if="group.owner === member.userId">Owner</p>
+              <span class="flex items-center w-full">
+                <ProfileAvatar class="w-10 h-10" />
+                <div class="flex justify-between w-full items-center">
+                  <p class="mx-2">{{ member.username }}</p>
+                  <p class="text-gray-400 text-sm" v-if="group.owner === member.userId">Owner</p>
+                </div>
               </span>
-              <span class="flex items-center" v-if="member.userId !== group.owner && member.userId !== userInfo.id">
+              <span class="flex items-center" v-if="member.userId !== group.owner">
                 <span 
                   v-if="isLoading[member.userId]"  
                   class="inline-block w-6 h-6 border-4 border-blue-500 rounded-full border-t-transparent animate-spin" 

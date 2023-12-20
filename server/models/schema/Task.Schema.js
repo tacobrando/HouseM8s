@@ -19,5 +19,12 @@ export const TaskSchema = new Schema({
     type: String,
     required: true
   },
-  completed: Boolean
+  price: {
+    type: String,
+    required: false
+  },
+  completed: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }
 }, { timestamps: true })

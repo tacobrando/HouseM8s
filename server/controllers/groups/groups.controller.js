@@ -1,6 +1,8 @@
 import { Server } from "../../services/server/server.js";
 import GroupModel from '../../models/Group.Model.js'
 import UserModel from "../../models/User.Model.js";
+import ChoreModel from "../../models/Chore.Model.js";
+import GroceryModel from "../../models/Grocery.Model.js";
 
 export async function addGroupController(req, res) {
   const groupInfo = req.body;
@@ -41,7 +43,7 @@ export async function getAllGroupsController(req, res) {
   }
 }
 
-export async function addUserToGroup(req, res) {
+export async function addUserToGroupController(req, res) {
   try {
     const { memberId } = req.body;
     const { groupId } = req.params;
@@ -74,7 +76,7 @@ export async function addUserToGroup(req, res) {
   }
 }
 
-export async function removeUserFromGroup(req, res) {
+export async function removeUserFromGroupController(req, res) {
   try {
     const { groupId, userId } = req.params;
 
@@ -100,8 +102,31 @@ export async function removeUserFromGroup(req, res) {
     // Remove group ID from the user's groups array
     await UserModel.findByIdAndUpdate(userId, { $pull: { groups: group._id } });
 
-    return res.status(200).json({ message: `User removed from ${group.name}` });
+    return res.status(200).json({ message: `${user.username} removed from ${group.name}` });
   } catch (error) {
     return res.status(error.response?.status || 500).send(error.message);
+  }
+}
+
+export async function deleteGroupController(req, res) {
+  try {
+    const { groupId } = req.params;
+    const group = await GroupModel.findById(groupId);
+
+    if (group) {
+      // Delete associated chores and groceries
+      await ChoreModel.deleteMany({ groupId: groupId });
+      await GroceryModel.deleteMany({ groupId: groupId });
+
+      // Then delete the group
+      await GroupModel.findByIdAndDelete(groupId);
+
+      return res.status(200).json({ message: 'Group deleted successfully.' });
+    } else {
+      return res.status(404).json({ message: "Group not found!" });
+    }
+  } catch (error) {
+    console.error(error);  // Log the entire error object
+    return res.status(error.response?.status || 500).send({ message: error.message });
   }
 }

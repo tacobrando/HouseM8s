@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { 
   addChoreController, 
-  getChoreController, 
+  deleteChoreController, 
   getGroupChoresController,
   updateChoreController
 } from "../../../controllers/chores/chores.controller.js";
@@ -9,8 +9,9 @@ import {
 const router = Router({ mergeParams: true })
 
 router.post('/add', addChoreController)
-router.get('/:choreId', getChoreController)
-router.put('/:choreId', updateChoreController)
+// router.get('/:choreId', getChoreController)
+router.put('/:choreId/update', updateChoreController)
+router.delete('/:choreId/delete', deleteChoreController)
 router.get('/', getGroupChoresController)
 
 export default router

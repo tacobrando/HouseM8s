@@ -46,8 +46,8 @@ export const useGroupStore = defineStore('group', {
           memberId: userId
         }).then((res) => {
           group.members.push(res.data)
+          toast.showSuccess(`${res.data.username} added to ${group.name}!`)
         })
-        toast.showSuccess(`User added to ${group.name}!`)
       } catch(error) {
         console.log(error)
         toast.showError(error.message)
@@ -58,21 +58,26 @@ export const useGroupStore = defineStore('group', {
       try {
         await api.delete(`/groups/${groupId}/remove-user/${userId}`)
         .then((res) => {
-          const group = this.groupList.find(group => group.id === groupId);
           if (group) {
             group.members = group.members.filter(member => member.userId !== userId);
-            console.log(group.members)
           }
+          toast.showSuccess(res.data.message)
         });
-        toast.showSuccess(`User removed from ${group.name}`)
       } catch (error) {
         toast.showError(error.message);
       }
     },    
     setGroup(id) {
-      useGroceryStore().getGroupItems(id)
-      useChoreStore().getGroupItems(id)
-      this.groupId = id
+      this.members = []
+      if(this.groupId !== id) {
+        useGroceryStore().getGroupItems(id)
+        useChoreStore().getGroupItems(id)
+        this.groupId = id
+
+        const group = this.$state.groupList.find(group => group.id === id)
+        this.members = group.members
+        return;
+      }
     },
     updateGroupName(id, newName) {
       const group = this.$state.groupList.find(group => group.id === id)
@@ -80,8 +85,17 @@ export const useGroupStore = defineStore('group', {
         group.name = newName
       }
     },
-    deleteGroup(id) {
-      this.$state.groupList = this.$state.groupList.filter(group => group.id !== id);
+    async deleteGroup(groupId) {
+      try {
+        this.$state.groupList = this.$state.groupList.filter(group => group.id !== groupId);
+        await api.delete(`/groups/${groupId}/delete`)
+        .then((res) => {
+          toast.showSuccess(res.data.message)
+        })
+      } catch(error) {
+        toast.showError(error.message)
+      }
+      this.$state.groupId = null
     }
   }
 })

@@ -1,6 +1,6 @@
 import GroceryModel from '../../models/Grocery.Model.js'
 import GroupModel from '../../models/Group.Model.js'
-import { getGroupTaskController, updateTaskController } from '../utils/task.controller.js'
+import { deleteTaskController, getGroupTaskController, updateTaskController } from '../utils/task.controller.js'
 
 export async function addGroceryController(req, res) {
   try {
@@ -15,7 +15,7 @@ export async function addGroceryController(req, res) {
     const grocery = await GroceryModel.create({ 
       ...req.body, 
       groupId,
-      completed: false 
+      completed: null 
     })
 
     group.groceries.push(grocery._id)
@@ -38,7 +38,13 @@ export async function getGroupGroceriesController(req, res) {
 
 export async function updateGroceryController(req, res) {
   const { groceryId } = req.params
-  return updateTaskController(req, res, GroceryModel, groceryId)
+  const userId = req.user._id.toString();
+  return updateTaskController(res, GroceryModel, groceryId, userId)
+}
+
+export async function deleteGroceryController(req, res) {
+  const { groceryId } = req.params
+  return deleteTaskController(res, GroceryModel, groceryId)
 }
 
 export async function getGroceryController(req, res) {

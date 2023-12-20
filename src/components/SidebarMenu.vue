@@ -15,7 +15,6 @@
       </span>
     </div>
     <div class="my-4">
-      <button @click="getUsersTest">Get Users</button>
       <Input placeholder="Add group" name="group" type="text" maxlength="20" class="text-white" @add="addGroup" />
     </div>
     <transition-group name="slide-down" tag="div" class="group-list flex flex-col mt-4 overflow-y-auto overflow-x-hidden">
@@ -40,7 +39,12 @@
         <Tooltip @update:toggle="editMenu.toggle" class="right-4 text-black p-3 flex flex-col items-start" :isOpen="editMenu.groupId === group.id">
           <button class="hover:text-blue-500" @click="memberModal.toggle(group.id)">Add</button>
           <button class="hover:text-blue-500" @click="editModal.toggle(group)">Edit</button>
-          <button v-if="group.owner === userStore.userInfo.id" class="hover:text-blue-500">Delete</button>
+          <button 
+            v-if="group.owner === userStore.userInfo.id" 
+            @click="deleteModal.toggle(group.id, group.name)"
+            class="hover:text-blue-500">
+              Delete
+          </button>
         </Tooltip>
       </div>
     </transition-group>
@@ -55,6 +59,13 @@
       :isOpen="editModal.value"
       @update="editModal.update"
     />
+    <DeleteGroupModal
+      prompt="Delete"
+      :isOpen="deleteModal.value"
+      :name="deleteModal.name"
+      :func="deleteModal.delete"
+      @update="deleteModal.update"
+    />
   </div>
 </template>
 <script setup>
@@ -62,9 +73,9 @@ import Input from './Input.vue'
 import { onMounted, onUnmounted, reactive } from 'vue';
 import Tooltip from './Tooltip.vue';
 import { useUserStore } from "@/composables/user"
-import api from '@/utils/Axios'
 import MemberSearchModal from './modal/search/members/MemberSearchModal.vue';
 import EditGroupModal from './modal/edit/EditGroupModal.vue';
+import DeleteGroupModal from './modal/delete/DeleteGroupModal.vue';
 
 const { store, isOpen } = defineProps({
   store: Object,
@@ -85,17 +96,40 @@ async function addGroup(group) {
   })
 }
 
+function setGroupIdLocal(ref, groupId, bool) {
+  if(bool) {
+    ref.groupId = groupId
+  } else {
+    ref.groupId = null
+  }
+}
+
+const deleteModal = reactive({
+  value: false,
+  groupId: null,
+  name: '',
+  toggle(groupId, name) {
+    editMenu.toggle()
+    deleteModal.value = !deleteModal.value
+    deleteModal.name = name
+    setGroupIdLocal(deleteModal, groupId, deleteModal.value)
+  },
+  update(value) {
+    deleteModal.value = value
+  },
+  async delete() {
+    await store.deleteGroup(deleteModal.groupId)
+    deleteModal.value = !deleteModal.value
+  }
+})
+
 const memberModal = reactive({
   value: false,
   groupId: null,
   toggle(groupId) {
     editMenu.toggle()
     memberModal.value = !memberModal.value
-    if(memberModal.value) {
-      memberModal.groupId = groupId
-    } else {
-      memberModal.groupId = null
-    }
+    setGroupIdLocal(memberModal, groupId, memberModal.value)
   },
   update(value) {
     memberModal.value = value
@@ -135,17 +169,7 @@ const editMenu = reactive({
   }
 })
 
-async function getUsersTest() {
-  try{
-    const { data } = await api.get('/users/all')
-    console.log(data)
-  } catch(error) {
-    console.error(error)
-  }
-}
-
-function setGroup(id, group) {
-  console.log(group)
+function setGroup(id) {
   store.setGroup(id)
   emit('close', false)
 }

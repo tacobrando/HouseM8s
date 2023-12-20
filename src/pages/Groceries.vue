@@ -6,7 +6,7 @@
           Add Groceries
         </span>
         <div class="groceries-input w-full lg:w-[calc(50%-7.5px)] pb-4 mt-2">
-          <Input type="text" name="task" placeholder="Enter groceries" @add="addItem" />
+          <Input :priceSelect="true" type="text" name="task" placeholder="Enter groceries" @add="addItem" />
         </div>
       </div>
       <div class="groceries-list">  

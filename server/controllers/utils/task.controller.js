@@ -1,15 +1,20 @@
-import GroupModel from "../../models/Group.Model.js"
 
-export async function updateTaskController(req, res, model, id) {
+export async function updateTaskController(res, model, taskId, userId) {
   try {
-    const task = await model.findByIdAndUpdate(id)
+    const task = await model.findByIdAndUpdate(taskId)
 
-    task.completed = !task.completed
-    task.save()
+    if(task.completed) {
+      task.completed = null
+    } else {
+      task.completed = userId
+    }
+    
+    await task.save()
 
     return res.status(200).send({ completed: task.completed })
   } catch(error) {
-    return res.status(error.status).send({ message: error.message })
+    console.log(error)
+    return res.status(error.response?.status || 500).send({ message: error.message })
   }
 }
 
@@ -30,5 +35,20 @@ export async function getGroupTaskController(req, res, model) {
     return res.status(200).json(sorted)
   } catch(error) {
     return res.status(error.status).send({ message: error.message })
+  }
+}
+
+export async function deleteTaskController(res, model, id) {
+  try {
+    const result = await model.findByIdAndDelete(id)
+
+    if(result) {
+      return res.status(200).json({ message: 'Task deleted successfully.' })
+    } else {
+      return res.status(404).json({ message: "Task not found!" })
+    }
+
+  } catch(error) {
+    return res.status(error.response?.status || 500).json({ message: error.response.message })
   }
 }
