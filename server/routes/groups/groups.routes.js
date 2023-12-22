@@ -6,7 +6,8 @@ import {
   addUserToGroupController, 
   deleteGroupController, 
   getAllGroupsController,
-  removeUserFromGroupController, 
+  removeUserFromGroupController,
+  updateGroupItemController, 
 } from "../../controllers/groups/groups.controller.js"
 import { authenticateToken } from "../../middleware/auth/auth.middleware.js"
 
@@ -20,6 +21,7 @@ router.use('/:groupId/groceries', groceryRoutes)
 router.put('/:groupId/add-user', addUserToGroupController)
 router.delete('/:groupId/remove-user/:userId', removeUserFromGroupController)
 router.post('/add', addGroupController)
+router.put('/:groupId/update', updateGroupItemController)
 router.get('/all', getAllGroupsController)
 router.delete('/:groupId/delete', deleteGroupController)
 

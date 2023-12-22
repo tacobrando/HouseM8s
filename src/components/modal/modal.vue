@@ -2,7 +2,7 @@
   <teleport to="body">
     <transition :name="animationClass">
       <div v-if="visible" class="fixed inset-0 z-50 flex items-center justify-center p-4 text-black" @click.self="handleOutsideClick">
-        <div class="modal-dialog relative bg-white shadow-lg rounded-md overflow-hidden"
+        <div class="modal-dialog relative dark:bg-default dark:text-white bg-white shadow-lg rounded-md overflow-hidden"
             :class="fullscreen ? 'w-full h-full' : 'w-[90%]  sm:w-5/6 md:w-2/3 lg:w-1/3'"
             role="dialog"
             aria-modal="true">

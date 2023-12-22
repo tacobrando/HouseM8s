@@ -1,5 +1,5 @@
 <template>
-  <div class="task-container select-none relative bg-default top-0">
+  <div class="task-container select-none relative bg-white dark:bg-default dark:text-white top-0">
     <div class="lg:flex justify-between items-start bg-inherit">
       <ListAccordion 
         name="Tasks"

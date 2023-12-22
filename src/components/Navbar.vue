@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-container fixed flex items-center justify-center md:justify-between bottom-0 md:top-0 w-full bg-white text-black h-16 md:shadow-md shadow-top-md z-50">
+  <div class="dark:bg-[#282828] dark:text-white  navbar-container fixed flex items-center justify-center md:justify-between bottom-0 md:top-0 w-full bg-white text-black h-16 md:shadow-md shadow-top-md z-50">
     <router-link 
       class="hidden md:block w-10 ml-4 h-10 rounded-full bg-blue-500"
       to="/"

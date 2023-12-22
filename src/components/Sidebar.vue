@@ -4,7 +4,7 @@
     class="w-full"
   >
     <div class="fixed flex flex-col top-0 z-[45] w-full md:w-[300px] text-black md:mt-16">
-      <div class="md:hidden flex flex-row items-center bg-white z-30 shadow-md"> 
+      <div class="md:hidden flex flex-row items-center dark:bg-default bg-white z-30 shadow-[20px_0_20px_-5px_rgba(0,0,0,0.5)]"> 
         <div class="h-full flex items-center flex-col justify-center mt-5 ml-4 mr-2">
           <button 
             @click.stop="mobileMenu.toggle" 

@@ -1,27 +1,31 @@
 <template>
     <canvas :id="chartId"></canvas>
-    <!-- <div v-else>No Data</div> -->
 </template>
 <script setup>
-import { ref, watch, onMounted, nextTick, computed } from 'vue';
 import Chart from 'chart.js/auto';
+import { 
+  ref, 
+  watch, 
+  onMounted, 
+  nextTick 
+} from 'vue';
 
-const { chartType, chartData, chartOptions } = defineProps({
-  chartType: {
+const { type, data, options } = defineProps({
+  type: {
     type: String,
     default: 'bar'
   },
-  chartData: {
+  data: {
     type: Object,
     required: true
   },
-  chartOptions: {
+  options: {
     type: Object,
     default: () => ({})
   }
 });
 
-const chartId = `${chartType}-chart-${Math.random().toString(36).substr(2, 9)}`;
+const chartId = `${type}-chart-${Math.random().toString(36).substr(2, 9)}`;
 const chartInstance = ref(null);
 
 function createChart() {
@@ -33,9 +37,9 @@ function createChart() {
     if (canvas) {
       const context = canvas.getContext('2d');
       chartInstance.value = new Chart(context, {
-        type: chartType,
-        data: chartData,
-        options: chartOptions
+        type: type,
+        data: data,
+        options: options
       });
     }
   });
@@ -45,14 +49,8 @@ onMounted(() => {
   createChart();
 });
 
-watch(() => [chartType, chartData, chartOptions], () => {
+watch(() => [type, data, options], () => {
   chartInstance.value.destroy();
   createChart();
 }, { deep: true });
-
-// onBeforeUnmount(() => {
-//   if (chartInstance.value) {
-//     chartInstance.value.destroy();
-//   }
-// });
 </script>

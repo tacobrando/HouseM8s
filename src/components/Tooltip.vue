@@ -7,9 +7,12 @@
       cursor-auto 
       absolute 
       w-auto
-      h-fit 
+      h-fit
+      dark:bg-default 
       bg-white 
       border
+      dark:text-white
+      dark:border-gray-700
       rounded-lg
     ">
     <slot />

@@ -1,8 +1,8 @@
 <template>
   <div class="groceries-page m-4">
     <div v-if="groupStore.groupId !== null" class="groceries-container">
-      <div class="bg-inherit">
-        <span class="text-xl font-bold">
+      <div class="bg-inherit dark:bg-default">
+        <span class="text-xl font-bold dark:text-white">
           Add Groceries
         </span>
         <div class="groceries-input w-full lg:w-[calc(50%-7.5px)] pb-4 mt-2">

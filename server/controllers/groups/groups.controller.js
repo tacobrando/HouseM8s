@@ -130,3 +130,14 @@ export async function deleteGroupController(req, res) {
     return res.status(error.response?.status || 500).send({ message: error.message });
   }
 }
+
+export async function updateGroupItemController(req, res) {
+  try {
+    const { groupId } = req.params
+    const group = await GroupModel.findByIdAndUpdate(groupId, req.body)
+
+    return res.status(200).json({ message: 'Group updated successfully.' });
+  } catch(error) {
+    return res.status(error.response?.status || 500).send({ message: error.message })
+  }
+}

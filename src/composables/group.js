@@ -6,6 +6,8 @@ import { useGroceryStore } from "./grocery";
 
 export const useGroupStore = defineStore('group', {
   state: () => ({
+    groupName: '',
+    currency: '',
     groupId: null,
     groupList: [
       // { id: 1, name: "Housemates"},
@@ -75,8 +77,19 @@ export const useGroupStore = defineStore('group', {
         this.groupId = id
 
         const group = this.$state.groupList.find(group => group.id === id)
+        this.groupName = group.name
         this.members = group.members
+        this.currency = group.currency
+        
         return;
+      }
+    },
+    async updateGroupItem(groupId, item) {
+      try {
+        await api.put(`/groups/${groupId}/update`, item)
+        .then((res) => toast.showSuccess(res.data.message))
+      } catch(error) {
+        toast.showError(error.message)
       }
     },
     updateGroupName(id, newName) {

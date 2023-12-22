@@ -2,7 +2,7 @@
   <div 
     @click="console.log(task)"
     ref="taskRef"
-    class="task-container flex justify-between items-center text-black mt-2 p-2 rounded-md relative" 
+    class="task-container flex justify-between items-center text-black shadow-md border-2 dark:border-0 mt-2 p-2 rounded-md relative" 
     v-if="task.groupId === groupId"
     :class="[ task.completed ? 'bg-gray-400':'bg-white']"
   >

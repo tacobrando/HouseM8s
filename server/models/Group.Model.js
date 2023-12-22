@@ -18,5 +18,10 @@ export default mongoose.model("Group", new mongoose.Schema({
   groceries: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Grocery"
-  }]
+  }],
+  currency: {
+    type: String,
+    default: '$',
+    required: false
+  },
 }, { timestamps: true }))

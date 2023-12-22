@@ -10,7 +10,7 @@
           v-model="searchQuery"
           placeholder="Search..."
           type="text" 
-          class="bg-gray-100 border py-1 px-2 rounded-md w-full" 
+          class="bg-gray-100 dark:text-black border py-1 px-2 rounded-md w-full" 
         />
       </div>
       <ul v-if="searchResults.length" class="max-h-[400px] overflow-auto p-2 member-search-results">
