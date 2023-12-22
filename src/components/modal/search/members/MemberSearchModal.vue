@@ -1,7 +1,7 @@
 <template>
   <Modal :isOpen="isOpen" @update:isOpen="updateModal">
     <div class="member-search">
-      <div class="border-b border-gray-200 w-full p-4">
+      <div class="border-b border-gray-200 dark:border-gray-600 w-full p-4">
         <h1 class="text-xl font-bold text-start">Search</h1>
         <p class="text-gray-500 text-sm">Add members to your group!</p>
       </div>
@@ -10,7 +10,7 @@
           v-model="searchQuery"
           placeholder="Search..."
           type="text" 
-          class="bg-gray-100 dark:text-black border py-1 px-2 rounded-md w-full" 
+          class="bg-gray-100 dark:border-gray-600 dark:bg-default dark:text-white border py-1 px-2 rounded-md w-full" 
         />
       </div>
       <ul v-if="searchResults.length" class="max-h-[400px] overflow-auto p-2 member-search-results">

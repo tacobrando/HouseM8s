@@ -4,7 +4,7 @@
     <input 
       @submit="addItem"
       v-model="itemRef.item" 
-      class="p-2 rounded-l-md rounded-r-none border-l-2 border-t-2 border-b-2 outline-none bg-white text-black w-full"
+      class="p-2 rounded-l-md rounded-r-none border-l-2 border-t-2 border-b-2 dark:border-gray-600 outline-none bg-white dark:bg-default dark:text-white text-black w-full"
       :type="props.type" 
       :name="props.name" 
       :placeholder="props.placeholder"
@@ -28,7 +28,7 @@
         'bg-blue-500': isFormValid, 
         'bg-gray-300': !isFormValid
       }" 
-      class="p-2 rounded-r-md transition-colors flex items-center"
+      class="p-2 rounded-r-md transition-colors flex items-center text-white"
       @click="addItem"
     >
       <font-awesome-icon :icon="['fas', 'plus']" class="h-5 w-5" />

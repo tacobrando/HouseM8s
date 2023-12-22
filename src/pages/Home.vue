@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col p-2">
+  <div class="flex flex-col m-4">
     <div class="activity-board" v-if="groupStore.groupId !== null">
       <div class="task-activity text-center">
         <div class="text-xl underline font-bold">{{ groupStore.groupName }} Activity</div>
@@ -7,7 +7,7 @@
           <div class="font-semibold text-lg underline">
             <span>Groceries ({{ groupStore.currency }})</span>
           </div>
-          <span v-if="groceryStore.completed.length < 1">No data</span>
+          <span v-if="groceryStore.completed.length < 1 && groceryStore.list.length < 1">No data</span>
           <Chart 
             v-else
             :key="groceryStore.completed" 
@@ -20,7 +20,7 @@
           <div class="font-semibold text-lg underline">
             <span>Chores</span>
           </div>
-          <span v-if="choreStore.completed.length < 1">No data</span>
+          <span v-if="choreStore.completed.length < 1 && choreStore.list.length < 1">No data</span>
           <Chart 
             v-else
             :key="choreStore.completed" 
@@ -31,6 +31,7 @@
         </div>
       </div>
     </div>
+    <div v-else-if="groupStore.groupList.length < 1">Create a group to start.</div>
     <div v-else>Select a group</div>
   </div>
 </template>

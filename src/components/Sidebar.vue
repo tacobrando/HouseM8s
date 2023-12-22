@@ -3,7 +3,7 @@
     id="sidebar" 
     class="w-full"
   >
-    <div class="fixed flex flex-col top-0 z-[45] w-full md:w-[300px] text-black md:mt-16">
+    <div class="fixed flex flex-col top-0 z-[45] w-full md:w-[300px] dark:text-white text-black md:mt-16">
       <div class="md:hidden flex flex-row items-center dark:bg-default bg-white z-30 shadow-[20px_0_20px_-5px_rgba(0,0,0,0.5)]"> 
         <div class="h-full flex items-center flex-col justify-center mt-5 ml-4 mr-2">
           <button 
@@ -15,7 +15,7 @@
           </button>
           <div 
             class=" w-12 h-1 rounded-full mt-4 transition-all" 
-            :class="[ mobileMenu.value ? 'bg-blue-500' : 'bg-white']" 
+            :class="[ mobileMenu.value ? 'bg-blue-500' : 'bg-white dark:bg-default']" 
           />
         </div>
         <div class="flex items-center justify-between flex-grow">

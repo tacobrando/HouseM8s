@@ -20,8 +20,6 @@ onBeforeMount(() => {
   settings.initializeDarkMode();
   groceryStore.init()
   choreStore.init()
+  
 })
 </script>
-
-<style scoped>
-</style>

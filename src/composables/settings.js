@@ -14,7 +14,6 @@ export const useSettingsStore = defineStore('settings', {
   }),
   actions: {
     initializeDarkMode() {
-      // Check local storage first
       const darkModeSetting = localStorage.getItem('darkMode');
       if (darkModeSetting) {
         this.darkMode = darkModeSetting === 'true';

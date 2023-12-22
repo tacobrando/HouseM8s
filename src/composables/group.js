@@ -80,7 +80,6 @@ export const useGroupStore = defineStore('group', {
         this.groupName = group.name
         this.members = group.members
         this.currency = group.currency
-        
         return;
       }
     },

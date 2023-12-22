@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import UserModel from '../../models/User.Model.js'
+import { isValidEmail } from '../../utils/Helpers.js'
 import { Console } from '../../utils/Tools.js'
 import { hash } from 'bcrypt'
 import jwt from 'jsonwebtoken'
@@ -12,6 +13,12 @@ export async function registerUserController(req, res) {
       return res.status(400).send({
         message: "Field is required."
       })
+    }
+
+    if (!isValidEmail(newUser.email)) {
+      return res.status(400).send({
+        message: "Invalid email."
+      });
     }
 
     if(newUser.password !== newUser.confirmPassword) {
@@ -56,7 +63,10 @@ export async function registerUserController(req, res) {
       user: userObject
     })
   } catch(error) {
-    Console.Error(error)
+    Console.Error(error);
+    return res.status(500).send({
+      message: "An error occurred during registration."
+    });
   }
 }
 

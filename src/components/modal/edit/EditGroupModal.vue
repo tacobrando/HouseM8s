@@ -1,12 +1,12 @@
 <template>
   <Modal :isOpen="isOpen" @update:isOpen="updateModal">
     <div class="edit-group">
-      <div class="border-b border-gray-200 w-full p-4">
+      <div class="border-b border-gray-200 dark:border-gray-600 w-full p-4">
         <h1 class="text-xl font-bold text-start">Edit Group</h1>
         <p class="text-gray-500 text-sm">Edit group information.</p>
       </div>
       <div class="edit-group-options p-2">
-        <label class="mr-2" for="select">Currency:</label>
+        <label class="mr-2 ml-2" for="select">Currency:</label>
         <select 
           class="bg-white text-black border-2" 
           @change="(event) => groupSettings.setCurrency(group.id, event)"
@@ -22,7 +22,7 @@
           </option>
         </select>
         <ul class="max-h-[400px] overflow-auto p-2 edit-group-members">
-          <li v-for="member in group.members" :key="member.userId" class="member-search-results-item p-1 rounded-md hover:bg-gray-100">
+          <li v-for="member in group.members" :key="member.userId" class="member-search-results-item p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
             <div v-if="member.userId" class="flex items-center justify-between my-2 mx-2">
               <span class="flex items-center w-full">
                 <ProfileAvatar class="w-10 h-10" />
@@ -36,7 +36,7 @@
                   v-if="isLoading[member.userId]"  
                   class="inline-block w-6 h-6 border-4 border-blue-500 rounded-full border-t-transparent animate-spin" 
                 />
-                <button 
+                <button
                   v-else
                   @click="removeUserHandler(group.id, member.userId)"
                   class="rounded-md text-white flex items-center p-1 bg-red-500" 

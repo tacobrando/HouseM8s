@@ -21,7 +21,7 @@
       <div 
         v-for="group in store.groupList" 
         :key="group.id"
-        class="transition-colors first:z-50 first:border-t-2 border-b-2 p-3 border-x-0 dark:bg-default bg-white cursor-pointer"
+        class="transition-colors first:z-50 first:border-t-2 border-b-2 dark:border-gray-600 p-3 border-x-0 dark:bg-default bg-white cursor-pointer"
       >
         <div 
           :class="[group.id === store.groupId ? 'text-blue-500' : '']"
@@ -70,7 +70,7 @@
 </template>
 <script setup>
 import Input from './Input.vue'
-import { onMounted, onUnmounted, reactive } from 'vue';
+import { onMounted, onUnmounted, reactive, computed } from 'vue';
 import Tooltip from './Tooltip.vue';
 import { useUserStore } from "@/composables/user"
 import MemberSearchModal from './modal/search/members/MemberSearchModal.vue';
@@ -183,6 +183,10 @@ function closeMenu(event){
 
 onMounted(async () => {
   await store.getGroups()
+  // const groupId = computed(() => store.groupList[0].id)
+  // if(groupId.value) {
+  //   setGroup(groupId.value)
+  // }
   document.addEventListener('click', closeMenu);
 });
 onUnmounted(() => {
