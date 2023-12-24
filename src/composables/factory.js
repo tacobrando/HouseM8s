@@ -3,6 +3,9 @@ import { toast } from './toast.js';
 import { defineStore } from 'pinia';
 import { useUserStore } from './user'
 import api from '../utils/Axios.js';
+import { useSocket } from './socket.io.js';
+import { useGroupStore } from './group.js'
+import { SocketEvent } from '../utils/SocketEvents.js';
 
 
 export function createStoreFactory(options) {
@@ -20,15 +23,51 @@ export function createStoreFactory(options) {
       ...options.state()
     }),
     actions: {
+      bindSocketEvents(Z) {
+        const { socket } = useSocket();
+        socket.on(SocketEvent.TASK_ADDED, (data) => {
+          this.list.unshift(data.task);
+        });
+
+          socket.on(SocketEvent.TASK_UPDATED, (data) => {
+            const { taskId, completed } = data;
+          
+            let itemIndexInList = this.list.findIndex(item => item.id === taskId);
+            let itemIndexInCompleted = this.completed.findIndex(item => item.id === taskId);
+          
+            let foundInList = itemIndexInList !== -1;
+            let foundInCompleted = itemIndexInCompleted !== -1;
+          
+            if (foundInList || foundInCompleted) {
+              let taskToUpdate;
+          
+              if (foundInList) {
+                taskToUpdate = this.list[itemIndexInList];
+              } else {
+                taskToUpdate = this.completed[itemIndexInCompleted];
+              }
+          
+              taskToUpdate.completed = completed;
+          
+              if (completed.userId && foundInList) {
+                this.list.splice(itemIndexInList, 1);
+                this.completed.unshift(taskToUpdate);
+              } else if (!completed.userId && foundInCompleted) {
+                this.completed.splice(itemIndexInCompleted, 1);
+                this.list.unshift(taskToUpdate);
+              }
+            }
+          });       
+      },
       init() {
         if (this.initialized) return;
-        
+        this.bindSocketEvents()
         this.sortList();
         this.initialized = true;
       },
       sortList() {
-        this.completed = this.list.filter(item => item.completed)
-        this.list = this.list.filter(item => item.completed === null);
+        this.completed = this.list.filter(item => item.completed.userId !== null)
+        this.list = this.list.filter(item => item.completed.userId === null);
       },
       async getGroupItems(groupId) {
         try {
@@ -42,10 +81,9 @@ export function createStoreFactory(options) {
       },
       async addItem(item, groupId) {
         try{
-          const { data } = await api.post(`/groups/${groupId}/${this.api}/add`, {
+          await api.post(`/groups/${groupId}/${this.api}/add`, {
             ...item
           })
-          this.list.unshift(data)
           this.showList.tasks = true
         } catch(error) {
           toast.showError(error.message)
@@ -69,28 +107,35 @@ export function createStoreFactory(options) {
       },
       async toggleComplete(itemId, groupId) {
         const { userInfo } = useUserStore()
+      
         let itemIndex = this.completed.findIndex(item => item.id === itemId);
-        let isCompleted = itemIndex !== -1;
-        let item;
-
-        if (isCompleted) {
-          item = this.completed[itemIndex];
-          this.completed.splice(itemIndex, 1);
-          item.completed = null;
-          this.list.unshift(item);
-          this.showList.tasks = true
-        } else {
+        let item = itemIndex !== -1 ? this.completed[itemIndex] : null;
+        let isCompleted = item !== null;
+      
+        if (!isCompleted) {
           itemIndex = this.list.findIndex(item => item.id === itemId);
-          if (itemIndex !== -1) {
-            item = this.list[itemIndex];
-            this.removeFromLocalState(itemId);
-            item.completed = userInfo.id;
+          item = itemIndex !== -1 ? this.list[itemIndex] : null;
+        }
+      
+        if (item) {
+          if (isCompleted) {
+            this.completed.splice(itemIndex, 1);
+            item.completed = { userId: null, name: null };
+            this.list.unshift(item);
+          } else {
+            this.list.splice(itemIndex, 1);
+            item.completed = { userId: userInfo.id, name: userInfo.username };
             this.completed.unshift(item);
           }
-          this.showList.completed = true
+      
+          this.showList.tasks = true;
+          this.showList.completed = true;
+      
+          await api.put(`/groups/${groupId}/${this.api}/${itemId}/update`, { completed: item.completed });
+        } else {
+          console.error('Item not found');
         }
-        await api.put(`/groups/${groupId}/${this.api}/${itemId}/update`)
-      },
+      },      
       ...options.actions
     },
   });

@@ -22,7 +22,6 @@
 import { onBeforeMount } from 'vue';
 import { useGroceryStore } from '@/composables/grocery'
 import { useGroupStore } from '@/composables/group'
-
 import TaskList from '@/components/TaskList.vue'
 import Input from '@/components/Input.vue';
 

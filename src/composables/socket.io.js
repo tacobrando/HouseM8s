@@ -12,6 +12,7 @@ export const useSocket = defineStore('socket', {
       this.socket.on('connected', () => {
         this.isConnected = true
       })
+      this.socket.off()
       this.socket.on('disconnect', () => {
         this.isConnected = false;
       });

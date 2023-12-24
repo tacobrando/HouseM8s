@@ -24,7 +24,13 @@ export const TaskSchema = new Schema({
     required: false
   },
   completed: {
-    type: Schema.Types.ObjectId,
-    ref: "User"
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    },
+    name: {
+      type: String,
+      ref: "User"
+    }
   }
 }, { timestamps: true })

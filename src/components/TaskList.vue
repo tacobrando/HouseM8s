@@ -2,7 +2,7 @@
   <div class="task-container select-none relative bg-white dark:bg-default dark:text-white top-0">
     <div class="lg:flex justify-between items-start bg-inherit">
       <ListAccordion 
-        name="Tasks"
+        :name="name"
         :show="store.showList" 
         :length="store.list.length" 
         class="pb-2 bg-inherit"
@@ -40,10 +40,14 @@ import Task from '@/components/Task.vue';
 import ListAccordion from '@/components/ListAccordion.vue'
 import { computed } from 'vue';
 
-const { store, title, groupId } = defineProps({
+const { store, title, groupId, name } = defineProps({
   store: Object,
   title: String,
-  groupId: String
+  groupId: String,
+  name: {
+    type: String,
+    default: "Tasks"
+  }
 });
 
 const sortedList = computed(() => store.list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)))

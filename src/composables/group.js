@@ -3,6 +3,9 @@ import api from '@/utils/Axios'
 import { toast } from "./toast";
 import { useChoreStore } from "./chore";
 import { useGroceryStore } from "./grocery";
+import { useSocket } from "./socket.io";
+import { SocketEvent } from "../utils/SocketEvents";
+import { useUserStore } from "./user";
 
 export const useGroupStore = defineStore('group', {
   state: () => ({
@@ -70,12 +73,14 @@ export const useGroupStore = defineStore('group', {
       }
     },    
     setGroup(id) {
+      const { socket } = useSocket()
+      const { userInfo } = useUserStore()
       this.members = []
       if(this.groupId !== id) {
         useGroceryStore().getGroupItems(id)
         useChoreStore().getGroupItems(id)
         this.groupId = id
-
+        socket.emit(SocketEvent.JOIN_GROUP, { user: userInfo.username, groupId: this.groupId })
         const group = this.$state.groupList.find(group => group.id === id)
         this.groupName = group.name
         this.members = group.members

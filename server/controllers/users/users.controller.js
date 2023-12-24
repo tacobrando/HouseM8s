@@ -35,7 +35,7 @@ export async function registerUserController(req, res) {
       })
     }
 
-    const existingUsername = await UserModel.findOne({ username: newUser.username })
+    const existingUsername = await UserModel.findOne({ username: new RegExp(`^${newUser.username}$`, 'i') })
 
     if(existingUsername) {
       return res.status(400).send({

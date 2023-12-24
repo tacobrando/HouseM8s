@@ -5,11 +5,12 @@ import {
 } from "../utils/task.controller.js";
 import ChoreModel from '../../models/Chore.Model.js'
 import GroupModel from "../../models/Group.Model.js";
+import { SocketEvent } from "../../utils/Tools.js";
 
 export async function addChoreController(req, res) {
   try {
     const { groupId } = req.params
-
+    const io = req.app.get('io')
     const group = await GroupModel.findById(groupId)
 
     if(!group) {
@@ -19,7 +20,10 @@ export async function addChoreController(req, res) {
     const chore = await ChoreModel.create({ 
       ...req.body, 
       groupId,
-      completed: null 
+      completed: {
+        userId: null,
+        name: null
+      } 
     })
 
     group.chores.push(chore._id)
@@ -28,6 +32,8 @@ export async function addChoreController(req, res) {
     const choreObj = chore.toObject()
     choreObj.id = choreObj._id
     delete choreObj._id
+
+    io.to(groupId).emit(SocketEvent.TASK_ADDED, { groupId: groupId, task: choreObj });
   
     return res.status(200).send(choreObj)
   } catch(error) {
@@ -42,7 +48,7 @@ export async function getGroupChoresController(req, res) {
 export async function updateChoreController(req, res) {
   const { choreId } = req.params
   const userId = req.user._id.toString();
-  return updateTaskController(res, ChoreModel, choreId, userId)
+  return updateTaskController(req, res, ChoreModel, choreId, userId)
 }
 
 export async function deleteChoreController(req, res) {

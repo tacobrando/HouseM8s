@@ -10,9 +10,9 @@ export const colorPalette = [
 
 export function parseChartData(store, members, totals) {
   store.completed
-    .filter(item => item.completed)
+    .filter(item => item.completed.userId !== null)
     .forEach(item => {
-      const completingMember = members.find(member => member.userId === item.completed)
+      const completingMember = members.find(member => member.userId === item.completed.userId)
       if(completingMember) {
         totals[completingMember.username] += parseFloat(item.price) || 1
       }
@@ -20,7 +20,7 @@ export function parseChartData(store, members, totals) {
   let unfinishedCount = 0;
   store.list
     .forEach(item => {
-      if(item.completed === null) {
+      if(item.completed.userId === null) {
         unfinishedCount += 1
       }
     })

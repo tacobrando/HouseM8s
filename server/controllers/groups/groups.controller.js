@@ -35,7 +35,7 @@ export async function getAllGroupsController(req, res) {
     const groups = await GroupModel.find({
       $or: [{ owner: userId }, { 'members.userId': userId }]
     })
-    .sort({ createdAt: -1 }); // Sorting the groups
+    .sort({ createdAt: -1 });
 
     return res.status(200).json(groups);
   } catch (error) {

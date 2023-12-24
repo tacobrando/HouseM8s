@@ -4,7 +4,7 @@
       <img :src="imageUrl" />
     </div>
     <div>
-      <div class="flex flex-col items-center dark:text-black">
+      <form @submit.prevent="login" class="flex flex-col items-center dark:text-black">
         <input 
           v-model="authStore.username" 
           class="dark:bg-white bg-gray-300 border p-2 mb-1 rounded-md" 
@@ -20,10 +20,10 @@
           id="password" 
           placeholder="Password"
         >
-        <button class="bg-blue-500 w-full p-2 rounded-md text-white" @click="login">Login</button>
+        <button class="bg-blue-500 w-full p-2 rounded-md text-white">Login</button>
         <span class="border-y-2 border-gray-300 w-1/2 text-center my-4 p-1 dark:text-white dark:border-gray-600">Or</span>
-        <button class="bg-green-500 w-full p-2 rounded-md text-white" @click="registerModal.toggle">Sign up</button>
-      </div>
+      </form>
+      <button class="bg-green-500 w-full p-2 rounded-md text-white" @click="registerModal.toggle">Sign up</button>
       <RegisterModal :isOpen="registerModal.value" :update="registerModal.update"  />
     </div>
   </div>

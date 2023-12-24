@@ -1,17 +1,27 @@
+import UserModel from "../../models/User.Model.js"
+import { SocketEvent } from "../../utils/Tools.js"
 
-export async function updateTaskController(res, model, taskId, userId) {
+export async function updateTaskController(req, res, model, taskId, userId) {
   try {
+    const { groupId } = req.params
+    const io = req.app.get('io')
     const task = await model.findByIdAndUpdate(taskId)
-
-    if(task.completed) {
-      task.completed = null
+    const user = await UserModel.findById(userId)
+    if(task.completed.userId) {
+      task.completed = {
+        userId: null,
+        name: null
+      }
     } else {
-      task.completed = userId
+      task.completed = {
+        userId: user._id,
+        name: user.username
+      }
     }
     
     await task.save()
-
-    return res.status(200).send({ completed: task.completed })
+    io.to(groupId).emit(SocketEvent.TASK_UPDATED, { taskId: task.id, completed: task.completed })
+    return res.status(200).end()
   } catch(error) {
     console.log(error)
     return res.status(error.response?.status || 500).send({ message: error.message })

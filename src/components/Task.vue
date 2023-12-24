@@ -1,44 +1,43 @@
 <template>
   <div 
-    @click="console.log(task)"
     ref="taskRef"
     class="task-container flex justify-between items-center text-black shadow-md border-2 dark:border-0 mt-2 p-2 rounded-md relative" 
     v-if="task.groupId === groupId"
-    :class="[ task.completed ? 'bg-gray-400':'bg-white']"
+    :class="[ task.completed.userId !== null ? 'bg-gray-400':'bg-white']"
   >
     <div class="flex-none">
-      <Checkbox :disabled="task.completed !== userInfo.id && task.completed !== null" :completed="task.completed" @toggle="toggleComplete(task.id)" />
+      <Checkbox :disabled="task.completed.userId !== userInfo.id && task.completed.userId !== null" :completed="task.completed.userId" @toggle="toggleComplete(task.id)" />
     </div>
     <div class="flex-grow flex justify-between items-center">
       <div class="task-details flex flex-col">
         <span 
           class="text-sm font-medium"
-          :class="[ task.completed ? 'text-gray-500':'text-gray-400']"
+          :class="[ task.completed.userId ? 'text-gray-500':'text-gray-400']"
         >
           {{ task.user.name }}
         </span>
         <span 
           class="flex-1 break-all"
-          :class="[ task.completed ? 'text-gray-600':'']"
+          :class="[ task.completed.userId ? 'text-gray-600':'']"
         >
           {{ task.item }}
         </span>
         <span 
           v-if="task.price"
-          :class="[ task.completed ? 'text-gray-500':'text-gray-400']"
+          :class="[ task.completed.userId ? 'text-gray-500':'text-gray-400']"
           class="task-price text-sm font-medium"        
         >
-          Price: ${{ task.price }}
+          Price: {{ currency }}{{ task.price }}
         </span>
         <span 
-          :class="[ task.completed ? 'text-gray-500':'text-gray-400']"
+          :class="[ task.completed.userId ? 'text-gray-500':'text-gray-400']"
           class="task-price text-sm font-medium"        
         >
-          Completed by: {{ completedBy }}
+          Completed by: {{ task.completed.name || 'TBD' }}
         </span>
       </div>
       <div 
-        :class="[ task.completed ? 'text-gray-500':'text-gray-400']"
+        :class="[ task.completed.userId ? 'text-gray-500':'text-gray-400']"
         class="task-details text-sm font-medium text-end sm:text-start flex flex-col"
       >
         <span class="task-date">
@@ -63,26 +62,12 @@ import { useGroupStore } from '@/composables/group';
 
 const taskRef = ref(null);
 const { userInfo } = useUserStore()
-const { members } = useGroupStore()
+const { currency } = useGroupStore()
 
 const emit = defineEmits(['delete', 'update']);
 const { task, groupId } = defineProps(['task', 'groupId']);
 
 const formattedDate = computed(() => moment(task.createdAt).fromNow())
-const completedBy = computed(() => {
-  if (task.completed) {
-    if (task.completed === userInfo.id) {
-      return userInfo.username;
-    } else {
-      const user = members.find(user => user.userId === task.completed);
-      if (user) {
-        return user.username;
-      }
-    }
-  }
-  return "TBD";
-});
-
 
 function deleteItem (id) {
   if (taskRef.value) {

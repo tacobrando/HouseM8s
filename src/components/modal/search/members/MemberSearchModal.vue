@@ -14,7 +14,7 @@
         />
       </div>
       <ul v-if="searchResults.length" class="max-h-[400px] overflow-auto p-2 member-search-results">
-        <li v-for="result in searchResults" :key="result.id" class="member-search-results-item p-1 rounded-md hover:bg-gray-100">
+        <li v-for="result in searchResults" :key="result.id" class="member-search-results-item p-1 rounded-md dark:hover:bg-gray-700 hover:bg-gray-100">
           <div v-if="result.id" class="flex items-center justify-between my-2 mx-2">
             <span class="flex items-center">
               <ProfileAvatar class="w-10 h-10 mr-2" />

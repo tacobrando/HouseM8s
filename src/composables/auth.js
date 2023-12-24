@@ -7,16 +7,12 @@ import { toast } from "./toast";
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    username: 'Test',
-    password: 'monkey',
+    username: '',
+    password: '',
     isLoggedIn: false
   }),
 
   actions: {
-    // setLoginInfo(info) {
-    //   this.username = info.username
-    //   this.password = info.password
-    // },
     resetLoginInfo() {
       this.username = ''
       this.password = ''
@@ -28,8 +24,9 @@ export const useAuthStore = defineStore('auth', {
         .then((res) => setUserInfo(res.data.user))
         this.$state.isLoggedIn = true
         router.push('/')
+        this.resetLoginInfo()
       } catch(error) {
-        toast.showError(error.message)
+        toast.showError(error.response.data.message)
         this.$state.isLoggedIn = false;
       }
     },

@@ -42,8 +42,15 @@
           <button 
             v-if="group.owner === userStore.userInfo.id" 
             @click="deleteModal.toggle(group.id, group.name)"
-            class="hover:text-blue-500">
+            class="hover:text-red-500">
               Delete
+          </button>
+          <button 
+            v-else 
+            class="hover:text-red-500"
+            @click="leaveModal.toggle(group.id, group.name)"
+          >
+            Leave
           </button>
         </Tooltip>
       </div>
@@ -59,23 +66,30 @@
       :isOpen="editModal.value"
       @update="editModal.update"
     />
-    <DeleteGroupModal
+    <ConfirmModal
       prompt="Delete"
       :isOpen="deleteModal.value"
       :name="deleteModal.name"
       :func="deleteModal.delete"
       @update="deleteModal.update"
     />
+    <ConfirmModal
+      prompt="Leave"
+      :isOpen="leaveModal.value"
+      :name="leaveModal.name"
+      :func="leaveModal.leave"
+      @update="leaveModal.update"
+    />
   </div>
 </template>
 <script setup>
 import Input from './Input.vue'
-import { onMounted, onUnmounted, reactive, computed } from 'vue';
+import { onUnmounted, reactive, computed, onBeforeMount } from 'vue';
 import Tooltip from './Tooltip.vue';
 import { useUserStore } from "@/composables/user"
 import MemberSearchModal from './modal/search/members/MemberSearchModal.vue';
 import EditGroupModal from './modal/edit/EditGroupModal.vue';
-import DeleteGroupModal from './modal/delete/DeleteGroupModal.vue';
+import ConfirmModal from './modal/confirm/ConfirmModal.vue';
 
 const { store, isOpen } = defineProps({
   store: Object,
@@ -104,14 +118,37 @@ function setGroupIdLocal(ref, groupId, bool) {
   }
 }
 
+function toggleModal(state, name) {
+    editMenu.toggle()
+    state.value = !state.value
+    state.name = name
+}
+
+const leaveModal = reactive({
+  value: false,
+  groupId: null,
+  name: '',
+  toggle(groupId, name) {
+    toggleModal(leaveModal, name)
+    setGroupIdLocal(leaveModal, groupId, leaveModal.value)
+  },
+  update(value) {
+    leaveModal.value = value
+  },
+  async leave() {
+    await store.removeUser(leaveModal.groupId, userStore.userInfo.id)
+    store.groupList = store.groupList.filter(group => group.id !== leaveModal.groupId)
+
+    leaveModal.value = !leaveModal.value
+  }
+})
+
 const deleteModal = reactive({
   value: false,
   groupId: null,
   name: '',
   toggle(groupId, name) {
-    editMenu.toggle()
-    deleteModal.value = !deleteModal.value
-    deleteModal.name = name
+    toggleModal(deleteModal, name)
     setGroupIdLocal(deleteModal, groupId, deleteModal.value)
   },
   update(value) {
@@ -181,12 +218,12 @@ function closeMenu(event){
   }
 }
 
-onMounted(async () => {
+onBeforeMount(async () => {
   await store.getGroups()
-  // const groupId = computed(() => store.groupList[0].id)
-  // if(groupId.value) {
-  //   setGroup(groupId.value)
-  // }
+  const groupId = computed(() => store.groupList[0])
+  if(groupId.value) {
+    setGroup(groupId.value.id)
+  }
   document.addEventListener('click', closeMenu);
 });
 onUnmounted(() => {

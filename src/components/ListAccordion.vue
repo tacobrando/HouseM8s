@@ -4,9 +4,9 @@
       <span 
         id="list-panel"
         class="text-lg w-full font-bold flex items-center justify-between border border-gray-500 rounded-md bg-inherit cursor-pointer p-2" 
-        @click="showList.toggle()"
+        @click="showList.toggle"
       >
-        {{ name }} <font-awesome-icon :icon="['fas', show[showId] ? 'chevron-up' : 'chevron-down']" />
+        {{ name }} <font-awesome-icon v-if="length > 0" :icon="['fas', show[showId] ? 'chevron-up' : 'chevron-down']" />
       </span>
       <span v-if="length <= 0" class="text-center text-gray-400 my-4">
         No tasks! 😱

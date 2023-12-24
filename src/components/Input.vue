@@ -20,7 +20,7 @@
       max="9999" 
       name="price"
       maxlength="7"
-      class="w-16 bg-white text-black border-2 pl-1"
+      class="w-16 bg-white dark:border-gray-600 dark:bg-default dark:text-white text-black border-2 pl-1"
     >
     <button 
       :disabled="!isFormValid"

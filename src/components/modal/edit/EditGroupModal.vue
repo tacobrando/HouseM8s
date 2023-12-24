@@ -38,6 +38,7 @@
                 />
                 <button
                   v-else
+                  v-if="group.owner === member.userId"
                   @click="removeUserHandler(group.id, member.userId)"
                   class="rounded-md text-white flex items-center p-1 bg-red-500" 
                 >

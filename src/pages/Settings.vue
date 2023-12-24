@@ -4,15 +4,6 @@
   </div>
 </template>
 <script setup>
-import { computed } from 'vue';
 import { useSettingsStore } from '@/composables/settings';
-const { currency, toggleDarkMode } = useSettingsStore()
-
-const currencySettings = computed(() => {
-  return Object.entries(currency.options).map(([key, value]) => ({
-    label: key,
-    code: value
-  }))
-})
-
+const { toggleDarkMode } = useSettingsStore()
 </script>

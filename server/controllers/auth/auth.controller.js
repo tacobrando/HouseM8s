@@ -2,14 +2,15 @@ import "dotenv/config"
 import jwt from 'jsonwebtoken'
 import { compare } from "bcrypt"
 import UserModel from "../../models/User.Model.js"
-import { Console } from "../../utils/Tools.js"
 import { Cookie } from "../../lib/Cookie.js"
 
 export async function loginController(req, res) {
   try{
+    const io = res.app.get('io')
+    
     const { username, password } = req.body
   
-    const user = await UserModel.findOne({ username })
+    const user = await UserModel.findOne({ username: new RegExp(`^${username}$`, 'i') })
   
     if(!user) {
       return res.status(401).send({ message: "User not found" })
@@ -33,7 +34,7 @@ export async function loginController(req, res) {
       user: userObject
     })
   } catch(error) {
-    Console.Error(error)
+    return res.status(error.response?.status||500).send({ message: error.message })
   }
 }
 
