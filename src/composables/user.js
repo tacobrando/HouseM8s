@@ -61,7 +61,11 @@ export const useUserStore = defineStore('user', {
         this.resetInfo('register')
         router.push('/')
       } catch(error) {   
-        toast.showError(error.response.data.message)
+        if(error.response) {
+          toast.showError(error.response.data.message)
+        } else {
+          toast.showError(error.message)
+        }
       } 
     },
     async getCookie() {
