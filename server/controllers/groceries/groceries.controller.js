@@ -29,7 +29,7 @@ export async function addGroceryController(req, res) {
     groceryObj.id = groceryObj._id
     delete groceryObj._id
     
-    io.to(groupId).emit(SocketEvent.TASK_ADDED, { groupName: group.name, task: groceryObj });
+    io.to(groupId).emit(SocketEvent.GROCERY.ADDED, { groupName: group.name, task: groceryObj });
     return res.status(200).json({ groupId: groupId, task: groceryObj })
   } catch(error) {
     console.log(error)
@@ -44,25 +44,25 @@ export async function getGroupGroceriesController(req, res) {
 export async function updateGroceryController(req, res) {
   const { groceryId } = req.params
   const userId = req.user._id.toString();
-  return updateTaskController(req, res, GroceryModel, groceryId, userId)
+  return updateTaskController(req, res, GroceryModel, groceryId, userId, SocketEvent.GROCERY)
 }
 
 export async function deleteGroceryController(req, res) {
   const { groceryId } = req.params
-  return deleteTaskController(res, GroceryModel, groceryId)
+  return deleteTaskController(req, res, GroceryModel, groceryId, SocketEvent.GROCERY)
 }
 
-export async function getGroceryController(req, res) {
-  const { groceryId } = req.params
+// export async function getGroceryController(req, res) {
+//   const { groceryId } = req.params
   
-  if(isNaN(parseInt(groceryId))) {
-    return res.status(404).send({
-      message: "Invalid Grocery"
-    })
-  }
+//   if(isNaN(parseInt(groceryId))) {
+//     return res.status(404).send({
+//       message: "Invalid Grocery"
+//     })
+//   }
 
-  return res.send({
-    groceryId,
-    message: "Get grocery"
-  })
-}
+//   return res.send({
+//     groceryId,
+//     message: "Get grocery"
+//   })
+// }

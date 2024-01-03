@@ -33,7 +33,6 @@ const { show, name, length } = defineProps({
 })
 
 const showId = name.toLowerCase()
-
 const showList = reactive({
   toggle() {
     show[showId] = !show[showId]

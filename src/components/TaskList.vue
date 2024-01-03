@@ -55,5 +55,5 @@ const sortedList = computed(() => store.list.sort((a, b) => new Date(b.createdAt
 const emit = defineEmits(['add', 'update', 'delete']);
 
 const deleteItem = async(id) => await store.deleteItem(id, groupId);
-const toggleItem = (id) => store.toggleComplete(id, groupId);
+const toggleItem = (id) => store.toggleComplete(id, groupId, name);
 </script>

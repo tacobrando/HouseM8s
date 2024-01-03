@@ -59,7 +59,7 @@ export async function registerUserController(req, res) {
     })
 
     return res.status(200).send({
-      message: "Register User",
+      message: "Registeration successful",
       user: userObject
     })
   } catch(error) {

@@ -12,10 +12,7 @@ export const useGroupStore = defineStore('group', {
     groupName: '',
     currency: '',
     groupId: null,
-    groupList: [
-      // { id: 1, name: "Housemates"},
-      // { id: 2, name: "Roomies"},
-    ],
+    groupList: [],
     members: [],
   }),
 

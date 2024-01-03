@@ -5,15 +5,13 @@ import UserModel from "../../models/User.Model.js"
 import { Cookie } from "../../lib/Cookie.js"
 
 export async function loginController(req, res) {
-  try{
-    const io = res.app.get('io')
-    
+  try{    
     const { username, password } = req.body
   
     const user = await UserModel.findOne({ username: new RegExp(`^${username}$`, 'i') })
   
     if(!user) {
-      return res.status(401).send({ message: "User not found" })
+      return res.status(401).send({ message: "User not found." })
     }
   
     const isMatch = await compare(password, user.password)
@@ -30,7 +28,7 @@ export async function loginController(req, res) {
     delete userObject.password
   
     return res.status(200).send({
-      message: "Login successful",
+      message: "Login successful.",
       user: userObject
     })
   } catch(error) {

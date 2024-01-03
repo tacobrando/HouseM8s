@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="groceries-list">  
-        <TaskList :groupId="groupStore.groupId" :store="groceryStore" />
+        <TaskList name="Groceries" :groupId="groupStore.groupId" :store="groceryStore" />
       </div>
     </div>
     <div v-else>

@@ -9,8 +9,9 @@ import AppLayout from '@/layout/AppLayout.vue';
 import { useChoreStore } from '@/composables/chore';
 import { useGroceryStore } from '@/composables/grocery';
 import { useSettingsStore } from '@/composables/settings';
-import { onBeforeMount, onMounted } from 'vue';
+import { onBeforeMount } from 'vue';
 import { useSocket } from '@/composables/socket.io';
+import { SocketEvent } from '@/utils/SocketEvents';
 
 const settings = useSettingsStore()
 const socket = useSocket()
@@ -21,7 +22,7 @@ const choreStore = useChoreStore()
 onBeforeMount(() => {
   socket.init()
   settings.initializeDarkMode();
-  groceryStore.init()
-  choreStore.init()
+  groceryStore.init(SocketEvent.GROCERY)
+  choreStore.init(SocketEvent.CHORE)
 })
 </script>
