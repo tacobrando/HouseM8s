@@ -30,7 +30,12 @@ export const useAuthStore = defineStore('auth', {
         router.push('/')
         this.resetLoginInfo()
       } catch(error) {
-        toast.showError(error.response.data.message)
+        console.log(error)
+        if(error.response) {
+          toast.showError(error.response.data.message)
+        } else {
+          toast.showError(error.message)
+        }
         this.$state.isLoggedIn = false;
       }
     },
