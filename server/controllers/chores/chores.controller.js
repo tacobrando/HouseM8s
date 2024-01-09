@@ -33,9 +33,9 @@ export async function addChoreController(req, res) {
     choreObj.id = choreObj._id
     delete choreObj._id
 
-    io.to(groupId).emit(SocketEvent.CHORE.ADDED, { groupName: group.name, task: choreObj });
+    io.to(groupId).emit(SocketEvent.CHORE.ADDED, { groupName: group.name, type: "chore", task: choreObj });
   
-    return res.status(200).send(choreObj)
+    return res.status(200).json(choreObj)
   } catch(error) {
     return res.status(error.status).send({ message: error.message })
   }
@@ -53,5 +53,5 @@ export async function updateChoreController(req, res) {
 
 export async function deleteChoreController(req, res) {
   const { choreId } = req.params
-  return deleteTaskController(req, res, ChoreModel, choreId, SocketEvent.CHORE)
+  return deleteTaskController(req, res, ChoreModel, choreId, "Chore", SocketEvent.CHORE)
 }

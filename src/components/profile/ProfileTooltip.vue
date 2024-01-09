@@ -18,13 +18,13 @@
 </template>
 
 <script setup>
-import Tooltip from '@/components/Tooltip.vue'
-import ProfileName from './ProfileName.vue';
-import ProfileAvatar from './ProfileAvatar.vue';
-import { useUserStore } from '@/composables/user';
-import { useAuthStore } from '@/composables/auth';
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/store/user';
+import { useAuthStore } from '@/store/auth';
+import Tooltip from '@/components/ui/Tooltip.vue'
+import ProfileName from './ProfileName.vue';
+import ProfileAvatar from './ProfileAvatar.vue';
 import LogoutModal from '@/components/modal/logout/LogoutModal.vue';
 
 const { isOpen } = defineProps(['isOpen'])

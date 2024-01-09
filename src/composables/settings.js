@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useSettingsStore = defineStore('settings', {
+export const useSettings = defineStore('settings', {
   state: () => ({
     darkMode: false,
     currency: {
@@ -13,7 +13,8 @@ export const useSettingsStore = defineStore('settings', {
     }
   }),
   actions: {
-    initializeDarkMode() {
+    init() {
+      // Initialize dark mode
       const darkModeSetting = localStorage.getItem('darkMode');
       if (darkModeSetting) {
         this.darkMode = darkModeSetting === 'true';

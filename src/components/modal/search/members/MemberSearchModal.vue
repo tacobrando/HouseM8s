@@ -39,11 +39,11 @@
   </Modal>
 </template>
 <script setup>
-import Modal from '@/components/modal/modal.vue'
 import { ref, watch } from 'vue'
-import { useUserStore } from '@/composables/user';
+import { useUserStore } from '@/store/user';
+import { useGroupStore } from '@/store/group';
+import Modal from '@/components/modal/modal.vue'
 import ProfileAvatar from '@/components/profile/ProfileAvatar.vue';
-import { useGroupStore } from '@/composables/group';
 
 const { isOpen, update, groupId } = defineProps({
   isOpen: Boolean,
@@ -70,10 +70,10 @@ watch(() => groupId, async (newGroupId) => {
 
 async function toggleUser(userId) {
   if (isLoading.value[userId]) {
-    return; // Prevent multiple clicks when already loading
+    return; // To prevent calling again if already loading.
   }
 
-  isLoading.value = { ...isLoading.value, [userId]: true }; // Set loading true
+  isLoading.value = { ...isLoading.value, [userId]: true };
 
   try {
     const index = groupMembers.value.indexOf(userId);
@@ -85,10 +85,8 @@ async function toggleUser(userId) {
       groupMembers.value.splice(index, 1);
     }
 
-    // Update successful, change the loading state
     isLoading.value = { ...isLoading.value, [userId]: false };
   } catch (error) {
-    // Handle any errors
     console.error(error);
     isLoading.value = { ...isLoading.value, [userId]: false };
   }

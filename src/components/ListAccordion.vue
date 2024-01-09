@@ -25,6 +25,7 @@
 
 <script setup>
 import { reactive } from 'vue'
+
 const { show, name, length } = defineProps({
   show: Object,
   name: String,
@@ -38,5 +39,4 @@ const showList = reactive({
     show[showId] = !show[showId]
   }
 })
-
 </script>

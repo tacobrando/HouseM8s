@@ -19,9 +19,9 @@
   </div>
 </template>
 <script setup>
-import { onBeforeMount, onMounted } from 'vue';
-import { useChoreStore } from '@/composables/chore'
-import { useGroupStore } from '@/composables/group'
+import { onBeforeMount } from 'vue';
+import { useChoreStore } from '@/store/chore'
+import { useGroupStore } from '@/store/group'
 
 import Input from '@/components/Input.vue';
 import TaskList from '@/components/TaskList.vue';

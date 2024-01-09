@@ -29,8 +29,8 @@ export async function addGroceryController(req, res) {
     groceryObj.id = groceryObj._id
     delete groceryObj._id
     
-    io.to(groupId).emit(SocketEvent.GROCERY.ADDED, { groupName: group.name, task: groceryObj });
-    return res.status(200).json({ groupId: groupId, task: groceryObj })
+    io.to(groupId).emit(SocketEvent.GROCERY.ADDED, { groupName: group.name, type: "grocery", task: groceryObj });
+    return res.status(200).json(groceryObj)
   } catch(error) {
     console.log(error)
     return res.status(error.status).send({ message: error.message })
@@ -49,7 +49,7 @@ export async function updateGroceryController(req, res) {
 
 export async function deleteGroceryController(req, res) {
   const { groceryId } = req.params
-  return deleteTaskController(req, res, GroceryModel, groceryId, SocketEvent.GROCERY)
+  return deleteTaskController(req, res, GroceryModel, groceryId, "Grocery", SocketEvent.GROCERY)
 }
 
 // export async function getGroceryController(req, res) {

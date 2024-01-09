@@ -1,11 +1,12 @@
 // storeFactory.js
-import { toast } from './toast.js';
 import { defineStore } from 'pinia';
-import { useUserStore } from './user'
-import api from '../utils/Axios.js';
-import { useSocket } from './socket.io.js';
+import { useUserStore } from '@/store/user.js'
+import { toast } from '@/composables/toast.js';
+import { useSocket } from '@/composables/socket.io.js';
+import api from '@/utils/Axios.js';
 
-export function createStoreFactory(options) {
+
+export function createTaskStoreFactory(options) {
   return defineStore({
     ...options,
     state: () => ({
@@ -25,16 +26,16 @@ export function createStoreFactory(options) {
         const { userInfo } = useUserStore()
 
         socket.on(Event.ADDED, (data) => {
-          this.list.unshift(data.task);
           if(data.task.user.userId !== userInfo.id) {
-            toast.showInfo(`${data.task.user.name} added task to ${data.groupName}.`)
+            this.list.unshift(data.task);
+            toast.showInfo(`${data.task.user.name} added ${data.type} to ${data.groupName}.`)
           }
         });
 
         socket.on(Event.DELETE, (info) => {
           this.removeFromLocalState(info.taskId);
           if(info.user !== userInfo.username) {
-            toast.showInfo(`${info.user} deleted a task from ${info.groupName}.`)
+            toast.showInfo(`${info.user} deleted a ${info.type.toLowerCase()} from ${info.groupName}.`)
           }
         })
 
@@ -91,9 +92,10 @@ export function createStoreFactory(options) {
       },
       async addItem(item, groupId) {
         try{
-          await api.post(`/groups/${groupId}/${this.api}/add`, {
+          const { data } = await api.post(`/groups/${groupId}/${this.api}/add`, {
             ...item
           })
+          this.list.unshift(data);
           this.showList.tasks = true
         } catch(error) {
           toast.showError(error.message)
@@ -142,7 +144,7 @@ export function createStoreFactory(options) {
       
           await api.put(`/groups/${groupId}/${this.api}/${itemId}/update`, { completed: item.completed });
         } else {
-          console.error('Item not found');
+          toast.showError('Item not found');
         }
       },      
       ...options.actions

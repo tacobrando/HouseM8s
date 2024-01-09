@@ -1,8 +1,8 @@
 import { describe, it, expect, vi } from 'vitest'
-import mocks from '../../mock/index'
+import mocks from '@/mock/index'
 import { createPinia, setActivePinia } from 'pinia';
-import { useAuthStore } from '@/composables/auth';
-import { registerInfo, userInfo } from './constants';
+import { useAuthStore } from '@/store/auth';
+import { registerInfo, userInfo } from './utils/constants';
 
 vi.mock('@/utils/Axios', () => ({
   default: {

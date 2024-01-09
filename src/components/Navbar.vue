@@ -27,14 +27,14 @@
   </div>
 </template>
 <script setup>
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { useSettings } from '@/composables/settings';
 import iconWhite from '@/assets/icons/HouseM8s-icon-white.png'
 import iconBlack from '@/assets/icons/HouseM8s-icon-black.png'
 import ProfileAvatar from '@/components/profile/ProfileAvatar.vue'
-import { computed } from 'vue';
-import { useSettingsStore } from '@/composables/settings';
 
-const settings = useSettingsStore()
+const settings = useSettings()
 
 const currentIcon = computed(() => settings.darkMode ? iconWhite : iconBlack);
 

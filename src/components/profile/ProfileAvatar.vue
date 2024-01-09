@@ -47,7 +47,7 @@
 
 <script setup>
 import ProfileTooltip from './ProfileTooltip.vue';
-import { useUserStore } from '@/composables/user';
+import { useUserStore } from '@/store/user';
 import { ref, reactive, watch } from 'vue'
 const props = defineProps({
   // src: {

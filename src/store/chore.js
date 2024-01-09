@@ -1,6 +1,6 @@
-import { createStoreFactory } from "./factory";
+import { createTaskStoreFactory } from "@/composables/taskFactory";
 
-export const useChoreStore = createStoreFactory({
+export const useChoreStore = createTaskStoreFactory({
   id: 'chore',
   state: () => ({
     api: 'chores',

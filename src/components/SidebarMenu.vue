@@ -21,7 +21,7 @@
       <div 
         v-for="group in store.groupList" 
         :key="group.id"
-        class="transition-colors first:z-50 first:border-t-2 border-b-2 dark:border-gray-600 p-3 border-x-0 dark:bg-default bg-white cursor-pointer"
+        class="transition-colors first:z-50 first:border-t-2 border-b-2 dark:border-gray-600 p-3 border-x-0 cursor-pointer"
       >
         <div 
           :class="[group.id === store.groupId ? 'text-blue-500' : '']"
@@ -83,18 +83,19 @@
   </div>
 </template>
 <script setup>
-import Input from './Input.vue'
+import { useUserStore } from "@/store/user"
 import { onUnmounted, reactive, computed, onBeforeMount } from 'vue';
-import Tooltip from './Tooltip.vue';
-import { useUserStore } from "@/composables/user"
-import MemberSearchModal from './modal/search/members/MemberSearchModal.vue';
+import Input from './Input.vue'
+import Tooltip from './ui/Tooltip.vue';
 import EditGroupModal from './modal/edit/EditGroupModal.vue';
 import ConfirmModal from './modal/confirm/ConfirmModal.vue';
+import MemberSearchModal from './modal/search/members/MemberSearchModal.vue';
 
 const { store, isOpen } = defineProps({
   store: Object,
   isOpen: Boolean
 })
+
 const emit = defineEmits(['close'])
 const userStore = useUserStore()
 

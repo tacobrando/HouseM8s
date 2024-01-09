@@ -54,11 +54,11 @@
 </template>
 
 <script setup>
-import moment from 'moment';
+import { useUserStore } from '@/store/user';
+import { useGroupStore } from '@/store/group';
 import { computed, onMounted, ref } from 'vue';
+import moment from 'moment';
 import Checkbox from './ui/Checkbox.vue';
-import { useUserStore } from '@/composables/user';
-import { useGroupStore } from '@/composables/group';
 
 const taskRef = ref(null);
 const { userInfo } = useUserStore()

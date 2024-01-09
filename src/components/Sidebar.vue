@@ -33,7 +33,7 @@
 <script setup>
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
-import { useGroupStore } from '@/composables/group';
+import { useGroupStore } from '@/store/group';
 import SidebarMenu from './SidebarMenu.vue';
 import ProfileAvatar from './profile/ProfileAvatar.vue';
 

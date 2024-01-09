@@ -19,7 +19,7 @@
 import Navbar from '@/components/Navbar.vue';
 import Sidebar from '@/components/Sidebar.vue';
 import { useRoute } from 'vue-router';
-import { useAuthStore } from '@/composables/auth';
+import { useAuthStore } from '@/store/auth';
 import { computed } from 'vue';
 
 const route = useRoute()

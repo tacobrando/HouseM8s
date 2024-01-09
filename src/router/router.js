@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { useAuthStore } from "@/composables/auth";
+import { useAuthStore } from "@/store/auth";
 import Home from "@/pages/Home.vue";
 import Chores from "@/pages/Chores.vue";
 import Groceries from "@/pages/Groceries.vue";

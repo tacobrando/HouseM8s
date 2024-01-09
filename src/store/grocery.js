@@ -1,6 +1,6 @@
-import { createStoreFactory } from "./factory";
+import { createTaskStoreFactory } from "@/composables/taskFactory";
 
-export const useGroceryStore = createStoreFactory({
+export const useGroceryStore = createTaskStoreFactory({
   id: 'grocery',
   state: () => ({
     api: 'groceries',

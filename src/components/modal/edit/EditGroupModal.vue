@@ -56,11 +56,12 @@
   </Modal>
 </template>
 <script setup>
+import { ref, computed, reactive } from 'vue';
+import { useGroupStore } from '@/store/group';
+import { useSettings } from '@/composables/settings';
 import Modal from '@/components/modal/modal.vue'
 import ProfileAvatar from '@/components/profile/ProfileAvatar.vue';
-import { useSettingsStore } from '@/composables/settings';
-import { useGroupStore } from '@/composables/group';
-import { ref, computed, reactive } from 'vue';
+
 
 const emit = defineEmits(['update', 'remove'])
 const { isOpen, group } = defineProps({
@@ -71,7 +72,7 @@ const { isOpen, group } = defineProps({
 const groupStore = useGroupStore()
 const isLoading = ref({});
 
-const settings = useSettingsStore()
+const settings = useSettings()
 
 const currencySettings = computed(() => {
   return Object.entries(settings.currency.options).map(([key, value]) => ({

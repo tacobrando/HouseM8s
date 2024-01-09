@@ -59,10 +59,11 @@
 </template>
 
 <script setup>
-import Modal from '@/components/modal/modal.vue'
-import { useUserStore } from '@/composables/user';
 import { computed } from 'vue';
+import { useUserStore } from '@/store/user';
 import { isFilled, isValidEmail } from '@/utils/Helpers';
+import Modal from '@/components/modal/modal.vue'
+
 const { isOpen, update } = defineProps({
   isOpen: Boolean,
   update: Function
@@ -75,5 +76,4 @@ const isFormValid = computed(() => {
       isFilled(registerInfo.password) && 
       registerInfo.password === registerInfo.confirmPassword
 });
-
 </script>

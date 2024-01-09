@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="profile-container m-4">
     {{ router.currentRoute.value.params.username }}
   </div>
 </template>
@@ -8,6 +8,4 @@
 import { useRouter } from 'vue-router';
 
 const router = useRouter()
-
-console.log(router.currentRoute)
 </script>

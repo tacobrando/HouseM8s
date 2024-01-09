@@ -49,17 +49,17 @@ export async function getGroupTaskController(req, res, model) {
   }
 }
 
-export async function deleteTaskController(req, res, model, id, event) {
+export async function deleteTaskController(req, res, model, id, type, event) {
   try {
     const { groupId } = req.params
     const group = await GroupModel.findById(groupId)
     const result = await model.findByIdAndDelete(id)
     const io = req.app.get('io')
     if(result) {
-      io.to(groupId).emit(event.DELETE, { groupName: group.name, taskId: id, user: req.user.username })
-      return res.status(200).json({ message: 'Task deleted successfully.' })
+      io.to(groupId).emit(event.DELETE, { groupName: group.name, taskId: id, type: type, user: req.user.username })
+      return res.status(200).json({ message: `${type} deleted successfully.` })
     } else {
-      return res.status(404).json({ message: "Task not found!" })
+      return res.status(404).json({ message: `${type} not found!` })
     }
 
   } catch(error) {

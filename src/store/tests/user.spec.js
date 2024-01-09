@@ -1,9 +1,9 @@
 import { describe, it, expect, vi } from 'vitest'
-import mocks from '../../mock/index'
+import mocks from '@/mock/index'
 import { createPinia, setActivePinia } from 'pinia';
-import { useUserStore } from '@/composables/user';
+import { useUserStore } from '@/store/user';
 import { isValidEmail } from '@/utils/Helpers';
-import { registerInfo, userInfo } from './constants';
+import { registerInfo, userInfo } from './utils/constants';
 
 vi.mock('@/utils/Axios', () => ({
   default: {
@@ -104,37 +104,10 @@ describe('User Store', () => {
   })
 
   it("Registration throws error if username is taken.", async() => {
-    mocks.axios.post.mockRejectedValueOnce({
-      response: {
-        data: {
-          message: "Username is already in use!"
-        }
-      }
-    });
-
-    await userStore.registerUser()
-    
-    expect(mocks.axios.post).toHaveBeenCalledWith('/users/register', {
-      info: userStore.registerInfo
-    });
-    expect(mocks.toast.showError).toHaveBeenCalledWith("Username is already in use!");
+    await testRegistrationError("Username is already in use!")
   })
 
   it("Registration throws error if email is taken.", async() => {
-    mocks.axios.post.mockRejectedValueOnce({
-      response: {
-        data: {
-          message: "Email is already in use!"
-        }
-      }
-    });
-
-    await userStore.registerUser()
-    
-    expect(mocks.axios.post).toHaveBeenCalledWith('/users/register', {
-      info: userStore.registerInfo
-    });
-
-    expect(mocks.toast.showError).toHaveBeenCalledWith("Email is already in use!");
+    await testRegistrationError("Email is already in use!")
   })
 })

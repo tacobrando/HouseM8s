@@ -30,12 +30,15 @@ const chartInstance = ref(null);
 
 function createChart() {
   nextTick(() => {
-    if (chartInstance.value) {
-      chartInstance.value.destroy();
-    }
     const canvas = document.getElementById(chartId);
-    if (canvas) {
-      const context = canvas.getContext('2d');
+    if (!canvas) return;
+
+    const context = canvas.getContext('2d');
+
+    if (chartInstance.value) {
+      chartInstance.value.data = data;
+      chartInstance.value.update();
+    } else {
       chartInstance.value = new Chart(context, {
         type: type,
         data: data,

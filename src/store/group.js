@@ -1,11 +1,12 @@
 import { defineStore } from "pinia";
-import api from '@/utils/Axios'
-import { toast } from "./toast";
+import { useUserStore } from "./user";
 import { useChoreStore } from "./chore";
 import { useGroceryStore } from "./grocery";
-import { useSocket } from "./socket.io";
-import { SocketEvent } from "../utils/SocketEvents";
-import { useUserStore } from "./user";
+import { useSocket } from "@/composables/socket.io";
+import { toast } from "@/composables/toast";
+import { SocketEvent } from "@/utils/SocketEvents";
+import api from '@/utils/Axios'
+
 
 export const useGroupStore = defineStore('group', {
   state: () => ({
@@ -51,7 +52,6 @@ export const useGroupStore = defineStore('group', {
           toast.showSuccess(`${res.data.username} added to ${group.name}!`)
         })
       } catch(error) {
-        console.log(error)
         toast.showError(error.message)
       }
     },
@@ -72,7 +72,7 @@ export const useGroupStore = defineStore('group', {
     setGroup(id) {
       const { socket } = useSocket()
       const { userInfo } = useUserStore()
-      this.members = []
+      // this.members = []
       if(this.groupId !== id) {
         useGroceryStore().getGroupItems(id)
         useChoreStore().getGroupItems(id)

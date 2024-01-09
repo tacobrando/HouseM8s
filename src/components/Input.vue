@@ -37,8 +37,8 @@
   </form>
 </template>
 <script setup>
-import { reactive, ref, computed } from 'vue';
-import { useUserStore } from '@/composables/user';
+import { reactive, computed } from 'vue';
+import { useUserStore } from '@/store/user';
 
 const props = defineProps({
   placeholder: String,
@@ -71,7 +71,6 @@ const isPriceValid = computed(() => {
   const regex = /^(\d+(\.\d{0,2})?|\.?\d{1,2})$/;
   return regex.test(itemRef.price);
 });
-
 
 const isFormValid = computed(() => {
   return itemRef.item.length > 0 && isPriceValid.value;

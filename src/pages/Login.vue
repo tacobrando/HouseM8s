@@ -29,18 +29,17 @@
   </div>
 </template>
 <script setup>
-import RegisterModal from '@/components/modal/register/RegisterModal.vue';
-import { useAuthStore } from '@/composables/auth'
-import { toast } from '@/composables/toast'
 import { reactive, computed } from 'vue';
+import { useAuthStore } from '@/store/auth'
+import { toast } from '@/composables/toast'
 import { isFilled } from '@/utils/Helpers';
-import { useSettingsStore } from '@/composables/settings';
-
+import { useSettings } from '@/composables/settings';
+import RegisterModal from '@/components/modal/register/RegisterModal.vue';
 import imageWhite from '@/assets/img/HouseM8s-white.png'
 import imageBlack from '@/assets/img/HouseM8s-black.png'
 
 const authStore = useAuthStore()
-const settings = useSettingsStore()
+const settings = useSettings()
 
 const imageUrl = computed(() => settings.darkMode ? imageWhite : imageBlack)
 

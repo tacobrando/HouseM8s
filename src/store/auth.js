@@ -3,7 +3,7 @@ import { useUserStore } from "./user";
 import { router } from '@/router/router'
 
 import api from "@/utils/Axios";
-import { toast } from "./toast";
+import { toast } from "@/composables/toast";
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -30,7 +30,6 @@ export const useAuthStore = defineStore('auth', {
         router.push('/')
         this.resetLoginInfo()
       } catch(error) {
-        console.log(error)
         if(error.response) {
           toast.showError(error.response.data.message)
         } else {

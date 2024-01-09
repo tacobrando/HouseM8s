@@ -10,11 +10,11 @@
           <span v-if="groceryStore.completed.length < 1 && groceryStore.list.length < 1">No data</span>
           <Chart 
             v-else
-            :key="groceryStore.completed" 
+            :key="groceryStore.completed.length" 
             type="doughnut" 
             :options="chartOptions" 
             :data="groceryChartData" 
-          />
+          />  
         </div>
         <div class="chore-activities mb-4">
           <div class="font-semibold text-lg underline">
@@ -23,7 +23,7 @@
           <span v-if="choreStore.completed.length < 1 && choreStore.list.length < 1">No data</span>
           <Chart 
             v-else
-            :key="choreStore.completed" 
+            :key="choreStore.completed.length" 
             type="doughnut" 
             :options="chartOptions" 
             :data="choreChartData" 
@@ -37,10 +37,10 @@
 </template>
 
 <script setup>
-import { computed, onBeforeMount } from 'vue';
-import { useChoreStore } from '@/composables/chore';
-import { useGroceryStore } from '@/composables/grocery';
-import { useGroupStore } from '@/composables/group';
+import { computed } from 'vue';
+import { useChoreStore } from '@/store/chore';
+import { useGroceryStore } from '@/store/grocery';
+import { useGroupStore } from '@/store/group';
 import { parseChartData, generateColors } from '@/utils/Chart'
 import Chart from '@/components/Chart.vue';
 
@@ -64,7 +64,6 @@ const groceryChartData = computed(() => {
   const labels = Object.keys(priceTotals);
   const data = Object.values(priceTotals);
   const backgroundColors = generateColors(labels);
-
 
   return {
     labels: labels,
@@ -100,5 +99,4 @@ const choreChartData = computed(() => {
     }]
   }
 })
-
 </script>

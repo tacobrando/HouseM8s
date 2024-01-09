@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
-import api from "@/utils/Axios";
-import { toast } from "./toast";
 import { router } from '@/router/router'
+import { toast } from "@/composables/toast";
+import api from "@/utils/Axios";
 
 export const useUserStore = defineStore('user', {
   state: () => ({

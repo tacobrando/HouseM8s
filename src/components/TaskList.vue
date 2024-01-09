@@ -36,9 +36,9 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import Task from '@/components/Task.vue';
 import ListAccordion from '@/components/ListAccordion.vue'
-import { computed } from 'vue';
 
 const { store, title, groupId, name } = defineProps({
   store: Object,

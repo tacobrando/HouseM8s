@@ -7,8 +7,9 @@
 </template>
 
 <script setup>
-import { useUserStore } from '@/composables/user';
 import { computed } from 'vue';
+import { useUserStore } from '@/store/user';
+
 const { username } = defineProps({
   username: {
     type: String,
