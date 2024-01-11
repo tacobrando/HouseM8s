@@ -21,6 +21,27 @@ export const useUserStore = defineStore('user', {
     }
   }),
   actions: {
+    async getUser(userId) {
+      try {
+        const { data } = await api.get(`/users/user/${userId}`)
+        if(data) {
+          return data
+        }
+      } catch(error) {
+        toast.showError(error.response.data.message)
+      }
+    },
+    async updateUser(userId, item) {
+      try {
+        const { data } = await api.put(`/users/user/${userId}`, item)
+        if(data) {
+          toast.showSuccess(data.message)
+          return data
+        }
+      } catch(error) {
+        toast.showError(error.response.data.message)
+      }
+    },
     async getAllUsers() {
       try {
         const { data } = await api.get('/users/all')

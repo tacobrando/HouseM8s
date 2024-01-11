@@ -11,6 +11,10 @@ export default mongoose.model("User", new mongoose.Schema({
     required: true,
     unique: true
   },
+  image: {
+    type: String,
+    default: 'default'
+  },
   password: {
     type: String,
     required: true

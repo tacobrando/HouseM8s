@@ -25,25 +25,25 @@
           <li v-for="member in group.members" :key="member.userId" class="member-search-results-item p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
             <div v-if="member.userId" class="flex items-center justify-between my-2 mx-2">
               <span class="flex items-center w-full">
-                <ProfileAvatar class="w-10 h-10" />
+                <ProfileAvatar :img="(currentUser.id === member.userId ? currentUser.image : member.image)" class="w-10 h-10" />
                 <div class="flex justify-between w-full items-center">
                   <p class="mx-2">{{ member.username }}</p>
                   <p class="text-gray-400 text-sm" v-if="group.owner === member.userId">Owner</p>
                 </div>
               </span>
-              <span class="flex items-center" v-if="member.userId !== group.owner">
+              <span class="flex items-center">
                 <span 
                   v-if="isLoading[member.userId]"  
                   class="inline-block w-6 h-6 border-4 border-blue-500 rounded-full border-t-transparent animate-spin" 
                 />
                 <button
                   v-else
-                  v-if="group.owner === member.userId"
+                  v-if="group.owner === currentUser.id && member.userId !== group.owner"
                   @click="removeUserHandler(group.id, member.userId)"
-                  class="rounded-md text-white flex items-center p-1 bg-red-500" 
+                  class="rounded-md text-white flex items-center p-1 bg-red-500"
                 >
                   <font-awesome-icon icon="fa-solid fa-trash" class="w-5 h-5" />
-                </button>              
+                </button>       
               </span>
             </div>
             <span v-else class="my-2">
@@ -58,6 +58,7 @@
 <script setup>
 import { ref, computed, reactive } from 'vue';
 import { useGroupStore } from '@/store/group';
+import { useUserStore } from '@/store/user';
 import { useSettings } from '@/composables/settings';
 import Modal from '@/components/modal/modal.vue'
 import ProfileAvatar from '@/components/profile/ProfileAvatar.vue';
@@ -71,6 +72,8 @@ const { isOpen, group } = defineProps({
 
 const groupStore = useGroupStore()
 const isLoading = ref({});
+
+const currentUser = computed(() => useUserStore().userInfo);
 
 const settings = useSettings()
 

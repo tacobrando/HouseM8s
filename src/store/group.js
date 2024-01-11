@@ -19,12 +19,18 @@ export const useGroupStore = defineStore('group', {
 
   actions: {
     async getGroups() {
+      const { getUser } = useUserStore()
       try {
         await api.get('/groups/all')
         .then((res) => {
           for(const group of res.data) {
             group.id = group._id
             delete group._id
+
+            group.members.forEach(async (member) => {
+              const user = await getUser(member.userId)
+              member.image = user.image
+            })
           }
           this.groupList = res.data
         })
@@ -43,12 +49,17 @@ export const useGroupStore = defineStore('group', {
       } 
     },
     async addUser(groupId, userId) {
+      const { getUser } = useUserStore()
+      const user = await getUser(userId)
       const group = this.groupList.find(group => group.id === groupId)
       try {
         await api.put(`/groups/${groupId}/add-user`, {
           memberId: userId
         }).then((res) => {
           group.members.push(res.data)
+          const member = group.members.find(member => member.userId === userId)
+          member.image = user.image
+          this.members = group.members
           toast.showSuccess(`${res.data.username} added to ${group.name}!`)
         })
       } catch(error) {
@@ -62,6 +73,7 @@ export const useGroupStore = defineStore('group', {
         .then((res) => {
           if (group) {
             group.members = group.members.filter(member => member.userId !== userId);
+            this.members = group.members
           }
           toast.showSuccess(res.data.message)
         });
@@ -72,7 +84,6 @@ export const useGroupStore = defineStore('group', {
     setGroup(id) {
       const { socket } = useSocket()
       const { userInfo } = useUserStore()
-      // this.members = []
       if(this.groupId !== id) {
         useGroceryStore().getGroupItems(id)
         useChoreStore().getGroupItems(id)

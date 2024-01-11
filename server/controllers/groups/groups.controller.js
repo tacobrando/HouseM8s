@@ -118,6 +118,11 @@ export async function deleteGroupController(req, res) {
       await ChoreModel.deleteMany({ groupId: groupId });
       await GroceryModel.deleteMany({ groupId: groupId });
 
+      await UserModel.updateMany(
+        { groups: groupId },
+        { $pull: { groups: groupId } }
+      )
+      
       // Then delete the group
       await GroupModel.findByIdAndDelete(groupId);
 

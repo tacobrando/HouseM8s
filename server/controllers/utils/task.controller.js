@@ -11,11 +11,13 @@ export async function updateTaskController(req, res, model, taskId, userId, even
     if(task.completed.userId) {
       task.completed = {
         userId: null,
+        image: null,
         name: null
       }
     } else {
       task.completed = {
         userId: user._id,
+        image: user.image,
         name: user.username
       }
     }

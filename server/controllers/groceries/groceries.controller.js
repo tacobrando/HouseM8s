@@ -18,6 +18,7 @@ export async function addGroceryController(req, res) {
       groupId,
       completed: {
         userId: null,
+        image: null,
         name: null
       } 
     })

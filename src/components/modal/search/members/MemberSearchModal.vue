@@ -17,7 +17,7 @@
         <li v-for="result in searchResults" :key="result.id" class="member-search-results-item p-1 rounded-md dark:hover:bg-gray-700 hover:bg-gray-100">
           <div v-if="result.id" class="flex items-center justify-between my-2 mx-2">
             <span class="flex items-center">
-              <ProfileAvatar class="w-10 h-10 mr-2" />
+              <ProfileAvatar :img="result.image" class="w-10 h-10 mr-2" />
               <p>{{ result.username }}</p>
             </span>
             <span class="flex items-center">
@@ -39,7 +39,7 @@
   </Modal>
 </template>
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, watchEffect } from 'vue';
 import { useUserStore } from '@/store/user';
 import { useGroupStore } from '@/store/group';
 import Modal from '@/components/modal/modal.vue'
@@ -54,19 +54,20 @@ const { isOpen, update, groupId } = defineProps({
 const emit = defineEmits(['add', 'remove', 'update']);
 
 const { getAllUsers, userInfo } = useUserStore()
-const { groupList, addUser, removeUser } = useGroupStore()
+const groupStore = useGroupStore()
  
 const searchQuery = ref('');
 const searchResults = ref([]);
 const groupMembers = ref([]);
 const isLoading = ref({});
 
-watch(() => groupId, async (newGroupId) => {
-  if (newGroupId) {
-    const currentGroup = groupList.find(group => group.id === newGroupId);
-    groupMembers.value = currentGroup ? currentGroup.members.map(member => member.userId) : [];
+watchEffect(() => {
+  const currentGroup = groupStore.groupList.find(group => group.id === groupId);
+  groupMembers.value = currentGroup ? currentGroup.members.map(member => member.userId) : [];
+  if (searchQuery.value) {
+    handleSearch();
   }
-}, { immediate: true });
+});
 
 async function toggleUser(userId) {
   if (isLoading.value[userId]) {
@@ -78,10 +79,10 @@ async function toggleUser(userId) {
   try {
     const index = groupMembers.value.indexOf(userId);
     if (index === -1) {
-      await addUser(groupId, userId);
+      await groupStore.addUser(groupId, userId);
       groupMembers.value.push(userId);
     } else {
-      await removeUser(groupId, userId);
+      await groupStore.removeUser(groupId, userId);
       groupMembers.value.splice(index, 1);
     }
 
@@ -105,13 +106,12 @@ async function handleSearch() {
     searchResults.value = [];
     return;
   }
-  const currentGroup = groupList.find(group => group.id === groupId);
+  const currentGroup = groupStore.groupList.find(group => group.id === groupId);
   const searchSegments = searchQuery.value.toLowerCase().split(' ').filter(segment => segment.length);
 
   let filteredResults = users.filter(user => {
     return user.id !== userInfo.id && 
     user.id !== currentGroup.owner &&
-    // !groupMembers.value.includes(user.id) &&
     searchSegments.some(segment => 
       user.username.toLowerCase().startsWith(segment)
     );

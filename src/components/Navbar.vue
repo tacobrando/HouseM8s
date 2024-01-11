@@ -22,7 +22,7 @@
       </router-link>
     </div>
     <div class="mr-4 flex-grow-0 hidden md:block w-10 h-10">
-      <ProfileAvatar mode="tooltip" />
+      <ProfileAvatar :img="avatar" tooltip />
     </div>
   </div>
 </template>
@@ -30,12 +30,15 @@
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useSettings } from '@/composables/settings';
+import { useUserStore } from '@/store/user';
 import iconWhite from '@/assets/icons/HouseM8s-icon-white.png'
 import iconBlack from '@/assets/icons/HouseM8s-icon-black.png'
 import ProfileAvatar from '@/components/profile/ProfileAvatar.vue'
 
 const settings = useSettings()
 
+
+const avatar = computed(() => useUserStore().userInfo.image)
 const currentIcon = computed(() => settings.darkMode ? iconWhite : iconBlack);
 
 const routes = useRouter().options.routes

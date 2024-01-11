@@ -22,6 +22,7 @@ export async function addChoreController(req, res) {
       groupId,
       completed: {
         userId: null,
+        image: null,
         name: null
       } 
     })

@@ -6,14 +6,19 @@
     :class="[ task.completed.userId !== null ? 'bg-gray-400':'bg-white']"
   >
     <div class="flex-none">
-      <Checkbox :disabled="task.completed.userId !== userInfo.id && task.completed.userId !== null" :completed="task.completed.userId" @toggle="toggleComplete(task.id)" />
+      <Checkbox 
+        :disabled="task.completed.userId !== userInfo.id && task.completed.userId !== null" 
+        :completed="task.completed.userId" 
+        @toggle="toggleComplete(task.id)" 
+      />
     </div>
     <div class="flex-grow flex justify-between items-center">
       <div class="task-details flex flex-col">
         <span 
-          class="text-sm font-medium"
+          class="text-sm font-medium flex items-center"
           :class="[ task.completed.userId ? 'text-gray-500':'text-gray-400']"
         >
+          <ProfileAvatar v-if="taskUser" :img="taskUser.image" class="w-4 h-4 mr-1" />
           {{ task.user.name }}
         </span>
         <span 
@@ -56,18 +61,21 @@
 <script setup>
 import { useUserStore } from '@/store/user';
 import { useGroupStore } from '@/store/group';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watchEffect, watch } from 'vue';
 import moment from 'moment';
 import Checkbox from './ui/Checkbox.vue';
+import ProfileAvatar from './profile/ProfileAvatar.vue';
 
 const taskRef = ref(null);
-const { userInfo } = useUserStore()
+const { userInfo, getUser } = useUserStore()
 const { currency } = useGroupStore()
 
 const emit = defineEmits(['delete', 'update']);
 const { task, groupId } = defineProps(['task', 'groupId']);
 
 const formattedDate = computed(() => moment(task.createdAt).fromNow())
+
+const taskUser = ref({})
 
 function deleteItem (id) {
   if (taskRef.value) {
@@ -80,9 +88,10 @@ function deleteItem (id) {
 
 const toggleComplete = (id) => emit('update', id)
 
-onMounted(() => {
+onMounted(async () => {
   if (taskRef.value) {
     taskRef.value.classList.add('animate-slide-down');
   }
+  taskUser.value = await getUser(task.user.userId)
 });
 </script>

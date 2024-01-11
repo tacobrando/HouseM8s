@@ -88,12 +88,33 @@ export async function getUsersController(req, res) {
 }
 
 export async function getUserController(req, res) {
-  const { userId } = req.body
+  try {
+    const { userId } = req.params
+    const user = await UserModel.findById(userId)
+  
+    if(!user) {
+      return res.status(401).send({ message: "User not found." });
+    }
+    
+    const userObj = user.toObject()
+    userObj.id = userObj._id
+    delete userObj._id
+    delete userObj.password
+  
+    return res.status(200).send(userObj)
+  } catch(error) {
+    return res.status(error.response?.status || 500).send({ message: error.message })
+  }
+}
 
-  const user = await UserModel.findById(userId)
+export async function updateUserController(req, res) {
+  try {
+    const { userId } = req.params
+    await UserModel.findByIdAndUpdate(userId, req.body)
 
-  if(!user) {
-    return res.status(401).send({ message: "User not found." });
+    return res.status(200).json({ message: 'Update successful.' })
+  } catch(error) {
+    return res.status(error.response?.status || 500).send({ message: error.message })
   }
 }
 

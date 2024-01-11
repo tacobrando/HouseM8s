@@ -60,7 +60,8 @@ const userStore = useUserStore();
 const itemRef = reactive({
   user: {
     userId: userStore.userInfo.id,
-    name: userStore.userInfo.username
+    name: userStore.userInfo.username,
+    image: userStore.userInfo.image
   },
   item: '',
   price: ''

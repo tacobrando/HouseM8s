@@ -6,6 +6,10 @@ export const TaskSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    image: {
+      type: Schema.Types.String,
+      ref: "User"
+    },
     name: {
       type: Schema.Types.String,
       ref: "User"
