@@ -63,7 +63,7 @@ export async function addUserToGroupController(req, res) {
       return res.status(404).send({ message: "User not found." });
     }
 
-    const memberInfo = { userId: user._id, username: user.username, joined: new Date() };
+    const memberInfo = { userId: user._id, username: user.username, image: user.image, joined: new Date() };
     group.members.push(memberInfo);
     await group.save();
 

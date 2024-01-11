@@ -33,7 +33,6 @@ export async function addGroceryController(req, res) {
     io.to(groupId).emit(SocketEvent.GROCERY.ADDED, { groupName: group.name, type: "grocery", task: groceryObj });
     return res.status(200).json(groceryObj)
   } catch(error) {
-    console.log(error)
     return res.status(error.status).send({ message: error.message })
   }
 }

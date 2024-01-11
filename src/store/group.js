@@ -49,16 +49,12 @@ export const useGroupStore = defineStore('group', {
       } 
     },
     async addUser(groupId, userId) {
-      const { getUser } = useUserStore()
-      const user = await getUser(userId)
       const group = this.groupList.find(group => group.id === groupId)
       try {
         await api.put(`/groups/${groupId}/add-user`, {
           memberId: userId
         }).then((res) => {
           group.members.push(res.data)
-          const member = group.members.find(member => member.userId === userId)
-          member.image = user.image
           this.members = group.members
           toast.showSuccess(`${res.data.username} added to ${group.name}!`)
         })

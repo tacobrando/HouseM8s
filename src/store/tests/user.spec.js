@@ -59,6 +59,7 @@ describe('User Store', () => {
       username: 'testuser',
       email: 'testuser@example.com',
       groups: [],
+      image: 'default',
       createdAt: '2023-01-01T00:00:00.000Z',  
       updatedAt: '2023-01-01T00:00:00.000Z'
     })

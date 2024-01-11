@@ -55,7 +55,8 @@ describe("Group Store", () => {
     expect(mocks.axios.put).toHaveBeenCalledWith(`/groups/${groupInfo.id}/add-user`, {
       memberId: memberInfo.id
     })
-    const group = groupStore.groupList.find(group => group.id === groupInfo.id);
+    const group = groupStore.groupList.find(group => group.id === groupInfo.id)
+    console.log(group)
     expect(group.members).toContainEqual(expect.objectContaining(member));
     expect(mocks.toast.showSuccess).toHaveBeenCalledWith(`${member.username} added to ${group.name}!`)
   })

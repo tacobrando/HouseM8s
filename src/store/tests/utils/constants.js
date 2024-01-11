@@ -10,6 +10,7 @@ export const userInfo = {
   username: 'testuser',
   email: 'testuser@example.com',
   groups: [],
+  image: 'default',
   createdAt: '2023-01-01T00:00:00.000Z',
   updatedAt: '2023-01-01T00:00:00.000Z'
 }
@@ -19,6 +20,7 @@ export const memberInfo = {
   username: 'testuser2',
   email: 'testuser2@example.com',
   groups: [],
+  image: 'default',
   createdAt: '2023-01-01T00:00:00.000Z',
   updatedAt: '2023-01-01T00:00:00.000Z'
 }
@@ -32,6 +34,7 @@ export const groupInfo = {
     {
       userId: userInfo._id,
       username: userInfo.username,
+      image: 'default',
       joined: '2023-01-01T00:00:00.000Z'
     }
   ],

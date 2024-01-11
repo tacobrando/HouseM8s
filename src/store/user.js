@@ -28,14 +28,16 @@ export const useUserStore = defineStore('user', {
           return data
         }
       } catch(error) {
-        toast.showError(error.response.data.message)
+        toast.showError(error.message)
       }
     },
-    async updateUser(userId, item) {
+    async updateUser(userId, item, showMsg = true) {
       try {
         const { data } = await api.put(`/users/user/${userId}`, item)
         if(data) {
-          toast.showSuccess(data.message)
+          if(showMsg) {
+            toast.showSuccess(data.message)
+          }
           return data
         }
       } catch(error) {

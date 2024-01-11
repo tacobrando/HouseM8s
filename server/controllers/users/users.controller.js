@@ -82,7 +82,6 @@ export async function getUsersController(req, res) {
     }))
 
   } catch(error) {
-    console.log(error)
     return res.status(400).send({ message: error.message })
   } 
 }
@@ -120,7 +119,6 @@ export async function updateUserController(req, res) {
 
 export async function getCookie(req, res) {
   const token = req.cookies['Housem8s_token']
-  console.log(token)
   return
 }
 

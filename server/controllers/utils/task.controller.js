@@ -26,7 +26,6 @@ export async function updateTaskController(req, res, model, taskId, userId, even
     io.to(groupId).emit(event.UPDATED, { taskId: task.id, groupName: group.name, completed: task.completed })
     return res.status(200).end()
   } catch(error) {
-    console.log(error)
     return res.status(error.response?.status || 500).send({ message: error.message })
   }
 }
