@@ -56,7 +56,6 @@ describe("Group Store", () => {
       memberId: memberInfo.id
     })
     const group = groupStore.groupList.find(group => group.id === groupInfo.id)
-    console.log(group)
     expect(group.members).toContainEqual(expect.objectContaining(member));
     expect(mocks.toast.showSuccess).toHaveBeenCalledWith(`${member.username} added to ${group.name}!`)
   })
