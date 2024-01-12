@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start": "serve -s dist",
     "build": "vite build",
     "preview": "vite preview --host",
     "test": "vitest"
