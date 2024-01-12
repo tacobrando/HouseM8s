@@ -5,7 +5,7 @@
         <h1 class="text-xl font-bold text-start">Sign Up</h1>
         <p class="text-gray-500 text-sm">I mean, why not?</p>
       </div>
-      <form @submit.prevent="registerUser" class="p-4">
+      <form @submit.prevent="submitForm" class="p-4">
         <div id="register-username">
           <input 
             type="text" 
@@ -76,4 +76,9 @@ const isFormValid = computed(() => {
       isFilled(registerInfo.password) && 
       registerInfo.password === registerInfo.confirmPassword
 });
+
+async function submitForm() {
+  await registerUser()
+  update(false)
+}
 </script>

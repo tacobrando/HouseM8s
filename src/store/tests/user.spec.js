@@ -64,7 +64,6 @@ describe('User Store', () => {
       updatedAt: '2023-01-01T00:00:00.000Z'
     })
     expect(mocks.toast.showSuccess).toHaveBeenCalledWith('Registration successful');
-    expect(mocks.router.push).toHaveBeenCalledWith('/');
   })
 
   it('Registration throws invalid email error.', async() => {

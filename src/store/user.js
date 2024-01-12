@@ -3,6 +3,7 @@ import { router } from '@/router/router'
 import { toast } from "@/composables/toast";
 import api from "@/utils/Axios";
 import { useGroupStore } from "./group";
+import { useAuthStore } from "./auth";
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -82,18 +83,22 @@ export const useUserStore = defineStore('user', {
       }
     },
     async registerUser() {
+      const authStore = useAuthStore()
+
       try {
         await api.post('/users/register', {
           info: this.$state.registerInfo
         })
         .then((res) => {
           if(res.data) {
+            authStore.username = this.registerInfo.username
+            authStore.password = this.registerInfo.password
             this.setUserInfo(res.data.user)
             toast.showSuccess(res.data.message)
           }
         })
+        await authStore.loginUser(false)
         this.resetInfo('register')
-        router.push('/')
       } catch(error) {   
         if(error.response) {
           toast.showError(error.response.data.message)

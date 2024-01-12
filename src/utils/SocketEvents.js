@@ -1,8 +1,4 @@
 export const SocketEvent = Object.freeze({
-  // TASK_ADDED: 'task_added',
-  // TASK_DELETED: 'task_deleted',
-  // TASK_UPDATED: 'task_updated',
-  // TASK_NOTIFICATION: 'task_notification',
   CHORE: {
     ADDED: 'chore_added',
     UPDATED: 'chore_updated',

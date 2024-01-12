@@ -22,7 +22,7 @@
           <span class="sidebar-title font-semibold text-lg flex-shrink-0">
             {{ route.name }}
           </span>
-          <ProfileAvatar :img="image" tooltip class="w-10 h-10 mr-4" />
+          <ProfileAvatar :img="avatar" tooltip class="w-10 h-10 mr-4" />
         </div>
       </div>
         <SidebarMenu @close="mobileMenu.set" :isOpen="mobileMenu.value" :store="groupStore" />
@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useGroupStore } from '@/store/group';
 import { useUserStore } from '@/store/user';
@@ -40,7 +40,7 @@ import ProfileAvatar from './profile/ProfileAvatar.vue';
 
 const route = useRoute()
 const groupStore = useGroupStore()
-const { image } = useUserStore().userInfo
+const avatar = computed(() => useUserStore().userInfo.image)
 
 const mobileMenu = reactive({
   value: false,
