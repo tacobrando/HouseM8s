@@ -34,7 +34,7 @@ export default defineConfig({
         ],
         screenshots: [
           {
-            src: '/screenshots/mobile.png', // Add a mobile screenshot
+            src: '/screenshots/mobile.png',
             sizes: '1140x1952',
             type: 'image/png',
             label: 'Mobile View',
