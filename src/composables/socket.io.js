@@ -9,7 +9,7 @@ export const useSocket = defineStore('socket', {
   }),
   actions: {
     init() {
-      this.socket = io(`${HOST}:${PORT}`)
+      this.socket = io(`${HOST}`)
       this.socket.on('connected', () => {
         this.isConnected = true
       })
