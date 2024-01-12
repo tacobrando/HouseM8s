@@ -4,6 +4,7 @@ import { isValidEmail } from '../../utils/Helpers.js'
 import { Console } from '../../utils/Tools.js'
 import { hash } from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import GroupModel from '../../models/Group.Model.js'
 
 export async function registerUserController(req, res) {
   try {
@@ -108,14 +109,34 @@ export async function getUserController(req, res) {
 
 export async function updateUserController(req, res) {
   try {
-    const { userId } = req.params
-    await UserModel.findByIdAndUpdate(userId, req.body)
+    const { userId } = req.params;
+    const updateData = req.body;
 
-    return res.status(200).json({ message: 'Update successful.' })
-  } catch(error) {
-    return res.status(error.response?.status || 500).send({ message: error.message })
+    const user = await UserModel.findByIdAndUpdate(userId, updateData, { new: true });
+
+    // Check if update is avatar image
+    if (user && 'image' in updateData) {
+      // Check all groups user is apart of
+      const groups = await GroupModel.find({ 'members.userId': userId });
+
+      // Update user avatar in all groups
+      const updatedInfo = groups.map(group => {
+        const memberIndex = group.members.findIndex(member => member.userId.toString() === userId);
+        if (memberIndex !== -1) {
+          group.members[memberIndex].image = updateData.image;
+        }
+        return group.save();
+      });
+
+      await Promise.all(updatedInfo);
+    }
+
+    return res.status(200).json({ message: 'Update successful.' });
+  } catch (error) {
+    return res.status(error.response?.status || 500).send({ message: error.message });
   }
 }
+
 
 export async function getCookie(req, res) {
   const token = req.cookies['Housem8s_token']

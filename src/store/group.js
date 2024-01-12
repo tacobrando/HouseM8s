@@ -19,18 +19,12 @@ export const useGroupStore = defineStore('group', {
 
   actions: {
     async getGroups() {
-      const { getUser } = useUserStore()
       try {
         await api.get('/groups/all')
         .then((res) => {
           for(const group of res.data) {
             group.id = group._id
             delete group._id
-
-            group.members.forEach(async (member) => {
-              const user = await getUser(member.userId)
-              member.image = user.image
-            })
           }
           this.groupList = res.data
         })

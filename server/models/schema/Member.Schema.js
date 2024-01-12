@@ -9,5 +9,9 @@ export const MemberSchema = new Schema({
     type: String,
     ref: "User"
   },
+  image: {
+    type: String,
+    ref: "User"
+  },
   joined: Date
 }, { _id: false })

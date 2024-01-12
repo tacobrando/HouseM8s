@@ -106,6 +106,7 @@ async function addGroup(group) {
     members: [{
       userId: userStore.userInfo.id,
       username: userStore.userInfo.username,
+      image: userStore.userInfo.image,
       joined: new Date()
     }]
   })
