@@ -9,7 +9,7 @@ export const useSocket = defineStore('socket', {
   }),
   actions: {
     init() {
-      this.socket = io(`${HOST}`)
+      this.socket = io(`${import.meta.env.VITE_SERVER_URL}`)
       this.socket.on('connected', () => {
         this.isConnected = true
       })
