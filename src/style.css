@@ -7,7 +7,10 @@
   line-height: 1.5;
   font-weight: 400;
   overflow: hidden;
-  color-scheme: light dark;
+  --bg: #ffffff;
+  --color-scheme: #ffffff;
+  color-scheme: var(--color-scheme);
+  background: var(--bg);
   color: black;
   font-synthesis: none;
   text-rendering: optimizeLegibility;

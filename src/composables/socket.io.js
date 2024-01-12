@@ -1,5 +1,6 @@
 import { io } from 'socket.io-client'
 import { defineStore } from 'pinia'
+import { HOST, PORT } from '@/utils/Constants'
 
 export const useSocket = defineStore('socket', {
   state: () => ({
@@ -8,7 +9,7 @@ export const useSocket = defineStore('socket', {
   }),
   actions: {
     init() {
-      this.socket = io('http://localhost:3000')
+      this.socket = io(`${HOST}:${PORT}`)
       this.socket.on('connected', () => {
         this.isConnected = true
       })

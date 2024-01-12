@@ -1,10 +1,11 @@
 import axios from 'axios'
+import { HOST, PORT } from '@/utils/Constants'
 
 const api = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: `${HOST}:${PORT}/api`,
   withCredentials: true,
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   }
 })
 

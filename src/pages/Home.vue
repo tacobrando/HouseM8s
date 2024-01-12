@@ -69,7 +69,7 @@ const groceryChartData = computed(() => {
     labels: labels,
     datasets: [
       {
-        label: "Monthly Data",
+        label: "Task",
         data: data,
         borderWidth: 1,
         backgroundColor: backgroundColors,
@@ -92,7 +92,7 @@ const choreChartData = computed(() => {
   return {
     labels: labels,
     datasets: [{
-      label: "Monthly Data",
+      label: "Task",
       data: data,
       borderWidth: 1,
       backgroundColor: backgroundColors,
