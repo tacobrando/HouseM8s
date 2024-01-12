@@ -9,7 +9,7 @@ export const useSocket = defineStore('socket', {
   }),
   actions: {
     init() {
-      this.socket = io(`${import.meta.env.VITE_SERVER_URL}`)
+      this.socket = io('https://housem8s-api-f6545d898b85.herokuapp.com')
       this.socket.on('connected', () => {
         this.isConnected = true
       })

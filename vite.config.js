@@ -5,9 +5,6 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  define: {
-    'process.env.VITE_SERVER_URL': JSON.stringify(import.meta.env.VITE_SERVER_URL)
-  },
   plugins: [
     vue(),
     VitePWA({
