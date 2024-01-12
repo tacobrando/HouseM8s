@@ -2,7 +2,7 @@ import axios from 'axios'
 import { HOST, PORT } from '@/utils/Constants'
 
 const api = axios.create({
-  baseURL: 'https://housem8s-api-f6545d898b85.herokuapp.com/api',
+  baseURL: `${import.meta.env.VITE_SERVER_URL}/api`,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
