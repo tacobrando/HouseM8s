@@ -17,37 +17,33 @@ export const useAuthStore = defineStore('auth', {
       this.username = ''
       this.password = ''
     },
-    async loginUser(showMsg=true) {
+    async loginUser() {
       try {
-        const { setUserInfo, userInfo } = useUserStore()
+        const { setUserInfo } = useUserStore()
         const { data } = await api.post('/auth/login', {
           username: this.username,
           password: this.password
         })
-        if(userInfo.id === '') {
-          setUserInfo(data.user)
-        }
-        this.$state.isLoggedIn = true
-        if(showMsg) {
-          toast.showSuccess(data.message)
-        }
-        router.push('/')
+        setUserInfo(data.user)
+        this.isLoggedIn = true
+        toast.showSuccess(data.message)
         this.resetLoginInfo()
+        router.push('/')
       } catch(error) {
-        if(error.response) {
+        this.isLoggedIn = false
+        if (error.response) {
           toast.showError(error.response.data.message)
         } else {
           toast.showError(error.message)
         }
-        this.$state.isLoggedIn = false;
       }
     },
     async logoutUser() {
       try {
         const { resetInfo } = useUserStore()
         await api.get('/auth/logout')
-        .then(() => resetInfo('user'))
-        this.$state.isLoggedIn = false
+        resetInfo('user')
+        this.isLoggedIn = false
         router.push('/login')
       } catch(error) {
         console.error(error)
@@ -55,16 +51,16 @@ export const useAuthStore = defineStore('auth', {
     },
     async isAuthenticated() {
       try {
-        const response = await api.get('/auth/verify-token');
-        if(response.data.verified) {
-          const { setUserInfo } = useUserStore()
+        const { setUserInfo } = useUserStore()
+        const response = await api.get('/auth/verify-session')
+        if (response.data.verified) {
           setUserInfo(response.data.user)
+          this.isLoggedIn = true
+        } else {
+          this.isLoggedIn = false
         }
-        this.$state.isLoggedIn = response.data.verified;
-        return response.data.verified;
       } catch (error) {
-        this.$state.isLoggedIn = false;
-        return false;
+        this.isLoggedIn = false
       }
     }
   }
