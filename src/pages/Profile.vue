@@ -7,7 +7,7 @@
       </span>
       <button 
         @click.stop="avatarOptions.toggle"
-        class="transition-all w-fit bg-blue-500 p-1.5 rounded-md hover:brightness-75"
+        class="text-white transition-all w-fit bg-blue-500 p-1.5 rounded-md hover:brightness-75"
       >
         Change avatar
       </button>

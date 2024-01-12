@@ -33,7 +33,6 @@ const props = defineProps({
 })
 
 const avatar = computed(() => new URL(`../../assets/img/profile/${props.img}.png`, import.meta.url).href)
-const avatarUrl = ref([])
 
 const profileMenu = reactive({
   value: false,
@@ -46,7 +45,6 @@ const profileMenu = reactive({
     profileMenu.value = value
   } 
 })
-
 
 const avatarUpload = reactive({
   value: false,

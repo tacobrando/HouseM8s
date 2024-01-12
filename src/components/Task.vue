@@ -18,7 +18,7 @@
           class="text-sm font-medium flex items-center"
           :class="[ task.completed.userId ? 'text-gray-500':'text-gray-400']"
         >
-          <ProfileAvatar v-if="taskUser" :img="taskUser.image" class="w-4 h-4 mr-1" />
+          <ProfileAvatar :img="taskUserAvatar" class="w-4 h-4 mr-1" />
           {{ task.user.name }}
         </span>
         <span 
@@ -36,9 +36,11 @@
         </span>
         <span 
           :class="[ task.completed.userId ? 'text-gray-500':'text-gray-400']"
-          class="task-price text-sm font-medium"        
+          class="task-price text-sm font-medium flex items-center"        
         >
-          Completed by: {{ task.completed.name || 'TBD' }}
+          Completed by:           
+          <ProfileAvatar v-if="task.completed.userId" :img="completedAvatar" class="w-4 h-4 mr-1 ml-1" />
+          {{ task.completed.name || 'TBD' }}
         </span>
       </div>
       <div 
@@ -61,21 +63,27 @@
 <script setup>
 import { useUserStore } from '@/store/user';
 import { useGroupStore } from '@/store/group';
-import { computed, onMounted, ref, watchEffect, watch } from 'vue';
+import { computed, onMounted, ref} from 'vue';
 import moment from 'moment';
 import Checkbox from './ui/Checkbox.vue';
 import ProfileAvatar from './profile/ProfileAvatar.vue';
 
 const taskRef = ref(null);
-const { userInfo, getUser } = useUserStore()
-const { currency } = useGroupStore()
+const { userInfo } = useUserStore()
+const { currency, members } = useGroupStore()
 
 const emit = defineEmits(['delete', 'update']);
 const { task, groupId } = defineProps(['task', 'groupId']);
 
-const formattedDate = computed(() => moment(task.createdAt).fromNow())
+function getAvatar(userId) {
+  return members.find(member => member.userId === userId).image
+}
 
-const taskUser = ref({})
+const taskUserAvatar = computed(() => getAvatar(task.user.userId))
+
+const completedAvatar = computed(() => getAvatar(task.completed.userId))
+
+const formattedDate = computed(() => moment(task.createdAt).fromNow())
 
 function deleteItem (id) {
   if (taskRef.value) {
@@ -88,10 +96,9 @@ function deleteItem (id) {
 
 const toggleComplete = (id) => emit('update', id)
 
-onMounted(async () => {
+onMounted(() => {
   if (taskRef.value) {
     taskRef.value.classList.add('animate-slide-down');
   }
-  taskUser.value = await getUser(task.user.userId)
 });
 </script>

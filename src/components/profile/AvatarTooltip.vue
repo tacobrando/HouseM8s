@@ -41,7 +41,7 @@ const emit = defineEmits(['update:toggle'])
 async function setAvatar(image) {
   try{
     await userStore.updateUser(userStore.userInfo.id, { image: image })
-    userStore.userInfo.image = image
+    userStore.updateAvatars(userStore.userInfo.id, image)
   } catch(error) {
     console.log(error)
   }

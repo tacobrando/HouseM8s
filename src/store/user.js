@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { router } from '@/router/router'
 import { toast } from "@/composables/toast";
 import api from "@/utils/Axios";
+import { useGroupStore } from "./group";
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -43,6 +44,16 @@ export const useUserStore = defineStore('user', {
       } catch(error) {
         toast.showError(error.response.data.message)
       }
+    },
+    updateAvatars(userId, image) {
+      const groupStore = useGroupStore()
+      const user = groupStore.members.find(member => member.userId === userId)
+      this.userInfo.image = image
+      user.image = image
+      groupStore.groupList.forEach(group => {
+        const member = group.members.find(member => member.userId === userId)
+        member.image = image
+      })
     },
     async getAllUsers() {
       try {
@@ -91,8 +102,8 @@ export const useUserStore = defineStore('user', {
         }
       } 
     },
-    async getCookie() {
-      await api.get('/users/get-cookie')
-    }
+    // async getCookie() {
+    //   await api.get('/users/get-cookie')
+    // }
   }
 }) 
