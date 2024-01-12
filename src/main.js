@@ -6,7 +6,6 @@ import { createPinia } from 'pinia'
 import { router } from './router/router';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { registerSW } from 'virtual:pwa-register'
 import { 
   faUser, 
   faCheck, 
@@ -54,5 +53,3 @@ createApp(App)
 .use(Toast)
 .use(router)
 .mount('#app')
-
-registerSW();

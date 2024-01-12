@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
 import { useUserStore } from "./user";
 import { router } from '@/router/router'
-
+import { registerSW } from 'virtual:pwa-register'
+import { unregisterServiceWorker } from "@/utils/Helpers";
 import api from "@/utils/Axios";
 import { toast } from "@/composables/toast";
 
@@ -28,6 +29,7 @@ export const useAuthStore = defineStore('auth', {
         this.isLoggedIn = true
         toast.showSuccess(data.message)
         this.resetLoginInfo()
+        registerSW()
         router.push('/')
       } catch(error) {
         this.isLoggedIn = false
@@ -44,6 +46,7 @@ export const useAuthStore = defineStore('auth', {
         await api.get('/auth/logout')
         resetInfo('user')
         this.isLoggedIn = false
+        unregisterServiceWorker()
         router.push('/login')
       } catch(error) {
         console.error(error)
