@@ -57,6 +57,9 @@ export default defineConfig({
     reporters: 'verbose',
     environment: 'jsdom',
   },
+  preview: {
+    port: 8080
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
