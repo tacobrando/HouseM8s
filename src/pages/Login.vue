@@ -29,7 +29,7 @@
   </div>
 </template>
 <script setup>
-import { reactive, computed } from 'vue';
+import { reactive, computed, onBeforeMount } from 'vue';
 import { useAuthStore } from '@/store/auth'
 import { toast } from '@/composables/toast'
 import { isFilled } from '@/utils/Helpers';
@@ -37,9 +37,12 @@ import { useSettings } from '@/composables/settings';
 import RegisterModal from '@/components/modal/register/RegisterModal.vue';
 import imageWhite from '@/assets/img/HouseM8s-white.png'
 import imageBlack from '@/assets/img/HouseM8s-black.png'
+import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore()
 const settings = useSettings()
+
+const router = useRouter()
 
 const imageUrl = computed(() => settings.darkMode ? imageWhite : imageBlack)
 
@@ -59,4 +62,10 @@ async function login() {
   }
   await authStore.loginUser()
 }
+
+onBeforeMount(() => {
+  if(authStore.isLoggedIn) {
+    router.push('/')
+  }
+})
 </script>
