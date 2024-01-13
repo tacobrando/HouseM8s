@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { unregisterServiceWorker } from "@/utils/Helpers";
 import { useAuthStore } from "@/store/auth";
 import Home from "@/pages/Home.vue";
 import Chores from "@/pages/Chores.vue";
@@ -61,6 +62,7 @@ router.beforeEach(async (to, from, next) => {
 
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!authStore.isLoggedIn && !await authStore.isAuthenticated()) {
+      unregisterServiceWorker()
       next({ path: '/login' });
     } else {
       next();
@@ -75,6 +77,7 @@ router.beforeEach(async (to, from, next) => {
     if (authStore.isLoggedIn || await authStore.isAuthenticated()) {
       next({ path: '/' });
     } else {
+      unregisterServiceWorker()
       next({ path: '/login' });
     }
   } else {
