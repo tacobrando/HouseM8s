@@ -48,16 +48,11 @@ export async function registerUserController(req, res) {
     const hashedPassword = await hash(password, 10)
 
     const user = await UserModel.create({ ...userData, password: hashedPassword })
+    
+    req.session.userId = user._id
 
     const userObject = user.toObject()
     delete userObject.password
-
-    const token = jwt.sign({ userId: userObject._id }, process.env.JWT_SECRET_KEY, { expiresIn: '7d' });
-    res.cookie('Housem8s_token', token, { 
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 604800000
-    })
 
     return res.status(200).send({
       message: "Registeration successful",
