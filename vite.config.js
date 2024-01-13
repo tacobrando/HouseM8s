@@ -13,7 +13,7 @@ export default defineConfig({
       injectRegister: 'auto',
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json,vue,txt,woff2}'],
-        cleanupOutdatedCaches: true
+        cleanupOutdatedCaches: false
       },
       manifest: {
         name: 'HouseM8s',
