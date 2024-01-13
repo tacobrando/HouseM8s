@@ -1,9 +1,8 @@
 export const Cookie = Object.freeze({
   options: {
     httpOnly: true,
-    secure: true,
-    sameSite: 'Lax',
-    path: '/',
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'none',
     maxAge: 604800000,
   }
 })

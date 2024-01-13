@@ -21,7 +21,8 @@ export const Server = {
   io: null,
   cors: {
     origin: ORIGIN,
-    credentials: true
+    credentials: true,
+
   },
   async Start() {
     Console.TimeStart("\x1b[2J\x1b[3J\x1b[HHouseM8s API v.0.1", "ready in")
@@ -29,6 +30,7 @@ export const Server = {
     this.app.use(cors(this.cors))
     this.app.use(express.static(staticPath))
     this.app.use(express.json())
+    this.app.enable('trust proxy', true)
     this.app.use(session(Session.config))
     this.app.use('/api', router)
 
