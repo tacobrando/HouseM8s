@@ -18,7 +18,7 @@ export const useAuthStore = defineStore('auth', {
       this.username = ''
       this.password = ''
     },
-    async loginUser() {
+    async loginUser(showMsg=true) {
       try {
         const { setUserInfo } = useUserStore()
         const { data } = await api.post('/auth/login', {
@@ -27,7 +27,9 @@ export const useAuthStore = defineStore('auth', {
         })
         setUserInfo(data.user)
         this.isLoggedIn = true
-        toast.showSuccess(data.message)
+        if(showMsg) {
+          toast.showSuccess(data.message)
+        }
         this.resetLoginInfo()
         registerSW()
         router.push('/')
