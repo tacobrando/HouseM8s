@@ -48,7 +48,7 @@ export async function registerUserController(req, res) {
     const hashedPassword = await hash(password, 10)
 
     const user = await UserModel.create({ ...userData, password: hashedPassword })
-    
+
     req.session.userId = user._id
 
     const userObject = user.toObject()
@@ -59,7 +59,7 @@ export async function registerUserController(req, res) {
       user: userObject
     })
   } catch(error) {
-    Console.Error(error);
+    // Console.Error(error);
     return res.status(500).send({
       message: "An error occurred during registration."
     });
