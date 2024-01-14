@@ -21,6 +21,7 @@ export default defineConfig({
         description: 'Manage your household tasks!',
         display: 'standalone',
         theme_color: "#242424",
+        background_color: "242424",
         icons: [
           {
             src: '/icons/HouseM8s-icon-white-192x192.png',
