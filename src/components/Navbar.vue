@@ -1,5 +1,5 @@
 <template>
-  <div class="dark:bg-[#282828] dark:text-white navbar-container fixed flex items-center justify-center md:justify-between bottom-0 md:top-0 w-full bg-white text-black h-16 md:shadow-md shadow-top-md z-50">
+  <div class="dark:bg-[#282828] dark:text-white navbar-container fixed flex items-center justify-center md:justify-between bottom-0 md:top-0 w-full bg-white text-black h-20 md:h-16 md:shadow-md shadow-top-md z-50">
     <router-link 
       :key="settings.darkMode"
       class="hidden md:block w-12 ml-4 h-12 rounded-full"
@@ -7,7 +7,7 @@
     >
       <img :src="currentIcon" alt="house">
     </router-link>
-    <div class="flex md:flex-grow justify-center">
+    <div class="flex md:flex-grow justify-center pb-2 md:pb-0">
       <router-link 
         v-for="(item, index) in routes"
         :key="index"
