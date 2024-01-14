@@ -30,7 +30,7 @@ export default defineConfig({
             purpose: "maskable"
           },
           {
-            src: '/icons/HouseM8s-icon-white-512x512.png',
+            src: '/icons/HouseM8s-icon-512x512.png',
             sizes: '512x512',
             type: 'image/png'
           }
