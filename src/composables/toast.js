@@ -1,8 +1,8 @@
 import { useToast } from 'vue-toastification'
 
 export const toast = Object.freeze({
-    showInfo(message) {
-      useToast().info(message)
+    showInfo(message, options) {
+      useToast().info(message, options)
     },
     showError(message) {
       useToast().error(message)

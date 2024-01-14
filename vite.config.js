@@ -24,7 +24,7 @@ export default defineConfig({
         background_color: "#242424",
         icons: [
           {
-            src: '/icons/HouseM8s-icon-white-192x192.png',
+            src: '/icons/HouseM8s-icon.png',
             sizes: '192x192',
             type: 'image/png',
             purpose: "maskable"

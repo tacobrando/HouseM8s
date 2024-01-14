@@ -108,10 +108,13 @@ define(['./workbox-728a0c38'], (function (workbox) { 'use strict';
     "url": "assets/HouseM8s-icon-white-KGB3KB_a.png",
     "revision": null
   }, {
+    "url": "assets/HouseM8s-icon-Xb799GeW.png",
+    "revision": null
+  }, {
     "url": "assets/HouseM8s-white-0ob_Xm8z.png",
     "revision": null
   }, {
-    "url": "assets/index-0FPSO03e.js",
+    "url": "assets/index-bpd6ujzS.js",
     "revision": null
   }, {
     "url": "assets/index-g_GcbEej.css",
@@ -120,14 +123,23 @@ define(['./workbox-728a0c38'], (function (workbox) { 'use strict';
     "url": "assets/workbox-window.prod.es5-prqDwDSL.js",
     "revision": null
   }, {
+    "url": "icons/HouseM8s-icon-black-192x192.png",
+    "revision": "847d22a6def5a05203b187b882a5d9c8"
+  }, {
+    "url": "icons/HouseM8s-icon-black-512x512.png",
+    "revision": "6e93c610e66d9b92ca09e2840af84c09"
+  }, {
     "url": "icons/HouseM8s-icon-white-192x192.png",
     "revision": "b7bc2b421b80172500fc42140813149a"
   }, {
     "url": "icons/HouseM8s-icon-white-512x512.png",
     "revision": "270ec0a8430a68202a8243e37027f3da"
   }, {
+    "url": "icons/HouseM8s-icon.png",
+    "revision": "42d9fb4652ec56b9a27c4353dc72cd63"
+  }, {
     "url": "index.html",
-    "revision": "2b2abb015b5fb3d6670f5e733871aedf"
+    "revision": "eb291b62ad29be29aba3776125c68e2c"
   }, {
     "url": "screenshots/desktop.png",
     "revision": "436e33a084594aab44d15bb13e60caea"
@@ -141,11 +153,14 @@ define(['./workbox-728a0c38'], (function (workbox) { 'use strict';
     "url": "icons/HouseM8s-icon-white-192x192.png",
     "revision": "b7bc2b421b80172500fc42140813149a"
   }, {
+    "url": "icons/HouseM8s-icon.png",
+    "revision": "42d9fb4652ec56b9a27c4353dc72cd63"
+  }, {
     "url": "icons/HouseM8s-icon-white-512x512.png",
     "revision": "270ec0a8430a68202a8243e37027f3da"
   }, {
     "url": "manifest.webmanifest",
-    "revision": "6cbbd4ba2e3342c506025fbe69f71d55"
+    "revision": "fec1d67f0ac7cf6b3c260c353edb410a"
   }], {});
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html")));
 
