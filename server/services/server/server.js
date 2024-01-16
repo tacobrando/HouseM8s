@@ -7,7 +7,7 @@ import path from 'path';
 import { Server as SocketServer } from "socket.io"
 import { createServer } from 'vite'
 import { Console, SocketEvent } from '../../utils/Tools.js'
-import { ORIGIN, HOST, PORT } from '../../utils/Constants.js';
+import { ORIGIN, URL, PORT } from '../../utils/Constants.js';
 import { Database } from "../../utils/Database.js"
 import { Session } from '../../lib/Session.js';
 import session from 'express-session';
@@ -40,7 +40,7 @@ export const Server = {
     this.server.listen(PORT, () => {
       Console.TimeEnd("\x1b[2J\x1b[3J\x1b[HHouseM8s API v.0.1", "ready in")
       console.log("")
-      Console.Info(`\u001b[37mNetwork: \u001b[1;34m${HOST}:${PORT}\n`)
+      Console.Info(`\u001b[37mNetwork: \u001b[1;34m${URL}\n`)
       Console.Log()
     })
     if(process.env.NODE_ENV !== 'production') {
