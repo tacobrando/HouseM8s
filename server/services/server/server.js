@@ -45,7 +45,8 @@ export const Server = {
     })
     if(process.env.NODE_ENV !== 'production') {
       const vite = await createServer({
-        server: { middlewareMode: 'html' }
+        server: { middlewareMode: true },
+        appType: 'spa'
       })
       this.app.use(vite.middlewares)
     } else {
