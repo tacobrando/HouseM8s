@@ -10,7 +10,7 @@
     "heroku-postbuild": "npm run build",
     "preview": "vite preview --host",
     "test": "vitest",
-    "deploy": "git add . && git commit -m 'deploy' && git push heroku consolidated:main"
+    "deploy": "git push heroku consolidated:main"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.0",

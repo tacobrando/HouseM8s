@@ -26,7 +26,7 @@ export const Server = {
 
   },
   async Start() {
-    Console.TimeStart("\x1b[2J\x1b[3J\x1b[HHouseM8s API v.0.1", "ready in")
+    Console.TimeStart("\x1b[2J\x1b[3J\x1b[HHouseM8s v.1.0", "ready in")
     this.app.use(cors(this.cors))
     this.app.use(express.json())
     this.app.enable('trust proxy', true)
@@ -38,7 +38,7 @@ export const Server = {
     this.app.set('io', this.io)
 
     this.server.listen(PORT, () => {
-      Console.TimeEnd("\x1b[2J\x1b[3J\x1b[HHouseM8s API v.0.1", "ready in")
+      Console.TimeEnd("\x1b[2J\x1b[3J\x1b[HHouseM8s v.1.0", "ready in")
       console.log("")
       Console.Info(`\u001b[37mNetwork: \u001b[1;34m${URL}\n`)
       Console.Log()
