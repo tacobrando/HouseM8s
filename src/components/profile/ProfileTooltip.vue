@@ -57,7 +57,7 @@ const logoutConfirm = reactive({
 })
 
 function navigate() {
-  router.push(`/profile/${user.userInfo.username}`)
+  router.push(`/profile`)
   emit("update:toggle", false)
 }
 </script>

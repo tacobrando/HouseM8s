@@ -17,5 +17,5 @@ const { username } = defineProps({
   }
 });
 
-const profilePath = computed(() => `/profile/${username}`)
+const profilePath = computed(() => `/profile`)
 </script>

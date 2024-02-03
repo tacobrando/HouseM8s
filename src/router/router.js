@@ -38,7 +38,7 @@ export const router = createRouter({
       meta: { requiresAuth: true }
     },
     {
-      path: '/profile/:username',
+      path: '/profile',
       name: 'Profile',
       component: Profile,
       meta: { requiresAuth: true }
