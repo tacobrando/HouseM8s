@@ -5,7 +5,6 @@ import { toast } from '@/composables/toast.js';
 import { useSocket } from '@/composables/socket.io.js';
 import api from '@/utils/Axios.js';
 
-
 export function createTaskStoreFactory(options) {
   return defineStore({
     ...options,

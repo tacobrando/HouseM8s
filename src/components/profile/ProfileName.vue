@@ -5,7 +5,6 @@
     </p>
   </router-link>
 </template>
-
 <script setup>
 import { computed } from 'vue';
 import { useUserStore } from '@/store/user';
